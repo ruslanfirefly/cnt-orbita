@@ -1,0 +1,16 @@
+baseURL : 'https://cnt-orbita.ru/'
+languageCode : 'ru-RU'
+title : 'СНТ "Орбита"'
+theme : "hugo-theme-stack"
+DefaultContentLanguage : "ru"
+
+Params:
+  colorScheme:
+    toggle: false
+    default: light
+
+  footer:
+    since: 2023
+    
+  comments:
+    enabled: false
