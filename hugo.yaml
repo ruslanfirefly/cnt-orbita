@@ -1,16 +1,79 @@
 baseURL : 'https://cnt-orbita.ru/'
 languageCode : 'ru-RU'
-title : 'СНТ "Орбита"'
+title : Садовое некоммерческое товарищество "Орбита"
 theme : "hugo-theme-stack"
 DefaultContentLanguage : "ru"
 
 Params:
+  mainSections:
+    - post
+  featuredImageField: image
+  rssFullContent: true
+  sidebar:
+    avatar:
+      enabled: true
+      src: orlogo.jpg
+      local: true
+    # emoji: 🍥
+    subtitle: Ленинградская область, Ломоносовский район, Виллозское городское поселение.
   colorScheme:
     toggle: false
     default: light
+  imageProcessing:
+    cover:
+      enabled: true
+    content:
+      enabled: true
 
   footer:
     since: 2023
-    
+
   comments:
     enabled: false
+  widgets:
+    homepage:
+      - type: search
+      - type: archives
+        params:
+            limit: 5
+      - type: categories
+        params:
+            limit: 10
+      # - type: tag-cloud
+      #   params:
+      #       limit: 10
+    page:
+      - type: toc
+  article:
+    math: false
+    toc: true
+    readingTime: false
+markup:
+    goldmark:
+        extensions:
+            passthrough:
+                enable: true
+                delimiters:
+                    block:
+                        - - \[
+                          - \]
+                        - - $$
+                          - $$
+                    inline:
+                        - - \(
+                          - \)
+        renderer:
+            ## Set to true if you have HTML content inside Markdown
+            unsafe: true
+    tableOfContents:
+        endLevel: 4
+        ordered: true
+        startLevel: 1
+    highlight:
+        noClasses: false
+        codeFences: true
+        guessSyntax: true
+        lineNoStart: 1
+        lineNos: true
+        lineNumbersInTable: true
+        tabWidth: 4
