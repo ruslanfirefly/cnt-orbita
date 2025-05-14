@@ -48,6 +48,14 @@ Params:
     math: false
     toc: true
     readingTime: false
+
+pagination:
+    pagerSize: 3
+
+permalinks:
+    post: /p/:slug/
+    page: /:slug/
+
 markup:
     goldmark:
         extensions:
