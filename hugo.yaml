@@ -50,7 +50,7 @@ Params:
     readingTime: false
 
 pagination:
-    pagerSize: 3
+    pagerSize: 15
 
 permalinks:
     post: /p/:slug/
