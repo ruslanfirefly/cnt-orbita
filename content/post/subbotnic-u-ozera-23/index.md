@@ -4,7 +4,6 @@ slug: subbotnic-u-ozera-23
 description: Приглашаем всех садоводов на субботник!
 date: '2023-06-02'
 categories:
-    - новости 
     - благоустройство
 # aliases:
 #   - about-us

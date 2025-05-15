@@ -1,10 +1,9 @@
 ---
 title: Противопожарный режим
-slug: protivopozharnyj-rezhim
+slug: protivopozharnyj-rezhim-2023
 description: В Ленинградской области введён особый противопожарный режим.
 date: '2023-06-02'
 categories:
-    - новости 
     - важное
 # aliases:
 #   - about-us

@@ -3,8 +3,8 @@ title: Борщевик в СНТ
 slug: borzhevik-v-snt
 description: Не допустить распространения на новые территории.
 date: '2023-06-01'
-categories:
-    - новости 
+categories: 
+    - Благоустройство
 # aliases:
 #   - about-us
 #   - about-hugo

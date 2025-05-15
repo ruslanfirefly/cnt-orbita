@@ -3,27 +3,63 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/post/</loc>
-    <lastmod>2023-06-25T00:00:00+00:00</lastmod>
+    <lastmod>2024-04-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2023-06-25T00:00:00+00:00</lastmod>
+    <lastmod>2024-04-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%D0%B2%D0%B0%D0%B6%D0%BD%D0%BE%D0%B5/</loc>
+    <lastmod>2024-04-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5/</loc>
+    <lastmod>2024-04-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-04-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/uvedomlenie-o-provedenii-sobraniya-2024/</loc>
+    <lastmod>2024-04-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/protivopozharnyj-rezhim-2024/</loc>
+    <lastmod>2024-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/vremennoe-ogranichenie-dvizheniya-transportnykh-sredstv-2024/</loc>
+    <lastmod>2024-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/itogi-2023/</loc>
+    <lastmod>2023-12-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/gotovimsya-k-sobraniyu-v-iyune-2024/</loc>
+    <lastmod>2023-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/zadolzhnost-na-10-2023/</loc>
+    <lastmod>2023-10-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/itogi-golosovaniya-08-23/</loc>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/ochno-zaochnoe-golosovanie-v-period-s-19082023-g-po-26082023-g/</loc>
+    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/sobranie-05-08-2023/</loc>
+    <lastmod>2023-07-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/vystavka-kartin-eleny-losevoj/</loc>
+    <lastmod>2023-07-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%D1%80%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/</loc>
+    <lastmod>2023-07-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/pereimenovanie-villozskogo-selskogo-poseleniya/</loc>
+    <lastmod>2023-06-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/%D0%B1%D0%BB%D0%B0%D0%B3%D0%BE%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%BE/</loc>
-    <lastmod>2023-06-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/</loc>
     <lastmod>2023-06-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/p/remont-podezdnoj-dorogi/</loc>
     <lastmod>2023-06-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2023-06-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/%D0%B2%D0%B0%D0%B6%D0%BD%D0%BE%D0%B5/</loc>
-    <lastmod>2023-06-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/p/protivopozharnyj-rezhim/</loc>
+    <loc>http://localhost:1313/p/protivopozharnyj-rezhim-2023/</loc>
     <lastmod>2023-06-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/p/subbotnic-u-ozera-23/</loc>
@@ -41,6 +77,8 @@
     <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/documents/</loc>
   </url><url>
     <loc>http://localhost:1313/contacts/</loc>
   </url><url>

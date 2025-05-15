@@ -4,7 +4,6 @@ slug: remont-podezdnoj-dorogi
 description: 23-24 июня силами и средствами наших садоводов и военных была отремонтирована подъездная дорога.
 date: '2023-06-25'
 categories:
-    - новости 
     - Благоустройство
 # aliases:
 #   - about-us

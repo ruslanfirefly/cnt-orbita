@@ -4,7 +4,6 @@ slug: pereimenovanie-villozskogo-selskogo-poseleniya
 # description: Приглашаем всех садоводов на субботник!
 date: '2023-06-29'
 categories:
-    - новости 
     - Важное
 # aliases:
 #   - about-us
