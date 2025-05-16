@@ -12,7 +12,7 @@ Params:
   sidebar:
     avatar:
       enabled: true
-      src: orlogo.jpg
+      src: orlogo_main.jpg
       local: true
     # emoji: 🍥
     subtitle: Ленинградская область, Ломоносовский район, Виллозское городское поселение.
