@@ -3,8 +3,10 @@ languageCode : 'ru-RU'
 title : Садовое некоммерческое товарищество "Орбита"
 theme : "hugo-theme-stack"
 DefaultContentLanguage : "ru"
+enableRobotsTXT: true
 
 Params:
+  favicon: logo_fav.png
   mainSections:
     - post
   featuredImageField: image
