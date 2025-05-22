@@ -1,6 +1,6 @@
 baseURL : 'https://cnt-orbita.ru/'
 languageCode : 'ru-RU'
-title : Садовое некоммерческое товарищество "Орбита"
+title : Садоводческое некоммерческое товарищество "Орбита"
 theme : "hugo-theme-stack"
 DefaultContentLanguage : "ru"
 enableRobotsTXT: true
