@@ -7,6 +7,8 @@ enableRobotsTXT: true
 
 Params:
   favicon: logo_fav.png
+  home:
+    type: list
   mainSections:
     - post
   featuredImageField: image
