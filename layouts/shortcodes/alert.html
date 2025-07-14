@@ -1,0 +1,25 @@
+{{- $type := .Get 0 | default "info" -}}
+{{- $icon := "" -}}
+
+{{- with .Get "icon" -}}
+    {{- $icon = . -}}
+{{- else -}}
+    {{- $icons := dict
+        "info" "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        "warning" "M11 15h2v2h-2v-2zm0-8h2v6h-2V7z"
+        "danger" "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+        "success" "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+    -}}
+    {{- $icon = index $icons $type -}}
+{{- end -}}
+
+<div class="alert alert-{{ $type }}" role="alert">
+    <div class="alert-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path fill-rule="evenodd" d="{{ $icon }}"></path>
+        </svg>
+    </div>
+    <div class="alert-content">
+        {{ .Inner | markdownify }}
+    </div>
+</div>

@@ -1,0 +1,75 @@
+/* --- Alert Shortcode --- */
+.alert {
+    position: relative;
+    padding: 1rem 1rem 1rem 3rem; /* Отступ слева для иконки */
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .375rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.alert-icon {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    width: 1.5rem; /* 24px */
+    height: 1.5rem; /* 24px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+/* Убираем лишний отступ у последнего параграфа внутри алерта */
+.alert-content > p:last-child {
+    margin-bottom: 0;
+}
+
+
+/*
+ * Color Variants
+ */
+
+/* Info (default) */
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+.alert-info .alert-icon svg {
+    fill: #0c5460;
+}
+
+/* Warning */
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.alert-warning .alert-icon svg {
+    fill: #856404;
+}
+
+/* Danger / Error */
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-danger .alert-icon svg {
+    fill: #721c24;
+}
+
+/* Success */
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-success .alert-icon svg {
+    fill: #155724;
+}
