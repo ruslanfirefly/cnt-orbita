@@ -1,0 +1,8 @@
+<div class="columns-container">
+    {{- $columns := split .Inner "<--->" -}}
+    {{- range $columns -}}
+        <div class="column">
+            {{- . | markdownify -}}
+        </div>
+    {{- end -}}
+</div>
