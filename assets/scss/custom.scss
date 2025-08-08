@@ -107,6 +107,31 @@
         gap: 1rem;
     }
 }
+
+/* Темная тема: улучшение читаемости текста */
+@media (prefers-color-scheme: dark) {
+    .column {
+        background-color: #2d2d2d;
+        border-color: #444;
+        color: #e0e0e0;
+    }
+    
+    .column h3,
+    .column h4,
+    .column h5,
+    .column h6 {
+        color: #ffffff;
+    }
+    
+    .column p,
+    .column li {
+        color: #e0e0e0;
+    }
+    
+    .column strong {
+        color: #ffffff;
+    }
+}
 /* --- SEO и стили футера --- */
 
 .footer-seo-links {
