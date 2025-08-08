@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cnt-orbita.ru/sitemap.xml
+
+# Запретить индексацию служебных страниц
+Disallow: /search/
+Disallow: /archives/
+Disallow: /categories/
+Disallow: /tags/
+Disallow: /page/
+Disallow: /p/
+
+# Запретить индексацию файлов
+Disallow: /docs/
+Disallow: /static/
+Disallow: /themes/
+Disallow: /assets/
+
+# Запретить индексацию служебных файлов Hugo
+Disallow: /index.xml
+Disallow: /rss.xml
+Disallow: /atom.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Указание для поисковых систем
+Host: https://cnt-orbita.ru
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content

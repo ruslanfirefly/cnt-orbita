@@ -1,39 +1,61 @@
-baseURL : 'https://cnt-orbita.ru/'
-languageCode : 'ru-RU'
-title : Садоводческое некоммерческое товарищество "Орбита"
-theme : "hugo-theme-stack"
-DefaultContentLanguage : "ru"
+baseURL: 'https://cnt-orbita.ru/'
+languageCode: 'ru-RU'
+title: 'Садоводческое некоммерческое товарищество "Орбита"'
+theme: "hugo-theme-stack"
+DefaultContentLanguage: "ru"
 enableRobotsTXT: true
+enableEmoji: true
+hasCJKLanguage: false
 
-Params:
-  favicon: logo_fav.png
+# SEO параметры
+params:
+  description: "Официальный сайт Садового некоммерческого товарищества Орбита. Новости, документы, собрания и важная информация для членов СНТ."
+  keywords: ["СНТ", "Орбита", "садовое товарищество", "Ломоносовский район", "Виллозское городское поселение", "дачный участок", "садоводство"]
+  author:
+    name: "СНТ Орбита"
+    email: "info@cnt-orbita.ru"
+  images: ["orlogo_main.jpg"]
+  favicon: "logo_fav.png"
+  
+  # Главная страница
   home:
     type: list
   mainSections:
     - post
   featuredImageField: image
   rssFullContent: true
+  
+  # Боковая панель
   sidebar:
     avatar:
       enabled: true
       src: orlogo_main.jpg
       local: true
-    # emoji: 🍥
-    subtitle: Ленинградская область, Ломоносовский район, Виллозское городское поселение.
+    emoji: "🏡"
+    subtitle: "Ленинградская область, Ломоносовский район, Виллозское городское поселение."
+  
+  # Цветовая схема
   colorScheme:
-    toggle: false
-    default: light
+    toggle: true
+    default: "auto"
+  
+  # Обработка изображений
   imageProcessing:
     cover:
       enabled: true
     content:
       enabled: true
-
+  
+  # Футер
   footer:
     since: 2023
-
+    customText: 'Садовое некоммерческое товарищество "Орбита"'
+  
+  # Комментарии
   comments:
     enabled: false
+  
+  # Виджеты
   widgets:
     homepage:
       - type: search
@@ -43,23 +65,28 @@ Params:
       - type: categories
         params:
             limit: 10
-      # - type: tag-cloud
-      #   params:
-      #       limit: 10
     page:
       - type: toc
+  
+  # Статьи
   article:
     math: false
     toc: true
-    readingTime: false
+    readingTime: true
+    license:
+      enabled: true
+      default: "Licensed under CC BY-NC-SA 4.0"
 
+# Пагинация
 pagination:
     pagerSize: 15
 
+# Постоянные ссылки
 permalinks:
     post: /p/:slug/
     page: /:slug/
 
+# Разметка
 markup:
     goldmark:
         extensions:
@@ -75,7 +102,6 @@ markup:
                         - - \(
                           - \)
         renderer:
-            ## Set to true if you have HTML content inside Markdown
             unsafe: true
     tableOfContents:
         endLevel: 4
@@ -89,3 +115,26 @@ markup:
         lineNos: true
         lineNumbersInTable: true
         tabWidth: 4
+
+# Sitemap
+sitemap:
+  changefreq: "weekly"
+  filename: "sitemap.xml"
+  priority: 0.8
+
+# Минификация
+minify:
+  disableXML: true
+  minifyOutput: true
+  tdewolff:
+    html:
+      keepWhitespace: false
+
+# Безопасность
+security:
+  exec:
+    allow:
+      - "^dart-sass-embedded$"
+      - "^go run.*"
+      - "^npx.*"
+      - "^postcss.*"
