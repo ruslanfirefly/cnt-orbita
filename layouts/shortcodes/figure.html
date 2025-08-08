@@ -1,0 +1,21 @@
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
+    {{- $src := .Page.Resources.GetMatch (.Get "src") -}}
+    {{- $alt := .Get "alt" -}}
+    {{- $caption := .Get "caption" -}}
+    {{- $width := .Get "width" -}}
+    {{- $height := .Get "height" -}}
+
+    {{- if $src -}}
+        {{- $original := $src.Resize "1024x" -}}
+        {{- $webp := $src.Resize "1024x webp" -}}
+        <picture>
+            <source srcset="{{ $webp.RelPermalink }}" type="image/webp">
+            <source srcset="{{ $original.RelPermalink }}" type="{{ $original.MediaType }}">
+            <img src="{{ $original.RelPermalink }}" alt="{{ $alt }}" {{ with $width }}width="{{ . }}"{{ end }} {{ with $height }}height="{{ . }}"{{ end }}>
+        </picture>
+    {{- end -}}
+
+    {{- if $caption -}}
+        <figcaption>{{ $caption | markdownify }}</figcaption>
+    {{- end -}}
+</figure>

@@ -6,4 +6,4 @@ categories:
 date: '2025-03-15'
 ---
 
-![Объявление](image.png)
+{{< figure src="image.png" alt="Объявление" >}}

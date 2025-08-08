@@ -6,6 +6,6 @@ categories:
 date: '2023-10-12'
 ---
 
-![Объявление.](image.png)
+{{< figure src="image.png" alt="Объявление." >}}
 
 __[Ознакомится с задолжностью по участкам](https://docs.google.com/spreadsheets/d/1HbEwQd4TtShPuAMHgUmkDjUaQ264XhPXz_mZAfogIiY/edit)__
