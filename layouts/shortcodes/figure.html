@@ -1,18 +1,23 @@
-<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
-    {{- $src := .Page.Resources.GetMatch (.Get "src") -}}
+<figure class="text-center{{ with .Get "class" }} {{ . }}{{ end }}">
+    {{- $src_param := .Get "src" -}}
     {{- $alt := .Get "alt" -}}
     {{- $caption := .Get "caption" -}}
     {{- $width := .Get "width" -}}
     {{- $height := .Get "height" -}}
 
-    {{- if $src -}}
-        {{- $original := $src.Resize "1024x" -}}
-        {{- $webp := $src.Resize "1024x webp" -}}
-        <picture>
-            <source srcset="{{ $webp.RelPermalink }}" type="image/webp">
-            <source srcset="{{ $original.RelPermalink }}" type="{{ $original.MediaType }}">
-            <img src="{{ $original.RelPermalink }}" alt="{{ $alt }}" {{ with $width }}width="{{ . }}"{{ end }} {{ with $height }}height="{{ . }}"{{ end }}>
-        </picture>
+    {{- if hasPrefix $src_param "/" -}}
+        <img src="{{ $src_param | relURL }}" alt="{{ $alt }}" {{ with $width }}width="{{ . }}"{{ end }} {{ with $height }}height="{{ . }}"{{ end }}>
+    {{- else -}}
+        {{- $src := .Page.Resources.GetMatch $src_param -}}
+        {{- if $src -}}
+            {{- $original := $src.Resize "1024x" -}}
+            {{- $webp := $src.Resize "1024x webp" -}}
+            <picture>
+                <source srcset="{{ $webp.RelPermalink }}" type="image/webp">
+                <source srcset="{{ $original.RelPermalink }}" type="{{ $original.MediaType }}">
+                <img src="{{ $original.RelPermalink }}" alt="{{ $alt }}" {{ with $width }}width="{{ . }}"{{ end }} {{ with $height }}height="{{ . }}"{{ end }}>
+            </picture>
+        {{- end -}}
     {{- end -}}
 
     {{- if $caption -}}
