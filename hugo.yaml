@@ -64,7 +64,7 @@ params:
             limit: 5
       - type: categories
         params:
-            limit: 10
+            limit: 30
     page:
       - type: toc
   
