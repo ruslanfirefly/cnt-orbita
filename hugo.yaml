@@ -66,12 +66,13 @@ params:
         params:
             limit: 30
     page:
-      - type: toc
+      - type: search
+      - type: categories
   
   # Статьи
   article:
     math: false
-    toc: true
+    toc: false
     readingTime: true
     license:
       enabled: false
