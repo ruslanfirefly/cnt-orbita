@@ -36,15 +36,16 @@ menu:
 
 ---
 
-## 📱 Телефон и почта
-
+## 📱 Связь и социальные сети
 
 **Электронная почта:** [sntorbita56@yandex.ru](mailto:sntorbita56@yandex.ru)
 
 **Официальный сайт:** [https://cnt-orbita.ru](https://cnt-orbita.ru)
 
+**Канал в MAX:** [https://max.ru/id4720008674_biz](https://max.ru/id4720008674_biz)
+
 ---
 
 ## 👤 Председатель
 
-**Заика Владимир Петрович**
+**Витер Андрей Дмитриевич**
