@@ -2,3 +2,7 @@ public
 resources
 .DS_Store
 GEMINI.md
+.deploy_config
+deploy_config
+.env.deploy
+*.lock

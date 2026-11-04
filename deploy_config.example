@@ -1,0 +1,14 @@
+# Конфигурация деплоя на удаленный сервер
+# Скопируйте этот файл в .deploy_config и укажите ваши реальные данные
+
+# Способ передачи: rsync, sftp или ftp
+DEPLOY_METHOD="rsync"
+
+# Параметры сервера
+REMOTE_HOST="example.com"
+REMOTE_PORT="22"
+REMOTE_USER="root"
+REMOTE_PATH="/var/www/cnt-orbita.ru/html/"
+
+# Если авторизация по паролю (рекомендуется SSH-ключ, но пароль тоже поддерживается):
+REMOTE_PASSWORD=""
