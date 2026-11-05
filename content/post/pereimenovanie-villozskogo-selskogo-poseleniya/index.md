@@ -3,8 +3,7 @@ title: Переименование Виллозского сельского п
 slug: pereimenovanie-villozskogo-selskogo-poseleniya
 # description: Приглашаем всех садоводов на субботник!
 date: '2023-06-29'
-categories:
-    - Важное
+categories: ["Важное и срочное"]
 # aliases:
 #   - about-us
 #   - about-hugo
@@ -12,8 +11,6 @@ categories:
 # license: CC BY-NC-ND
 # lastmod: '2025-05-14'
 ---
-
-
 Уважаемые садоводы!
 
 Наше садоводство ранее находилось на территории Виллозского сельского поселения.

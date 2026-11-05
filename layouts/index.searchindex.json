@@ -1,0 +1,19 @@
+{{- $index := slice -}}
+{{- range site.RegularPages -}}
+  {{- $snippet := .Summary | plainify | truncate 240 -}}
+  {{- with .Description -}}
+    {{- $snippet = . -}}
+  {{- end -}}
+  {{- $item := dict
+      "title" .Title
+      "url" .RelPermalink
+      "date" (.Date.Format "02.01.2006")
+      "type" (cond (in (slice "post" "posts") .Type) "post" "page")
+      "badge" (cond (in (slice "post" "posts") .Type) "Новость" "Раздел")
+      "snippet" $snippet
+      "tags" (default slice .Params.categories)
+      "actionText" "Читать далее"
+  -}}
+  {{- $index = $index | append $item -}}
+{{- end -}}
+{{- $index | jsonify -}}

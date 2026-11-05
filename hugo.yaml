@@ -7,16 +7,102 @@ enableRobotsTXT: true
 enableEmoji: true
 hasCJKLanguage: false
 
-# SEO параметры
+# Настройка вывода SearchIndex для клиентского живого поиска
+outputs:
+  home:
+    - HTML
+    - RSS
+    - SearchIndex
+outputFormats:
+  SearchIndex:
+    mediaType: "application/json"
+    baseName: "searchindex"
+    isPlainText: true
+    notAlternative: true
+
+# SEO и параметры портала СНТ «Орбита»
 params:
-  description: "Официальный сайт Садового некоммерческого товарищества Орбита. Новости, документы, собрания и важная информация для членов СНТ."
-  keywords: ["СНТ", "Орбита", "садовое товарищество", "Ломоносовский район", "Виллозское городское поселение", "дачный участок", "садоводство"]
+  description: "Официальный сайт Садового некоммерческого товарищества Орбита (Ломоносовский район, Виллозское городское поселение). Новости, документы, взносы, тарифы на электроэнергию и собрания."
+  keywords: ["СНТ", "Орбита", "садовое товарищество", "Ломоносовский район", "Виллозское городское поселение", "Малое Карлино", "дачный участок", "садоводство"]
   author:
-    name: "СНТ Орбита"
+    name: "СНТ «Орбита»"
     email: "info@cnt-orbita.ru"
   images: ["orlogo_main.jpg"]
   favicon: "logo_fav.png"
   
+  # Общие реквизиты и контакты СНТ
+  snt:
+    name: 'СНТ «Орбита»'
+    location: 'д. Малое Карлино, Ломоносовский р-н'
+    fullAddress: '188508, Ленинградская обл., Ломоносовский р-н, Виллозское ГП, д. Малое Карлино, тер. СНТ «Орбита»'
+    chairman: 'Витер Андрей Дмитриевич'
+    plotsCount: 334
+    phoneDisplay: '+7 (921) 967-06-42'
+    phoneTel: '+79219670642'
+    receptionHours: 'Сб 12:00–14:00'
+    email: 'sntorbita56@yandex.ru'
+    newsEmail: 'news@cnt-orbita.ru'
+    maxChannelUrl: 'https://max.ru/id4720008674_biz'
+    lenenergoPhone: '8 (800) 220-02-20'
+    pskPhone: '8 (812) 678-96-00'
+    pskCabinetUrl: 'https://ikus.pesc.ru/auth/login'
+
+  # Банковские реквизиты (для модального окна СБП и карточки оплаты)
+  requisites:
+    enabled: true
+    inn: '4720008674'
+    kpp: '472501001'
+    account: '40703810155240000156'
+    bank: 'Северо-Западный банк ПАО Сбербанк'
+    bik: '044030653'
+    corrAccount: '30101810500000000653'
+    purposeTemplate: 'Целевой и членский взнос за 2026 год, участок № ___'
+    paymentTableUrl: 'https://docs.google.com/spreadsheets/d/1zhGuLnfFQLzfv22SANlKMt_76mLHWN2umiCzYl9Nk64/edit?usp=sharing'
+    qrImageUrl: '/vznosy/qr-oplata.png'
+
+  # Экстренная верхняя полоса (.emergency-strip)
+  emergencyStrip:
+    enabled: true
+    mode: 'normal'
+    title: 'Правление СНТ «Орбита» · Приём: Сб 12:00–14:00'
+    subtitle: 'Аварийная «Ленэнерго»: 8 (800) 220-02-20 · Показания ПСК: 8 (812) 678-96-00'
+
+  # Главный Hero-баннер собрания на главной (.hero-banner)
+  heroBanner:
+    enabled: true
+    expiresAt: '2027-07-05T23:59:59+03:00'
+    tag: 'Общее собрание 2026'
+    datesLabel: 'Заочно: 20 июня – 3 июля · Очно: 4 июля в 12:00'
+    title: 'Очередное общее собрание членов СНТ «Орбита» (очно-заочное голосование)'
+    description: 'Выборы Председателя, членов Правления (5 кандидатов) и Ревизионной комиссии, утверждение отчётов и сметы на 2026 год.'
+    showProgress: true
+    progressLeftLabel: 'Территория СНТ: 334 участка (д. Малое Карлино)'
+    progressRightLabel: 'Бюллетени: в Правлении Сб 12:00–14:00'
+    progressPercent: 68
+    primaryBtn:
+      text: 'Порядок голосования 2026'
+      url: '/p/nachalo-golosovaniya-2026/'
+    secondaryBtn:
+      text: 'Список кандидатов (Протокол №31)'
+      url: '/p/utverzhden-spisok-kandidatov-2026/'
+
+  # Оперативная сводка инфраструктуры и тарифов (.status-bar)
+  statusBar:
+    enabled: true
+    items:
+      - dot: 'ok'
+        label: 'Тарифы АО «ПСК» (до 1500 кВт·ч)'
+        value: 'День 7,25 ₽ · Ночь 3,95 ₽ · Единый 6,59 ₽'
+      - dot: 'ok'
+        label: 'Передача показаний света'
+        value: 'С 1 по 25 число · 8 (812) 678-96-00'
+      - dot: 'info'
+        label: 'Аварийная «Ленэнерго»'
+        value: 'Отключение света: 8 (800) 220-02-20'
+      - dot: 'info'
+        label: 'Приём в доме Правления'
+        value: 'Суббота 12:00–14:00 · Витер А.Д.'
+
   # Главная страница
   home:
     type: list
@@ -25,7 +111,7 @@ params:
   featuredImageField: image
   rssFullContent: true
   
-  # Боковая панель
+  # Боковая панель (фоллбек темы)
   sidebar:
     avatar:
       enabled: true
@@ -55,7 +141,7 @@ params:
   comments:
     enabled: false
   
-  # Виджеты
+  # Виджеты (для темы)
   widgets:
     homepage:
       - type: search
@@ -72,22 +158,21 @@ params:
   # Статьи
   article:
     math: false
-    toc: false
+    toc: true
     readingTime: true
     license:
       enabled: false
-      default: "Licensed under CC BY-NC-SA 4.0"
 
 # Пагинация
 pagination:
     pagerSize: 15
 
-# Постоянные ссылки
+# Постоянные ссылки (100% обратная совместимость)
 permalinks:
     post: /p/:slug/
     page: /:slug/
 
-# Разметка
+# Разметка Goldmark
 markup:
     goldmark:
         extensions:
@@ -107,7 +192,7 @@ markup:
     tableOfContents:
         endLevel: 4
         ordered: true
-        startLevel: 1
+        startLevel: 2
     highlight:
         noClasses: false
         codeFences: true

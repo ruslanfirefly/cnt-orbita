@@ -1,0 +1,122 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Полоса экстренной связи для мобильных экранов -->
+  {{ partial "emergency-strip.html" . }}
+
+  <!-- Главный баннер важного события / голосования -->
+  {{ partial "hero-banner.html" . }}
+
+  <!-- Справочная сводка инфраструктуры (свет, мусор, приём правления) -->
+  <section aria-label="Справочная сводка СНТ Орбита">
+    {{ partial "status-bar.html" . }}
+  </section>
+
+  <!-- Сетка сервисов и карточка быстрой оплаты СБП -->
+  <section aria-label="Основные разделы и сервисы СНТ">
+    {{ partial "quick-grid.html" . }}
+    {{ partial "payment-card.html" . }}
+  </section>
+
+  <!-- Блок новостей и объявлений -->
+  {{ $posts := where site.RegularPages "Type" "in" (slice "post" "posts") }}
+  {{ $featured := first 1 (where $posts "Params.featured" true) }}
+  {{ if not $featured }}
+    {{ $featured = first 1 $posts }}
+  {{ end }}
+  {{ $featuredPage := index $featured 0 }}
+  {{ $remaining := where $posts "Permalink" "ne" $featuredPage.Permalink }}
+  {{ $topList := first 5 $remaining }}
+
+  <div class="section-h">
+    <h2>Новости и объявления СНТ «Орбита»</h2>
+    <a href="{{ "/archives/" | relURL }}">
+      Все публикации в архиве
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="news">
+    {{ with $featuredPage }}
+      <a class="featured" href="{{ .RelPermalink }}">
+        <div class="featured-art">
+          {{ $img := .Resources.GetMatch "*{cover,image,header}*" }}
+          {{ if $img }}
+            {{ $thumb := $img.Fill "800x450 Center webp" }}
+            <img src="{{ $thumb.RelPermalink }}" alt="{{ $.Title }}" class="featured-art-img" loading="eager" width="800" height="450">
+          {{ else }}
+            <div class="featured-art-bg" aria-hidden="true"></div>
+            <div class="featured-event-card">
+              <span class="featured-event-lbl">{{ with .Params.protocol }}Протокол №{{ . }}{{ else }}СНТ «Орбита»{{ end }}</span>
+              <span class="featured-event-date">{{ .Title }}</span>
+              <span class="featured-event-place">{{ with .Params.subtitle }}{{ . }}{{ else }}Официальное сообщение{{ end }}</span>
+            </div>
+            <div class="featured-art-center" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+            </div>
+          {{ end }}
+        </div>
+        <div class="featured-body">
+          <div class="chips">
+            {{ with .Params.categories }}{{ range first 2 . }}<span class="chip">{{ . }}</span>{{ end }}{{ end }}
+          </div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 220 }}{{ end }}</p>
+          <div class="meta">
+            <span>{{ .Date.Format "02.01.2006" }}</span>
+            {{ with .Params.protocol }}
+              <span class="dot" aria-hidden="true"></span>
+              <span>Протокол №{{ . }}</span>
+            {{ end }}
+          </div>
+        </div>
+      </a>
+    {{ end }}
+
+    <!-- Список свежих публикаций -->
+    <div class="news-list">
+      {{ range $topList }}
+        <a class="row" href="{{ .RelPermalink }}">
+          <div class="row-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          </div>
+          <div class="row-t">
+            <b>{{ .Title }}</b>
+            <div class="meta">
+              <span>{{ .Date.Format "02.01.2006" }}</span>
+              {{ with index .Params.categories 0 }}
+                <span class="dot" aria-hidden="true"></span>
+                <span>{{ . }}</span>
+              {{ end }}
+            </div>
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+
+  <!-- Быстрые тематические рубрики и сервисы -->
+  <div class="section-h" style="margin-top: 36px;">
+    <h2>Тематические рубрики</h2>
+  </div>
+  <div class="cats">
+    <a href="{{ "categories/важное-и-срочное/" | relURL }}">Важное и срочное <b>Срочно</b></a>
+    <a href="{{ "categories/собрания-и-выборы/" | relURL }}">Собрания и кворум <b>217-ФЗ</b></a>
+    <a href="{{ "categories/правление-и-отчёты/" | relURL }}">Правление и отчёты <b>Протоколы</b></a>
+    <a href="{{ "categories/дороги-и-благоустройство/" | relURL }}">Дороги и ремонт <b>Смета</b></a>
+    <a href="{{ "categories/электроэнергия-и-тарифы/" | relURL }}">Электроэнергия <b>Тарифы</b></a>
+    <a href="{{ "categories/пожарная-безопасность-и-мчс/" | relURL }}">Пожарная безопасность <b>МЧС</b></a>
+    <a href="{{ "/vznosy/" | relURL }}">Взносы и QR-код <b>СБП</b></a>
+    <a href="{{ "/documents/" | relURL }}">Устав и сметы <b>PDF</b></a>
+    <a href="{{ "/contacts/" | relURL }}">Пост охраны и правление <b>Контакты</b></a>
+    <a href="https://max.ru/id4720008674_biz" target="_blank" rel="noopener">Канал СНТ в MAX <b>Официальный</b></a>
+  </div>
+
+  <!-- Архивы по годам -->
+  <div class="archives">
+    <span class="lbl">Архив по годам:</span>
+    {{ range $posts.GroupByDate "2006" }}
+      <a href="{{ "/archives/" | relURL }}#year-{{ .Key }}">{{ .Key }} год · {{ len .Pages }} {{ if eq (len .Pages) 1 }}статья{{ else if and (ge (len .Pages) 2) (le (len .Pages) 4) }}статьи{{ else }}статей{{ end }}</a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

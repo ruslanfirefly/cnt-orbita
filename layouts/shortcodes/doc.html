@@ -1,0 +1,22 @@
+{{- $title := .Get "title" | default (.Get 0) -}}
+{{- $url := .Get "url" | default (.Get 1) -}}
+{{- $type := .Get "type" | default "PDF" | upper -}}
+{{- $size := .Get "size" -}}
+<div class="doc-list" style="margin: 16px 0;">
+  <a class="doc-item" href="{{ $url }}" target="_blank" rel="noopener">
+    <div class="doc-left">
+      <span class="doc-ext">{{ $type }}</span>
+      <div class="doc-info">
+        <b>{{ $title }}</b>
+        <div class="doc-sub">
+          <span>{{ $type }}-документ</span>
+          {{ with $size }}<span class="dot" aria-hidden="true"></span><span>{{ . }}</span>{{ end }}
+        </div>
+      </div>
+    </div>
+    <span class="doc-dl">
+      Скачать
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+    </span>
+  </a>
+</div>

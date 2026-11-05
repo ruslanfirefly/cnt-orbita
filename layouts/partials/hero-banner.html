@@ -1,0 +1,53 @@
+{{- $hb := .Site.Params.heroBanner -}}
+{{- if and $hb $hb.enabled -}}
+  {{- $notExpired := true -}}
+  {{- with $hb.expiresAt -}}
+    {{- if lt (time.AsTime .) now -}}
+      {{- $notExpired = false -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if $notExpired -}}
+  <section class="hero-banner" aria-labelledby="heroHeading" {{ with $hb.expiresAt }}data-expires="{{ . }}"{{ end }}>
+    <div class="hero-body">
+      <div class="hero-top">
+        {{- with $hb.tag -}}
+        <span class="hero-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+          {{ . }}
+        </span>
+        {{- end -}}
+        {{- with $hb.datesLabel -}}
+        <span class="hero-exp">{{ . }}</span>
+        {{- end -}}
+      </div>
+
+      <h1 class="hero-title" id="heroHeading">{{ $hb.title }}</h1>
+      {{- with $hb.description -}}
+      <p class="hero-desc">{{ . }}</p>
+      {{- end -}}
+
+      {{- if $hb.showProgress -}}
+      <div class="quorum-box" role="group" aria-label="Информация о проведении голосования">
+        <div class="quorum-head">
+          <span>{{ $hb.progressLeftLabel | safeHTML }}</span>
+          <span>{{ $hb.progressRightLabel | safeHTML }}</span>
+        </div>
+        <div class="quorum-bar" aria-hidden="true">
+          <div class="quorum-fill" style="width: {{ default 68 $hb.progressPercent }}%"></div>
+        </div>
+      </div>
+      {{- end -}}
+    </div>
+
+    <div class="hero-cta">
+      {{- with $hb.primaryBtn -}}
+      <a class="hero-btn-primary" href="{{ .url | relURL }}">{{ .text }}</a>
+      {{- end -}}
+      {{- with $hb.secondaryBtn -}}
+      <a class="hero-btn-secondary" href="{{ .url | relURL }}">{{ .text }}</a>
+      {{- end -}}
+    </div>
+  </section>
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,66 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <a href="{{ "/archives/" | relURL }}">Архив</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">{{ .Title }}</span>
+  </nav>
+
+  <!-- Шапка страницы рубрики -->
+  <section class="page-hero">
+    <div>
+      <h1 id="pageHeading">{{ .Title }}</h1>
+      <p id="pageSubheading">Официальные материалы и объявления по теме «{{ .Title }}» (всего {{ len .Pages }} материалов).</p>
+    </div>
+  </section>
+
+  <!-- Панель рубрик для быстрого переключения -->
+  <section class="filter-bar" aria-label="Рубрики публикаций">
+    <div class="filter-label">
+      <span>Перейти в другую рубрику</span>
+    </div>
+    <div class="cat-chips">
+      <a class="cat-btn" href="{{ "/archives/" | relURL }}">Все материалы</a>
+      {{ range site.Taxonomies.categories }}
+        <a class="cat-btn {{ if eq .Page.Title $.Title }}active{{ end }}" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <b>{{ .Count }}</b></a>
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- Сетка публикаций рубрики -->
+  <section class="year-section" style="margin-top: 28px;">
+    <div class="post-grid">
+      {{ range .Pages }}
+        <a class="post-card" href="{{ .RelPermalink }}">
+          <div class="post-date-box">
+            <b>{{ .Date.Format "02" }}</b>
+            <span>{{ .Date.Format "01" }}</span>
+          </div>
+          <div class="post-body">
+            <div class="post-tags">
+              {{ with .Params.categories }}
+                {{ range first 2 . }}
+                  <span class="p-tag">{{ . }}</span>
+                {{ end }}
+              {{ end }}
+              {{ with .Params.protocol }}
+                <span class="p-tag-amber">Протокол №{{ . }}</span>
+              {{ end }}
+            </div>
+            <h3>{{ .Title }}</h3>
+            <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 140 }}{{ end }}</p>
+            <div class="p-meta">
+              <span>{{ .Date.Format "02.01.2006" }}</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span>{{ .ReadingTime }} мин чтения</span>
+            </div>
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+</div>
+{{ end }}

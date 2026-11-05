@@ -1,0 +1,172 @@
+{{ define "main" }}
+<div class="container">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Поиск по сайту</span>
+  </nav>
+
+  <section class="search-hero">
+    <h1>Поиск по материалам, документам и тарифам СНТ «Орбита»</h1>
+    <p>Мгновенный поиск по всем новостям, протоколам собраний, тарифам ПСК, реквизитам и бланкам заявлений.</p>
+
+    <form id="searchForm" role="search" onsubmit="event.preventDefault();">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input class="search-main-input" id="mainSearchInput" type="search" placeholder="Введите запрос: например, взносы, тариф на свет, доверенность..." autocomplete="off" autofocus aria-label="Поисковый запрос">
+        <button class="clear-btn" id="clearSearchBtn" type="button" aria-label="Очистить поле поиска" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="quick-queries" aria-label="Быстрые подсказки">
+        <span class="qq-title">Часто ищут:</span>
+        <button class="qq-btn" type="button" data-q="взносы">Взносы и СБП</button>
+        <button class="qq-btn" type="button" data-q="электроэнергия">Тарифы на свет</button>
+        <button class="qq-btn" type="button" data-q="доверенность">Доверенность на собрание</button>
+        <button class="qq-btn" type="button" data-q="дорога">Ремонт дорог</button>
+        <button class="qq-btn" type="button" data-q="охрана">Пост охраны</button>
+      </div>
+    </form>
+  </section>
+
+  <div class="results-toolbar">
+    <div class="type-tabs" id="typeTabs" role="tablist">
+      <button class="type-tab active" type="button" data-type="all">Все материалы</button>
+      <button class="type-tab" type="button" data-type="post">Новости</button>
+      <button class="type-tab" type="button" data-type="page">Разделы сайта</button>
+    </div>
+    <div class="results-count" id="resultsStatus" aria-live="polite">Загрузка индекса поиска...</div>
+  </div>
+
+  <div id="resultsList" class="results-container" aria-live="polite"></div>
+
+  <div id="emptyBox" class="empty-state" style="display:none;">
+    <div class="empty-title">Ничего не найдено</div>
+    <p>Попробуйте изменить формулировку или перейти в основные разделы:</p>
+    <div class="empty-links">
+      <a href="{{ "/vznosy/" | relURL }}">Оплата взносов</a>
+      <a href="{{ "/documents/" | relURL }}">Устав и документы</a>
+      <a href="{{ "/contacts/" | relURL }}">Контакты и правление</a>
+      <a href="{{ "/archives/" | relURL }}">Архив всех новостей</a>
+    </div>
+  </div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+(function() {
+  var searchIndex = [];
+  var input = document.getElementById('mainSearchInput');
+  var clearBtn = document.getElementById('clearSearchBtn');
+  var list = document.getElementById('resultsList');
+  var status = document.getElementById('resultsStatus');
+  var emptyBox = document.getElementById('emptyBox');
+  var activeType = 'all';
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var initQuery = urlParams.get('q') || '';
+
+  fetch('{{ "searchindex.json" | relURL }}')
+    .then(function(res) {
+      if (!res.ok) throw new Error('Search index load failed');
+      return res.json();
+    })
+    .then(function(data) {
+      searchIndex = data;
+      status.textContent = 'Индекс загружен (' + searchIndex.length + ' материалов)';
+      if (initQuery) {
+        input.value = initQuery;
+        clearBtn.style.display = 'inline-flex';
+        renderResults();
+      } else {
+        renderResults();
+      }
+    })
+    .catch(function(err) {
+      status.textContent = 'Ошибка загрузки индекса поиска.';
+      console.error(err);
+    });
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function renderResults() {
+    if (!searchIndex || !searchIndex.length) return;
+    var q = input.value.trim().toLowerCase();
+    var filtered = searchIndex.filter(function(item) {
+      if (activeType !== 'all' && item.type !== activeType) return false;
+      if (!q) return true;
+      var title = (item.title || '').toLowerCase();
+      var snippet = (item.snippet || '').toLowerCase();
+      var tags = (item.tags || []).join(' ').toLowerCase();
+      return title.indexOf(q) !== -1 || snippet.indexOf(q) !== -1 || tags.indexOf(q) !== -1;
+    });
+
+    if (q) {
+      status.textContent = 'Найдено материалов: ' + filtered.length;
+    } else {
+      status.textContent = 'Показаны все материалы (' + filtered.length + ')';
+    }
+
+    if (filtered.length === 0) {
+      list.innerHTML = '';
+      emptyBox.style.display = 'block';
+      return;
+    }
+
+    emptyBox.style.display = 'none';
+    var html = '';
+    filtered.forEach(function(item) {
+      html += '<article class="result-card">';
+      html += '<div class="rc-head">';
+      html += '<span class="rc-badge">' + escapeHtml(item.badge) + '</span>';
+      html += '<span class="rc-date">' + escapeHtml(item.date) + '</span>';
+      html += '</div>';
+      html += '<h2 class="rc-title"><a href="' + escapeHtml(item.url) + '">' + escapeHtml(item.title) + '</a></h2>';
+      html += '<p class="rc-desc">' + escapeHtml(item.snippet) + '</p>';
+      html += '<div class="rc-foot">';
+      html += '<a class="rc-link" href="' + escapeHtml(item.url) + '">' + escapeHtml(item.actionText || 'Открыть') + ' →</a>';
+      html += '</div>';
+      html += '</article>';
+    });
+    list.innerHTML = html;
+  }
+
+  input.addEventListener('input', function() {
+    clearBtn.style.display = input.value ? 'inline-flex' : 'none';
+    renderResults();
+  });
+
+  clearBtn.addEventListener('click', function() {
+    input.value = '';
+    clearBtn.style.display = 'none';
+    input.focus();
+    renderResults();
+  });
+
+  var qqBtns = document.querySelectorAll('.qq-btn');
+  qqBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      input.value = btn.getAttribute('data-q') || '';
+      clearBtn.style.display = 'inline-flex';
+      input.focus();
+      renderResults();
+    });
+  });
+
+  var tabs = document.querySelectorAll('.type-tab');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      activeType = tab.getAttribute('data-type') || 'all';
+      renderResults();
+    });
+  });
+})();
+</script>
+{{ end }}

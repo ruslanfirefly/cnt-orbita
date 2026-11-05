@@ -1,0 +1,75 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Архив публикаций</span>
+  </nav>
+
+  {{ $posts := where site.RegularPages "Type" "in" (slice "post" "posts") }}
+  {{ $years := $posts.GroupByDate "2006" }}
+
+  <!-- Шапка страницы архива -->
+  <section class="page-hero">
+    <div>
+      <h1 id="pageHeading">Новости, объявления и архив СНТ «Орбита»</h1>
+      <p id="pageSubheading">Все официальные протоколы, уведомления о собраниях, тарифы и отчеты правления (всего {{ len $posts }} материалов).</p>
+    </div>
+    <div class="year-pills" role="group" aria-label="Быстрый переход по годам">
+      {{ range $years }}
+        <a class="year-btn" href="#year-{{ .Key }}">{{ .Key }} <span>{{ len .Pages }}</span></a>
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- Панель рубрик -->
+  <section class="filter-bar" aria-label="Рубрики публикаций">
+    <div class="filter-label">
+      <span>Тематические рубрики</span>
+      <span id="filterCounter">Всего рубрик: 7</span>
+    </div>
+    <div class="cat-chips">
+      <a class="cat-btn active" href="{{ "/archives/" | relURL }}">Все материалы <b>{{ len $posts }}</b></a>
+      {{ range site.Taxonomies.categories }}
+        <a class="cat-btn" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <b>{{ .Count }}</b></a>
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- Секции по годам -->
+  {{ range $years }}
+    <section class="year-section" id="year-{{ .Key }}" style="margin-top: 32px;">
+      <div class="year-header">
+        <h2>{{ .Key }} год</h2>
+        <span class="year-badge">{{ len .Pages }} {{ if eq (len .Pages) 1 }}публикация{{ else if and (ge (len .Pages) 2) (le (len .Pages) 4) }}публикации{{ else }}публикаций{{ end }}</span>
+      </div>
+      <div class="post-grid">
+        {{ range .Pages }}
+          <a class="post-card" href="{{ .RelPermalink }}">
+            <div class="post-date-box">
+              <b>{{ .Date.Format "02" }}</b>
+              <span>{{ .Date.Format "01" }}</span>
+            </div>
+            <div class="post-body">
+              <div class="post-tags">
+                {{ with .Params.categories }}{{ range first 2 . }}<span class="p-tag">{{ . }}</span>{{ end }}{{ end }}
+                {{ with .Params.protocol }}
+                  <span class="p-tag-amber">Протокол №{{ . }}</span>
+                {{ end }}
+              </div>
+              <h3>{{ .Title }}</h3>
+              <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 140 }}{{ end }}</p>
+              <div class="p-meta">
+                <span>{{ .Date.Format "02.01.2006" }}</span>
+                <span class="dot" aria-hidden="true"></span>
+                <span>{{ .ReadingTime }} мин чтения</span>
+              </div>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+</div>
+{{ end }}

@@ -1,12 +1,9 @@
 ---
 slug: uvedomlenie-o-nachale-priema-pravleniem-anket-kandidatov-v-vybornye-organy
 title: Уведомление о начале приема Правлением Анкет кандидатов в Выборные органы.
-categories:
-    - важное
-    - объявление
+categories: ["Важное и срочное", "Праздники и жизнь СНТ"]
 date: '2025-03-31'
 ---
-
 Уважаемые члены СНТ «ОРБИТА»!
 
 

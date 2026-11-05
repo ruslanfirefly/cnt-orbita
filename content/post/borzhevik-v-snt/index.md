@@ -3,8 +3,7 @@ title: Борщевик в СНТ
 slug: borzhevik-v-snt
 description: Не допустить распространения на новые территории.
 date: '2023-06-01'
-categories: 
-    - Благоустройство
+categories: ["Дороги и благоустройство"]
 # aliases:
 #   - about-us
 #   - about-hugo
@@ -12,7 +11,6 @@ categories:
 # license: CC BY-NC-ND
 # lastmod: '2025-05-14'
 ---
-
 ### ⚠️ Борщевик в СНТ — меры борьбы
 
 Уважаемые садоводы!  
