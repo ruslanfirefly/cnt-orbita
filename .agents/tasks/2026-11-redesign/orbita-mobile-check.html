@@ -6,49 +6,53 @@
 <title>Проверка адаптивности — СНТ «Орбита»</title>
 <style>
   body{
-    margin:0;background:#0e1524;font:14px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    margin:0;background:#0b1220;font:14px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;
     color:#e9eff9;display:flex;flex-direction:column;height:100vh;overflow:hidden;
   }
   .bar{
-    display:flex;align-items:center;gap:8px;padding:10px 16px;
-    background:#182238;border-bottom:1px solid #26344f;flex-wrap:wrap;
+    display:flex;align-items:center;gap:10px;padding:10px 16px;
+    background:#131d31;border-bottom:1px solid #223048;flex-wrap:wrap;
   }
-  .bar b{font-size:14px;margin-right:8px;display:flex;align-items:center;gap:6px}
+  .bar b{font-size:14px;margin-right:6px;display:flex;align-items:center;gap:6px;color:#f1f5f9}
   .btn-group{display:flex;align-items:center;gap:6px}
   .bar button{
-    background:#123243;color:#e9eff9;border:1px solid #26344f;border-radius:8px;
+    background:#11293d;color:#e9eff9;border:1px solid #223048;border-radius:8px;
     padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;min-height:36px;
     transition:background .15s,border-color .15s,color .15s;
   }
   .bar button:hover{border-color:#22d3ee;color:#22d3ee}
-  .bar button.active{background:#22d3ee;color:#0b1220;border-color:#22d3ee;font-weight:700}
+  .bar button.active{background:#22d3ee;color:#081426;border-color:#22d3ee;font-weight:700}
   .tools{margin-left:auto;display:flex;align-items:center;gap:12px}
   .tools button{
-    background:#20314f;border-color:#33486c;display:inline-flex;align-items:center;gap:6px;
+    background:#18253d;border-color:#2e4162;display:inline-flex;align-items:center;gap:8px;
   }
-  .tools button:hover{background:#263c62;border-color:#22d3ee}
-  .w{font-size:13px;color:#aab8cf;font-weight:600;min-width:64px;text-align:right}
+  .tools button:hover{background:#20314f;border-color:#22d3ee}
+  .tools button svg{width:16px;height:16px}
+  .w{font-size:13px;color:#94a3b8;font-weight:700;min-width:64px;text-align:right}
   .frame{
     flex:1;display:flex;align-items:center;justify-content:center;
     padding:16px;overflow:auto;min-height:0;
   }
   .device{
-    position:relative;background:#000;border-radius:26px;
+    position:relative;background:#000;border-radius:28px;
     box-shadow:0 24px 70px rgba(0,0,0,.65);padding:10px;
-    border:1px solid #26344f;transition:width .25s ease;max-width:100%;
+    border:1px solid #223048;transition:width .25s ease;max-width:100%;
   }
   .device.desktop{border-radius:12px;padding:6px}
-  iframe{border:0;border-radius:18px;background:#fff;display:block;transition:width .25s ease}
+  iframe{border:0;border-radius:20px;background:#fff;display:block;transition:width .25s ease}
   .device.desktop iframe{border-radius:8px}
   .hint{
-    padding:8px 16px;color:#aab8cf;font-size:12.5px;text-align:center;
-    background:#131c2e;border-top:1px solid #1f2c44;
+    padding:8px 16px;color:#94a3b8;font-size:12.5px;text-align:center;
+    background:#0f172a;border-top:1px solid #1e293b;
   }
 </style>
 </head>
 <body>
   <div class="bar">
-    <b>📱 Проверка адаптивности</b>
+    <b>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+      Адаптивность прототипа
+    </b>
     <div class="btn-group">
       <button data-w="320" title="Компактный смартфон (320px)">320 px</button>
       <button data-w="390" class="active" title="Смартфон iPhone/Android (390px)">390 px</button>
@@ -57,7 +61,10 @@
       <button data-w="1920" title="Широкий экран Full HD (1920px)">1920 px</button>
     </div>
     <div class="tools">
-      <button id="toggleTheme" title="Переключить тему во фрейме">🌓 Тема: светлая/тёмная</button>
+      <button id="toggleTheme" title="Переключить тему во фрейме">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        Тема: светлая/тёмная
+      </button>
       <span class="w" id="w">390 px</span>
     </div>
   </div>
@@ -66,7 +73,7 @@
       <iframe id="f" src="orbita-redesign.html" title="Прототип редизайна СНТ «Орбита»"></iframe>
     </div>
   </div>
-  <div class="hint">Прототип во фрейме: ширина переключается кнопками, тема проверяется кнопкой «🌓 Тема», прокрутка внутри фрейма.</div>
+  <div class="hint">Прототип во фрейме: кнопки меняют ширину, тема переключается кнопкой «Тема: светлая/тёмная». Эмодзи полностью заменены на векторные SVG-иконки.</div>
 <script>
   var f=document.getElementById('f'),
       wEl=document.getElementById('w'),
@@ -100,11 +107,13 @@
   themeBtn.addEventListener('click',function(){
     try{
       var doc=f.contentDocument||f.contentWindow.document;
-      var cur=doc.documentElement.dataset.theme==='dark'?'light':'dark';
-      doc.documentElement.dataset.theme=cur;
-      var icon=doc.getElementById('themeIcon');
-      if(icon)icon.textContent=cur==='dark'?'☀️':'🌙';
-      try{f.contentWindow.localStorage.setItem('orbita-theme',cur)}catch(e){}
+      var tBtn=doc.getElementById('themeBtn');
+      if(tBtn){
+        tBtn.click();
+      }else{
+        var cur=doc.documentElement.dataset.theme==='dark'?'light':'dark';
+        doc.documentElement.dataset.theme=cur;
+      }
     }catch(e){
       console.warn('Iframe theme toggle error:',e);
     }
