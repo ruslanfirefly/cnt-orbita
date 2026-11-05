@@ -7,7 +7,7 @@
 <title>СНТ «Орбита» — Официальный сайт товарищества</title>
 <meta name="description" content="Официальный сайт СНТ «Орбита»: актуальные взносы, тарифы на электроэнергию, протоколы правления, голосования и экстренная связь с дежурным.">
 <style>
-/* ============ Дизайн-система нового бренда (Navy Ink + Cyan Accent) ============ */
+/* ============ Дизайн-система (Navy Ink + Cyan Accent) ============ */
 :root{
   --bg:#f3f7fb;
   --card:#ffffff;
@@ -18,13 +18,15 @@
   --line:#dce4ee;       /* Структурные разделители карточек */
   --line-strong:#cbd5e1;
   --cyan:#06b6d4;       /* Фирменный бирюзовый акцент */
-  --cyan-deep:#0e7490;  /* Ссылки и активные кнопки: ~5.4:1 */
+  --cyan-deep:#0a5c75;  /* Усиленный контраст ссылок и кнопок: 7.5:1 на белом (WCAG AAA) */
   --cyan-soft:#e0f7fa;  /* Мягкая бирюзовая подложка */
-  --cyan-glow:rgba(6,182,212,.18);
+  --cyan-glow:rgba(6,182,212,.2);
   --amber-soft:#fef3c7;
   --amber-text:#92400e;
   --emerald-soft:#d1fae5;
   --emerald-text:#065f46;
+  --danger-soft:#fee2e2;
+  --danger-text:#991b1b;
   --radius:16px;
   --r-sm:12px;
   --header-h:72px;
@@ -46,17 +48,22 @@
   --cyan:#22d3ee;
   --cyan-deep:#67e8f9;  /* 10.9:1 на карточке */
   --cyan-soft:#11293d;
-  --cyan-glow:rgba(34,211,238,.22);
+  --cyan-glow:rgba(34,211,238,.24);
   --amber-soft:#3d2914;
   --amber-text:#fbbf24;
   --emerald-soft:#113527;
   --emerald-text:#34d399;
+  --danger-soft:#3b1818;
+  --danger-text:#f87171;
   --shadow-sm:0 1px 3px rgba(0,0,0,.4);
   --shadow:0 3px 10px rgba(0,0,0,.35);
   --shadow-md:0 8px 24px -4px rgba(0,0,0,.5);
   --shadow-lg:0 16px 36px -6px rgba(0,0,0,.65);
   --grad-hero:linear-gradient(135deg,#091426 0%,#132845 55%,#155e75 100%);
 }
+
+/* Режим увеличенного шрифта для людей старшего поколения */
+html.font-lg{font-size:118%}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -68,6 +75,7 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
+body.menu-open{overflow:hidden}
 img{max-width:100%;height:auto}
 a{color:var(--cyan-deep);text-decoration:none;transition:color .15s}
 a:hover{text-decoration:underline}
@@ -112,7 +120,7 @@ a:hover{text-decoration:underline}
 .nav a:hover{background:var(--cyan-soft);color:var(--ink);text-decoration:none}
 .nav a[aria-current="page"]{color:var(--cyan-deep);font-weight:700;background:var(--cyan-soft)}
 
-/* Кнопка экстренной связи в десктоп-шапке */
+/* Кнопка экстренной связи в десктоп-шапке (>960px) */
 .emergency-pill{
   display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 11px;
   background:var(--cyan-soft);border:1px solid color-mix(in srgb, var(--cyan) 40%, var(--line));
@@ -141,13 +149,19 @@ a:hover{text-decoration:underline}
 }
 .hbtn:hover{background:var(--cyan-soft);border-color:var(--line);color:var(--ink)}
 .hbtn svg{width:22px;height:22px}
-.hbtn-call{display:none;color:#0e7490;background:var(--cyan-soft)}
-.hbtn-call:hover{background:var(--cyan);color:#081426}
+
+/* Кнопка «А+» (размер шрифта) */
+.font-btn{font-weight:800;font-size:.95rem;letter-spacing:-.02em}
+html.font-lg .font-btn{background:var(--cyan);color:#081426;border-color:var(--cyan)}
+
+/* Бургер и превращение в крестик */
 .burger{display:none}
+.burger .ic-close{display:none}
+.burger[aria-expanded="true"] .ic-burger{display:none}
+.burger[aria-expanded="true"] .ic-close{display:block}
 
 @media (max-width:960px){
   .emergency-pill{display:none}
-  .hbtn-call{display:inline-flex}
 }
 @media (max-width:899px){
   .nav{display:none}
@@ -187,13 +201,20 @@ a:hover{text-decoration:underline}
 .btn-cyan{background:var(--cyan);color:#081426}
 .btn-cyan:hover{background:#22d3ee}
 
-/* Мобильное меню (полноэкранная шторка с контурными иконками) */
+/* Мобильное меню с полупрозрачным оверлеем */
+.menu-backdrop{
+  position:fixed;inset:0;background:rgba(11,18,32,.65);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  z-index:55;opacity:0;visibility:hidden;transition:.25s ease;
+}
+.menu-backdrop.open{opacity:1;visibility:visible}
+
 .mobile-menu{
-  position:fixed;inset:calc(var(--header-h) + 1px) 0 auto 0;z-index:49;
+  position:fixed;inset:calc(var(--header-h) + 1px) 0 auto 0;z-index:60;
   background:var(--card);border-bottom:1px solid var(--line);
-  box-shadow:var(--shadow-lg);padding:10px 16px 22px;
-  transform:translateY(-8px);opacity:0;visibility:hidden;transition:.2s ease;
-  max-height:calc(100vh - var(--header-h) - 16px);overflow-y:auto;
+  box-shadow:var(--shadow-lg);padding:10px 16px 96px;
+  transform:translateY(-8px);opacity:0;visibility:hidden;transition:.25s ease;
+  max-height:calc(100vh - var(--header-h) - 10px);overflow-y:auto;
 }
 .mobile-menu.open{transform:none;opacity:1;visibility:visible}
 .mobile-menu a{
@@ -208,44 +229,59 @@ a:hover{text-decoration:underline}
   color:var(--cyan-deep);display:flex;align-items:center;justify-content:center;flex:none;
 }
 .mm-ic svg{width:20px;height:20px}
+.mm-footer-tools{
+  margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);
+  display:flex;align-items:center;gap:10px;justify-content:space-between;
+}
+.mm-font-toggle{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 16px;
+  border-radius:10px;border:1px solid var(--line);background:var(--bg);
+  color:var(--ink);font-weight:700;font-size:.92rem;cursor:pointer;
+}
 
 /* ============ Основное содержимое ============ */
-main{padding:22px 0 64px}
+main{padding:20px 0 64px}
 main:focus{outline:none}
 
-/* Мобильная полоса быстрого звонка сторожу */
+/* Синхронизированная полоса вызова сторожа (<=960px) */
 .emergency-strip{
   display:none;align-items:center;justify-content:space-between;gap:12px;
-  background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);
-  padding:12px 14px;margin-bottom:16px;box-shadow:var(--shadow-sm);
+  background:var(--card);border:1px solid var(--line);border-left:4px solid #10b981;
+  border-radius:var(--r-sm);padding:12px 16px;margin-bottom:18px;box-shadow:var(--shadow-sm);
 }
-@media (max-width:768px){.emergency-strip{display:flex}}
+@media (max-width:960px){.emergency-strip{display:flex}}
+@media (max-width:420px){
+  .emergency-strip{flex-direction:column;align-items:stretch;gap:10px;text-align:center}
+  .em-strip-left{justify-content:center}
+  .em-strip-phone{min-height:48px;width:100%;justify-content:center;font-size:1rem}
+}
 .em-strip-left{display:flex;align-items:center;gap:10px;min-width:0}
 .pulse-indicator{
   width:10px;height:10px;border-radius:50%;background:#10b981;
   box-shadow:0 0 0 3px rgba(16,185,129,.25);flex:none;
 }
-.em-strip-title{font-size:.85rem;font-weight:600;color:var(--ink2);line-height:1.3}
+.em-strip-title{font-size:.88rem;font-weight:700;color:var(--ink);line-height:1.3}
 .em-strip-phone{
-  display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.9rem;
-  color:var(--cyan-deep);background:var(--cyan-soft);padding:6px 12px;border-radius:999px;
-  white-space:nowrap;flex:none;
+  display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:.92rem;
+  color:var(--cyan-deep);background:var(--cyan-soft);padding:8px 16px;border-radius:999px;
+  white-space:nowrap;flex:none;transition:background .15s,color .15s;
 }
-.em-strip-phone svg{width:15px;height:15px}
+.em-strip-phone:hover{background:var(--cyan);color:#081426;text-decoration:none}
+.em-strip-phone svg{width:16px;height:16px}
 
 /* ============ Срочный баннер (Hero Announcement) ============ */
 .hero-banner{
-  position:relative;display:flex;align-items:center;gap:20px;
+  position:relative;display:flex;flex-direction:column;gap:16px;
   background:var(--card);border:1px solid var(--line);border-left:6px solid var(--cyan);
-  border-radius:var(--radius);padding:22px 24px;margin-bottom:24px;box-shadow:var(--shadow);
-  transition:box-shadow .2s,transform .2s,border-color .2s;overflow:hidden;
+  border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;box-shadow:var(--shadow);
+  overflow:hidden;
 }
 .hero-banner::after{
-  content:"";position:absolute;top:0;right:0;bottom:0;width:240px;
+  content:"";position:absolute;top:0;right:0;bottom:0;width:300px;
   background:radial-gradient(circle at right center, var(--cyan-glow), transparent 70%);
   pointer-events:none;
 }
-.hero-banner:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);text-decoration:none;border-color:var(--cyan)}
+.hero-main-row{display:flex;align-items:flex-start;gap:20px}
 .hero-ic{
   flex:none;width:56px;height:56px;border-radius:16px;
   background:linear-gradient(135deg, var(--cyan-soft), color-mix(in srgb, var(--cyan) 25%, transparent));
@@ -260,24 +296,91 @@ main:focus{outline:none}
   padding:4px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em;
 }
 .hero-exp{font-size:.85rem;color:var(--ink3);font-weight:600}
-.hero-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--ink);line-height:1.3}
-.hero-desc{margin:0;color:var(--ink2);font-size:.96rem;line-height:1.45}
-.hero-cta{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:8px;z-index:1}
-.hero-btn{
-  display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;
-  background:var(--ink);color:var(--bg);font-weight:700;font-size:.95rem;white-space:nowrap;
-  box-shadow:var(--shadow-sm);transition:background .15s,transform .15s;
+.hero-title{margin:0 0 6px;font-size:1.32rem;font-weight:800;color:var(--ink);line-height:1.3}
+.hero-desc{margin:0;color:var(--ink2);font-size:.96rem;line-height:1.5}
+
+/* Прогресс-бар кворума */
+.quorum-box{
+  background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:12px 16px;margin:2px 0 4px;z-index:1;
 }
-.hero-banner:hover .hero-btn{background:var(--cyan);color:#081426}
-.hero-btn svg{width:16px;height:16px;transition:transform .15s}
-.hero-banner:hover .hero-btn svg{transform:translateX(3px)}
+.quorum-header{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  font-size:.88rem;margin-bottom:8px;flex-wrap:wrap;
+}
+.quorum-status{display:flex;align-items:center;gap:8px;color:var(--ink)}
+.quorum-status strong{color:var(--cyan-deep);font-weight:800}
+.quorum-days{color:var(--ink3);font-weight:600;font-size:.82rem}
+.quorum-bar{
+  position:relative;height:10px;background:var(--line);border-radius:999px;overflow:hidden;
+}
+.quorum-fill{
+  height:100%;width:67.6%;
+  background:linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
+  border-radius:999px;
+}
+.quorum-marker{
+  position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--ink);opacity:.45;
+}
+.quorum-labels{
+  display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink3);margin-top:4px;
+}
+
+/* Раздельные кнопки действия Hero-баннера */
+.hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;z-index:1;margin-top:4px}
+.hero-btn-main{
+  min-height:50px;padding:12px 24px;font-size:1rem;font-weight:800;
+  box-shadow:var(--shadow-sm);border-radius:12px;
+}
+.hero-btn-main svg{width:18px;height:18px}
+.hero-btn-sec{
+  display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.95rem;
+  color:var(--cyan-deep);padding:10px 14px;border-radius:10px;
+}
+.hero-btn-sec:hover{background:var(--cyan-soft);text-decoration:none}
+.hero-btn-sec svg{width:16px;height:16px;transition:transform .15s}
+.hero-btn-sec:hover svg{transform:translateX(3px)}
 
 @media (max-width:768px){
-  .hero-banner{flex-direction:column;align-items:flex-start;padding:18px 18px 20px;gap:14px}
+  .hero-banner{padding:18px 18px 20px;gap:14px}
   .hero-banner::after{display:none}
-  .hero-cta{width:100%;align-items:stretch;margin-top:4px}
-  .hero-btn{justify-content:center;width:100%}
+  .hero-main-row{flex-direction:column;gap:12px}
+  .hero-actions{flex-direction:column;align-items:stretch;width:100%}
+  .hero-btn-main{width:100%;justify-content:center}
+  .hero-btn-sec{width:100%;justify-content:center}
 }
+
+/* ============ Виджет «Статус СНТ сегодня» ============ */
+.status-widget{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin-bottom:24px;box-shadow:var(--shadow-sm);
+}
+.status-widget-header{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:14px;flex-wrap:wrap;
+}
+.status-widget-title{display:flex;align-items:center;gap:10px}
+.status-widget-title h3{margin:0;font-size:1.05rem;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+.status-updated{font-size:.8rem;color:var(--ink3);font-weight:500}
+.status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:960px){.status-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.status-grid{grid-template-columns:1fr;gap:8px}}
+
+.status-item{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 12px;
+  background:var(--bg);border-radius:var(--r-sm);border:1px solid var(--line);
+}
+.status-icon{
+  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex:none;
+}
+.status-icon svg{width:18px;height:18px}
+.status-icon.status-ok{background:var(--emerald-soft);color:var(--emerald-text)}
+.status-icon.status-info{background:var(--cyan-soft);color:var(--cyan-deep)}
+.status-text{display:flex;flex-direction:column;min-width:0;line-height:1.3}
+.status-lbl{font-size:.74rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.02em}
+.status-val{font-size:.85rem;font-weight:600;color:var(--ink);margin-top:2px}
+.status-val-ok{color:var(--emerald-text);font-weight:700}
+[data-theme="dark"] .status-val-ok{color:#34d399}
 
 /* ============ Информативные виджеты быстрых действий ============ */
 .section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:28px 0 16px}
@@ -290,7 +393,7 @@ main:focus{outline:none}
 @media (max-width:390px){.quick-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
 
 .q-card{
-  position:relative;display:flex;flex-direction:column;gap:12px;
+  position:relative;display:flex;flex-direction:column;gap:10px;
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   padding:20px 18px 18px;box-shadow:var(--shadow);color:var(--ink);
   transition:transform .18s,box-shadow .18s,border-color .18s;overflow:hidden;
@@ -311,14 +414,33 @@ main:focus{outline:none}
   font-size:.76rem;font-weight:700;padding:4px 9px;border-radius:999px;
   background:var(--cyan-soft);color:var(--cyan-deep);letter-spacing:.01em;white-space:nowrap;
 }
-.q-badge-amber{background:var(--amber-soft);color:var(--amber-text)}
-.q-badge-green{background:var(--emerald-soft);color:var(--emerald-text)}
-
 .q-body{display:flex;flex-direction:column;gap:4px}
 .q-title{font-size:1.15rem;font-weight:800;color:var(--ink);letter-spacing:-.01em;display:flex;align-items:center;gap:6px}
 .q-title svg{width:16px;height:16px;opacity:0;color:var(--cyan-deep);transform:translateX(-4px);transition:opacity .15s,transform .15s}
 .q-card:hover .q-title svg{opacity:1;transform:none}
 .q-desc{font-size:.88rem;color:var(--ink2);line-height:1.42}
+
+/* Кнопка QR-кода внутри карточки взносов */
+.q-btn-qr{
+  margin-top:6px;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;
+  background:var(--cyan-soft);color:var(--cyan-deep);border:1px solid color-mix(in srgb, var(--cyan) 30%, transparent);
+  border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;
+  transition:background .15s,color .15s;width:fit-content;
+}
+.q-btn-qr:hover{background:var(--cyan);color:#081426}
+.q-btn-qr svg{width:15px;height:15px}
+
+@media (max-width:480px){
+  .q-card{padding:14px 12px;gap:8px}
+  .q-header{flex-wrap:wrap;gap:6px}
+  .q-ic{width:40px;height:40px;border-radius:11px}
+  .q-ic svg{width:20px;height:20px}
+  .q-title{font-size:1rem;word-break:break-word}
+  .q-title svg{display:none!important}
+  .q-badge{font-size:.72rem;padding:3px 7px}
+  .q-desc{font-size:.8rem}
+  .q-btn-qr{padding:5px 9px;font-size:.75rem}
+}
 
 /* ============ Лента новостей ============ */
 .news{display:grid;gap:20px;grid-template-columns:1fr;margin-top:6px}
@@ -339,27 +461,37 @@ main:focus{outline:none}
   position:relative;aspect-ratio:16/9;background:var(--grad-hero);
   display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
+@media (max-width:640px){
+  .featured-art{aspect-ratio:21/9;min-height:128px}
+  .featured-art-center{width:56px;height:56px;border-radius:16px}
+  .featured-art-center svg{width:28px;height:28px}
+}
 .featured-art-bg{
   position:absolute;inset:0;opacity:.18;color:#22d3ee;
   background-image:radial-gradient(rgba(34,211,238,.3) 1px, transparent 1px);
   background-size:20px 20px;
 }
 .featured-badge-top{
-  position:absolute;top:16px;left:16px;z-index:2;
+  position:absolute;top:14px;left:14px;z-index:2;
   background:rgba(255,255,255,.94);color:#0f172a;
   font-weight:800;font-size:.82rem;padding:6px 14px;border-radius:999px;
   box-shadow:0 2px 8px rgba(0,0,0,.15);display:inline-flex;align-items:center;gap:6px;
 }
+[data-theme="dark"] .featured-badge-top{
+  background:rgba(19,29,49,.92);color:var(--ink);border:1px solid var(--line);
+}
 .featured-badge-top svg{width:15px;height:15px;color:#0891b2}
+[data-theme="dark"] .featured-badge-top svg{color:#22d3ee}
+
 .featured-art-center{
-  position:relative;z-index:1;width:84px;height:84px;border-radius:24px;
+  position:relative;z-index:1;width:80px;height:80px;border-radius:24px;
   background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   border:1px solid rgba(255,255,255,.2);color:#22d3ee;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 12px 28px rgba(0,0,0,.35);transition:transform .2s;
 }
 .featured:hover .featured-art-center{transform:scale(1.08)}
-.featured-art-center svg{width:44px;height:44px}
+.featured-art-center svg{width:42px;height:42px}
 
 .featured-body{padding:22px 24px 24px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
@@ -369,14 +501,13 @@ main:focus{outline:none}
   transition:background .15s,color .15s;
 }
 .chip:hover{background:var(--cyan);color:#081426}
-.chip-alert{background:var(--amber-soft);color:var(--amber-text)}
 
 .featured-body h3{margin:0 0 10px;font-size:1.35rem;line-height:1.35;letter-spacing:-.01em;font-weight:800;color:var(--ink)}
 .featured-body p{margin:0 0 16px;color:var(--ink2);font-size:1rem;line-height:1.55}
 .meta{display:flex;align-items:center;gap:10px;color:var(--ink3);font-size:.88rem;font-weight:500}
 .meta .dot{width:4px;height:4px;border-radius:50%;background:var(--ink3);opacity:.8}
 
-/* Список компактных строк новостей */
+/* Список компактных строк новостей (строго хронологический порядок) */
 .news-list{display:flex;flex-direction:column;gap:12px}
 .row{
   display:flex;gap:16px;align-items:center;
@@ -394,6 +525,7 @@ main:focus{outline:none}
 }
 .row-ic svg{width:24px;height:24px}
 .row:hover .row-ic{background:var(--cyan);color:#081426;transform:scale(1.05)}
+.row-ic.row-ic-danger{background:var(--danger-soft);color:var(--danger-text)}
 .row-ic.g2{background:color-mix(in srgb, var(--cyan) 18%, transparent)}
 .row-t{flex:1;min-width:0}
 .row-t b{
@@ -447,28 +579,92 @@ main:focus{outline:none}
   color:var(--ink3);font-size:.88rem;
 }
 
-/* ============ Мобильная нижняя навигация (Таб-бар) ============ */
+/* ============ Мобильный Таб-бар (5 пунктов) ============ */
 .bottomnav{display:none}
 @media (max-width:639px){
-  body{padding-bottom:82px}
+  body{padding-bottom:86px}
   .bottomnav{
-    display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:50;
+    display:grid;grid-template-columns:repeat(5,1fr);position:fixed;z-index:50;
     left:0;right:0;bottom:0;
     background:color-mix(in srgb, var(--card) 95%, transparent);
     -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
     border-top:1px solid var(--line);
-    padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom));
     box-shadow:0 -4px 16px rgba(0,0,0,.08);
   }
-  .bottomnav a{
-    display:flex;flex-direction:column;align-items:center;gap:4px;
-    padding:8px 4px;border-radius:12px;color:var(--ink3);font-size:.8rem;font-weight:600;
-    min-height:52px;justify-content:center;transition:background .15s,color .15s;
+  .bottomnav a,.bottomnav button{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:6px 2px;border-radius:10px;color:var(--ink3);font-size:.74rem;font-weight:600;
+    min-height:50px;justify-content:center;transition:background .15s,color .15s;
+    background:transparent;border:0;cursor:pointer;
   }
-  .bottomnav a svg{width:22px;height:22px;flex:none}
-  .bottomnav a:hover{text-decoration:none;background:var(--cyan-soft);color:var(--ink)}
+  .bottomnav a svg,.bottomnav button svg{width:20px;height:20px;flex:none}
+  .bottomnav a:hover,.bottomnav button:hover{text-decoration:none;background:var(--cyan-soft);color:var(--ink)}
   .bottomnav a[aria-current="page"]{color:var(--cyan-deep);font-weight:700}
+  .bottomnav button[aria-expanded="true"]{color:var(--cyan-deep);font-weight:700;background:var(--cyan-soft)}
 }
+
+/* ============ Модальное окно быстрой оплаты по СБП и реквизитам ============ */
+.modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal[hidden]{display:none}
+.modal-backdrop{
+  position:absolute;inset:0;background:rgba(11,18,32,.7);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.modal-window{
+  position:relative;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);padding:24px;z-index:1;display:flex;flex-direction:column;gap:18px;
+}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-tag{
+  background:var(--cyan-soft);color:var(--cyan-deep);font-weight:800;font-size:.76rem;
+  padding:3px 9px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em;
+}
+.modal-header h2{margin:6px 0 0;font-size:1.25rem;font-weight:800;color:var(--ink)}
+.modal-close{
+  width:40px;height:40px;border-radius:10px;border:1px solid var(--line);
+  background:var(--bg);color:var(--ink2);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex:none;transition:background .15s,color .15s;
+}
+.modal-close:hover{background:var(--cyan-soft);color:var(--ink)}
+.modal-close svg{width:20px;height:20px}
+
+.modal-body{display:grid;grid-template-columns:1fr 1.35fr;gap:20px}
+@media (max-width:640px){.modal-body{grid-template-columns:1fr}}
+
+.qr-col{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.qr-frame{
+  position:relative;background:#ffffff;padding:14px;border-radius:16px;
+  border:1px solid var(--line);box-shadow:var(--shadow-sm);width:210px;height:210px;
+}
+.qr-svg{width:100%;height:100%;color:#17233b}
+.qr-caption{font-size:.82rem;color:var(--ink2);line-height:1.4}
+.qr-caption strong{color:var(--ink)}
+
+.req-col{display:flex;flex-direction:column;gap:12px}
+.req-item{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px}
+.req-lbl{font-size:.74rem;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.req-val-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:3px}
+.req-val-column{flex-direction:column;align-items:stretch}
+.req-val{font-size:.92rem;font-weight:700;color:var(--ink)}
+.req-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.03em}
+.req-template{font-size:.88rem;color:var(--cyan-deep);padding:6px 8px;background:var(--card);border-radius:6px;border:1px dashed var(--line);margin-bottom:6px}
+
+.copy-btn{
+  padding:5px 10px;border-radius:6px;border:1px solid var(--line);background:var(--card);
+  color:var(--cyan-deep);font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;
+  transition:all .15s;
+}
+.copy-btn:hover{background:var(--cyan-soft);border-color:var(--cyan)}
+.copy-btn.copied{background:#10b981;color:#ffffff;border-color:#10b981}
+.copy-btn.btn-full{width:100%;padding:8px 12px;font-size:.84rem}
+
+.modal-footer{
+  border-top:1px solid var(--line);padding-top:14px;display:flex;
+  align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.modal-note{font-size:.8rem;color:var(--ink3);flex:1;min-width:200px}
 </style>
 </head>
 <body>
@@ -505,7 +701,7 @@ main:focus{outline:none}
       <a href="https://cnt-orbita.ru/contacts/">Контакты</a>
     </nav>
 
-    <!-- Экстренная связь в десктоп-шапке -->
+    <!-- Экстренная связь в десктоп-шапке (>960px) -->
     <a class="emergency-pill" href="tel:+79210000000" aria-label="Экстренная связь со сторожем СНТ">
       <span class="em-dot" aria-hidden="true"></span>
       <svg class="em-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -516,10 +712,10 @@ main:focus{outline:none}
     </a>
 
     <div class="actions">
-      <!-- Быстрый звонок для планшетов и мобильных -->
-      <a class="hbtn hbtn-call" href="tel:+79210000000" aria-label="Позвонить дежурному или сторожу">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </a>
+      <!-- Кнопка «А+» (крупный шрифт) -->
+      <button class="hbtn font-btn" id="fontBtn" aria-label="Крупный шрифт для комфортного чтения" title="Крупный шрифт (А+)">
+        <span class="font-btn-text">А+</span>
+      </button>
 
       <!-- Поиск -->
       <button class="hbtn" id="searchBtn" aria-label="Открыть поиск по сайту" aria-expanded="false" aria-controls="searchBar">
@@ -533,9 +729,10 @@ main:focus{outline:none}
         </span>
       </button>
 
-      <!-- Бургер-меню -->
+      <!-- Бургер-меню (превращается в крестик) -->
       <button class="hbtn burger" id="burgerBtn" aria-label="Открыть главное меню" aria-expanded="false" aria-controls="mobileMenu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="ic-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
     </div>
   </div>
@@ -548,10 +745,13 @@ main:focus{outline:none}
   </div>
 </header>
 
+<!-- Полупрозрачный оверлей для закрытия меню -->
+<div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+
 <!-- Мобильное меню (полный список разделов с векторными иконками) -->
 <nav class="mobile-menu" id="mobileMenu" aria-label="Полное меню сайта" aria-hidden="true">
   <a href="https://cnt-orbita.ru/">
-    <span class="mm-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+    <span class="mm-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
     Главная страница
   </a>
   <a href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/">
@@ -590,12 +790,22 @@ main:focus{outline:none}
     <span class="mm-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
     Состав правления и комиссии
   </a>
+
+  <div class="mm-footer-tools">
+    <button class="mm-font-toggle" id="mmFontBtn" type="button">
+      <span class="font-btn-text">А+</span>
+      <span id="mmFontLabel">Крупный шрифт</span>
+    </button>
+    <a href="tel:+79210000000" style="color:var(--cyan-deep);font-weight:700;font-size:.9rem;padding:6px 10px">
+      Дежурный: +7 (921) 000-00-00
+    </a>
+  </div>
 </nav>
 
 <!-- ================= Содержимое страницы ================= -->
 <main id="main" class="container" tabindex="-1">
 
-  <!-- Мобильная плашка быстрого вызова сторожа/дежурного -->
+  <!-- Синхронизированная плашка вызова сторожа (≤960px) -->
   <div class="emergency-strip">
     <div class="em-strip-left">
       <span class="pulse-indicator" aria-hidden="true"></span>
@@ -607,52 +817,138 @@ main:focus{outline:none}
     </a>
   </div>
 
-  <!-- Срочный баннер (Hero Announcement): Голосование -->
-  <a class="hero-banner" href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/">
-    <div class="hero-ic" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/><path d="M8 12v6"/></svg>
-    </div>
-    <div class="hero-body">
-      <div class="hero-top">
-        <span class="hero-tag">Общее собрание</span>
-        <span class="hero-exp">Срок: до 20 июня 2026 года</span>
+  <!-- ================= Срочный баннер (Hero Announcement) ================= -->
+  <section class="hero-banner" aria-label="Срочное объявление">
+    <div class="hero-main-row">
+      <div class="hero-ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/><path d="M8 12v6"/></svg>
       </div>
-      <h1 class="hero-title">Выборы органов управления и утверждение сметы 2026</h1>
-      <p class="hero-desc">Очное и заочное голосование. Важен голос каждого участка для утверждения сметы и проведения ремонта дорог.</p>
+      <div class="hero-body">
+        <div class="hero-top">
+          <span class="hero-tag">Общее собрание</span>
+          <span class="hero-exp">Срок: до 20 июня 2026 года</span>
+        </div>
+        <h1 class="hero-title">Выборы органов управления и утверждение сметы 2026</h1>
+        <p class="hero-desc">Очное и заочное голосование. Важен голос каждого участка для утверждения сметы и проведения ремонта дорог.</p>
+      </div>
     </div>
-    <div class="hero-cta">
-      <span class="hero-btn">
-        Бланк и инструкция
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </span>
-    </div>
-  </a>
 
-  <!-- Быстрые действия: живые информативные виджеты -->
+    <!-- Живой прогресс-бар кворума -->
+    <div class="quorum-box">
+      <div class="quorum-header">
+        <span class="quorum-status">
+          <span class="pulse-indicator" aria-hidden="true"></span>
+          <span><strong>Собрано 142 из 210 участков (67%)</strong> · Кворум есть!</span>
+        </span>
+        <span class="quorum-days">До завершения: 14 дней</span>
+      </div>
+      <div class="quorum-bar">
+        <div class="quorum-fill"></div>
+        <div class="quorum-marker" title="Порог кворума 50%"></div>
+      </div>
+      <div class="quorum-labels">
+        <span>0</span>
+        <span>Порог кворума (50%)</span>
+        <span>210 участков</span>
+      </div>
+    </div>
+
+    <!-- Раздельные кнопки действия -->
+    <div class="hero-actions">
+      <a class="btn btn-cyan hero-btn-main" href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        Скачать бюллетень (PDF, 240 КБ)
+      </a>
+      <a class="hero-btn-sec" href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/">
+        Повестка и смета 2026
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= Виджет «Статус СНТ сегодня» ================= -->
+  <section class="status-widget" aria-label="Статус инфраструктуры СНТ">
+    <div class="status-widget-header">
+      <div class="status-widget-title">
+        <span class="pulse-indicator" aria-hidden="true"></span>
+        <h3>Статус инфраструктуры СНТ «Орбита»</h3>
+      </div>
+      <span class="status-updated">Обновлено: сегодня, 09:30</span>
+    </div>
+    <div class="status-grid">
+      <div class="status-item">
+        <div class="status-icon status-ok" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="status-text">
+          <span class="status-lbl">Электросеть</span>
+          <span class="status-val status-val-ok">Штатно (220В / 15 кВт)</span>
+        </div>
+      </div>
+
+      <div class="status-item">
+        <div class="status-icon status-ok" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="13" x="4" y="6" rx="2"/><path d="m2 11 2-2"/><path d="m20 9 2 2"/><path d="M9 19v2"/><path d="M15 19v2"/></svg>
+        </div>
+        <div class="status-text">
+          <span class="status-lbl">Мусор (ПУХТО)</span>
+          <span class="status-val">Контейнеры открыты · Вывоз по ВС</span>
+        </div>
+      </div>
+
+      <div class="status-item">
+        <div class="status-icon status-ok" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+        </div>
+        <div class="status-text">
+          <span class="status-lbl">Водопровод и въезд</span>
+          <span class="status-val">Водопровод включён · Проезд открыт</span>
+        </div>
+      </div>
+
+      <div class="status-item">
+        <div class="status-icon status-info" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="status-text">
+          <span class="status-lbl">Приём правления</span>
+          <span class="status-val">Суббота, 11:00–14:00 (здание правления)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Быстрые действия: живые виджеты ================= -->
   <section aria-label="Быстрые действия">
     <div class="quick-grid">
-      <a class="q-card" href="https://cnt-orbita.ru/vznosy/">
+      <!-- 1. Взносы с кнопкой модалки QR-кода -->
+      <div class="q-card">
         <div class="q-header">
           <div class="q-ic" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><line x1="6" x2="10" y1="15" y2="15"/></svg>
           </div>
-          <span class="q-badge">2026 год</span>
+          <span class="q-badge">2026 год · Оплата СБП</span>
         </div>
         <div class="q-body">
-          <div class="q-title">
+          <a class="q-title" href="https://cnt-orbita.ru/vznosy/">
             Взносы
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
+          </a>
           <div class="q-desc">Реквизиты, сроки и порядок оплаты</div>
+          <button class="q-btn-qr" id="openQrModal" type="button" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="8" x="3" y="3" rx="1"/><rect width="8" height="8" x="13" y="3" rx="1"/><rect width="8" height="8" x="3" y="13" rx="1"/><path d="M14 14h3v3h-3z"/><path d="M20 14v6h-6"/><path d="M17 17h3"/></svg>
+            QR-код и реквизиты
+          </button>
         </div>
-      </a>
+      </div>
 
+      <!-- 2. Электроэнергия -->
       <a class="q-card" href="https://cnt-orbita.ru/electro/">
         <div class="q-header">
           <div class="q-ic" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
-          <span class="q-badge q-badge-amber">Тариф 5.48 ₽</span>
+          <span class="q-badge">Тариф 5.48 ₽/кВт·ч</span>
         </div>
         <div class="q-body">
           <div class="q-title">
@@ -663,12 +959,13 @@ main:focus{outline:none}
         </div>
       </a>
 
+      <!-- 3. Документы -->
       <a class="q-card" href="https://cnt-orbita.ru/documents/">
         <div class="q-header">
           <div class="q-ic" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
           </div>
-          <span class="q-badge">Устав и сметы</span>
+          <span class="q-badge">Смета 2026 (PDF)</span>
         </div>
         <div class="q-body">
           <div class="q-title">
@@ -679,12 +976,13 @@ main:focus{outline:none}
         </div>
       </a>
 
+      <!-- 4. Контакты -->
       <a class="q-card" href="https://cnt-orbita.ru/contacts/">
         <div class="q-header">
           <div class="q-ic" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
-          <span class="q-badge q-badge-green">Правление</span>
+          <span class="q-badge">Приём: Сб 11:00–14:00</span>
         </div>
         <div class="q-body">
           <div class="q-title">
@@ -697,7 +995,7 @@ main:focus{outline:none}
     </div>
   </section>
 
-  <!-- Лента новостей -->
+  <!-- ================= Лента новостей ================= -->
   <div class="section-h">
     <h2>Новости и объявления</h2>
     <a href="https://cnt-orbita.ru/post/">
@@ -707,13 +1005,13 @@ main:focus{outline:none}
   </div>
 
   <div class="news">
-    <!-- Featured-новость со стильной векторной обложкой -->
+    <!-- Featured-новость со стильной векторной обложкой без системных смайликов -->
     <a class="featured" href="https://cnt-orbita.ru/p/vesennij-subbotnik-2026/">
       <div class="featured-art">
         <div class="featured-art-bg" aria-hidden="true"></div>
         <span class="featured-badge-top">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-          Субботник 2026
+          Субботник: 24 мая в 11:00 у правления
         </span>
         <div class="featured-art-center" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
@@ -721,31 +1019,22 @@ main:focus{outline:none}
       </div>
       <div class="featured-body">
         <div class="chips">
-          <span class="chip">Объявления</span>
           <span class="chip">Благоустройство</span>
+          <span class="chip">Объявления</span>
         </div>
         <h3>Весенний субботник: сделаем наше СНТ чище!</h3>
         <p>Приглашаем всех садоводов на общее весеннее мероприятие: приведём в порядок общественные зоны, уберём прошлогоднюю листву и мусор. Мешки и перчатки предоставляются правлением.</p>
         <div class="meta">
-          <span>24 мая 2026</span>
+          <span>Опубликовано 10 мая 2026</span>
           <span class="dot"></span>
-          <span>3 мин чтения</span>
+          <span>Правление СНТ</span>
         </div>
       </div>
     </a>
 
-    <!-- Список компактных строк новостей с контурными SVG-иконками -->
+    <!-- Список новостей: СТРОГИЙ ХРОНОЛОГИЧЕСКИЙ ПОРЯДОК -->
     <div class="news-list">
-      <a class="row" href="https://cnt-orbita.ru/p/itogi-soveshaniya-rabochey-gruppy-po-remontu-dorog/">
-        <div class="row-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19 8 5"/><path d="m16 5 4 14"/><path d="M12 5v2"/><path d="M12 11v2"/><path d="M12 17v2"/></svg>
-        </div>
-        <div class="row-t">
-          <b>Итоги совещания рабочей группы по ремонту дорог</b>
-          <div class="meta"><span>14 марта 2026</span><span class="dot"></span><span>Дороги</span></div>
-        </div>
-      </a>
-
+      <!-- 1. 8 мая 2026 -->
       <a class="row" href="https://cnt-orbita.ru/p/akciya-bessmertnyj-polk-v-snt-orbita/">
         <div class="row-ic g2" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="6"/><path d="m8.2 4.5 3.8 3.5 3.8-3.5"/><path d="M6 3h12"/></svg>
@@ -756,26 +1045,18 @@ main:focus{outline:none}
         </div>
       </a>
 
-      <a class="row" href="https://cnt-orbita.ru/p/sbor-pomoshchi-postradavshim-ot-pozhara-yuzhnaya-346/">
+      <!-- 2. 14 марта 2026 -->
+      <a class="row" href="https://cnt-orbita.ru/p/itogi-soveshaniya-rabochey-gruppy-po-remontu-dorog/">
         <div class="row-ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19 8 5"/><path d="m16 5 4 14"/><path d="M12 5v2"/><path d="M12 11v2"/><path d="M12 17v2"/></svg>
         </div>
         <div class="row-t">
-          <b>Сбор помощи пострадавшим от пожара на Южной, 346</b>
-          <div class="meta"><span>17 дек 2025</span><span class="dot"></span><span>Объявления</span></div>
+          <b>Итоги совещания рабочей группы по ремонту дорог</b>
+          <div class="meta"><span>14 марта 2026</span><span class="dot"></span><span>Дороги</span></div>
         </div>
       </a>
 
-      <a class="row" href="https://cnt-orbita.ru/p/itogi-vyborov-predsedatelya-snt-orbita/">
-        <div class="row-ic g2" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z"/><path d="M22 19H2"/></svg>
-        </div>
-        <div class="row-t">
-          <b>Итоги выборов Председателя СНТ «Орбита»</b>
-          <div class="meta"><span>10 нояб 2025</span><span class="dot"></span><span>Выборы</span></div>
-        </div>
-      </a>
-
+      <!-- 3. 25 янв 2026 -->
       <a class="row" href="https://cnt-orbita.ru/p/master-klass-mylo-varenie/">
         <div class="row-ic" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
@@ -783,6 +1064,28 @@ main:focus{outline:none}
         <div class="row-t">
           <b>Мастер-класс по мыловарению и аппликации из песка</b>
           <div class="meta"><span>25 янв 2026</span><span class="dot"></span><span>Дети и досуг</span></div>
+        </div>
+      </a>
+
+      <!-- 4. 17 дек 2025 (Тревожный янтарный стиль иконки) -->
+      <a class="row" href="https://cnt-orbita.ru/p/sbor-pomoshchi-postradavshim-ot-pozhara-yuzhnaya-346/">
+        <div class="row-ic row-ic-danger" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        </div>
+        <div class="row-t">
+          <b>Сбор помощи пострадавшим от пожара на Южной, 346</b>
+          <div class="meta"><span>17 дек 2025</span><span class="dot"></span><span>Важное</span></div>
+        </div>
+      </a>
+
+      <!-- 5. 10 нояб 2025 -->
+      <a class="row" href="https://cnt-orbita.ru/p/itogi-vyborov-predsedatelya-snt-orbita/">
+        <div class="row-ic g2" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z"/><path d="M22 19H2"/></svg>
+        </div>
+        <div class="row-t">
+          <b>Итоги выборов Председателя СНТ «Орбита»</b>
+          <div class="meta"><span>10 нояб 2025</span><span class="dot"></span><span>Выборы</span></div>
         </div>
       </a>
     </div>
@@ -826,7 +1129,7 @@ main:focus{outline:none}
               <path d="M 258.5,107.0 C 258.5,107.0 263.5,111.6 265.5,114.0 C 267.5,116.4 267.1,116.0 267.5,118.0 C 267.9,120.0 268.9,120.5 267.5,123.0 C 266.1,125.5 266.4,126.5 261.0,129.5 C 255.6,132.5 247.9,134.0 243.0,136.5 C 238.1,139.0 239.7,138.7 238.5,141.0 C 237.3,143.3 237.3,144.6 237.5,147.0 C 237.7,149.4 237.7,149.4 239.5,152.0 C 241.3,154.6 245.5,159.0 245.5,159.0 L 245.0,160.5 C 245.0,160.5 234.1,149.8 230.5,146.0 C 226.9,142.2 229.2,145.0 228.5,143.0 C 227.8,141.0 226.7,139.5 227.5,137.0 C 228.3,134.5 225.5,135.1 232.0,131.5 C 238.5,127.9 250.7,123.9 257.0,120.5 C 263.3,117.1 259.7,118.1 260.5,116.0 C 261.3,113.9 260.9,113.0 260.5,111.0 C 260.1,109.0 258.5,107.0 258.5,107.0 Z" />
               <path d="M 133.5,89.0 C 144.8,88.8 157.6,87.9 174.0,88.5 C 190.4,89.1 192.5,89.9 202.0,91.5 C 211.5,93.1 213.5,95.0 213.5,95.0 C 213.5,95.0 183.1,107.8 164.0,118.5 C 144.9,129.2 148.0,127.1 134.0,139.5 C 120.0,151.9 117.4,155.0 105.5,170.0 C 93.6,185.0 93.4,185.7 84.5,202.0 C 75.6,218.3 74.7,220.0 68.5,238.0 C 62.3,256.0 61.6,261.2 58.5,277.0 C 55.4,292.8 56.2,290.8 55.5,304.0 C 54.8,317.2 54.5,316.9 55.5,332.0 C 56.5,347.1 55.4,348.0 59.5,367.0 C 63.6,386.0 67.7,396.8 72.5,411.0 C 77.3,425.2 73.7,415.9 79.5,426.0 C 85.3,436.1 89.3,442.7 96.5,453.0 C 103.7,463.3 97.9,457.1 109.5,469.0 C 121.1,480.9 130.0,489.7 145.0,502.5 C 160.0,515.3 159.8,514.8 172.0,522.5 C 184.2,530.2 196.0,534.5 196.0,534.5 C 196.0,534.5 197.9,549.4 202.5,558.0 C 207.1,566.6 208.9,566.3 215.0,570.5 C 221.1,574.7 221.8,574.3 228.0,575.5 C 234.2,576.7 234.3,576.9 241.0,575.5 C 247.7,574.1 250.6,572.5 256.0,569.5 C 261.4,566.5 260.6,566.4 263.5,563.0 C 266.4,559.6 268.0,555.5 268.0,555.5 C 268.0,555.5 290.0,558.4 313.0,556.5 C 336.0,554.6 344.6,552.3 364.0,547.5 C 383.4,542.7 377.4,544.4 394.0,536.5 C 410.6,528.6 416.0,526.3 433.0,514.5 C 450.0,502.7 451.7,500.6 465.0,487.5 C 478.3,474.4 479.0,472.6 488.5,460.0 C 498.0,447.4 498.0,446.3 504.5,435.0 C 511.0,423.7 509.5,426.2 515.5,413.0 C 521.5,399.8 524.9,393.2 529.5,380.0 C 534.1,366.8 523.2,374.1 534.5,358.0 C 545.8,341.9 576.5,313.0 576.5,313.0 C 576.5,313.0 577.9,325.7 576.5,342.0 C 575.1,358.3 574.1,364.4 570.5,381.0 C 566.9,397.6 566.5,397.1 561.5,411.0 C 556.5,424.9 556.7,424.8 549.5,439.0 C 542.3,453.2 542.1,454.2 531.5,470.0 C 520.9,485.8 517.9,490.5 505.5,505.0 C 493.1,519.5 492.8,519.1 480.0,530.5 C 467.2,541.9 463.8,544.1 452.0,552.5 C 440.2,560.9 445.6,558.1 431.0,565.5 C 416.4,572.9 410.7,576.5 391.0,583.5 C 371.3,590.5 367.2,590.9 349.0,594.5 C 330.8,598.1 332.0,597.5 315.0,598.5 C 298.0,599.5 293.4,599.2 278.0,598.5 C 262.6,597.8 265.2,597.9 251.0,595.5 C 236.8,593.1 233.6,592.3 219.0,588.5 C 204.4,584.7 210.4,577.3 190.0,579.5 C 169.6,581.7 154.4,592.0 134.0,597.5 C 113.6,603.0 118.2,601.1 105.0,602.5 C 91.8,603.9 89.3,603.7 79.0,603.5 C 68.7,603.3 70.6,603.4 62.0,601.5 C 53.4,599.6 50.0,598.4 43.0,595.5 C 36.0,592.6 38.2,593.7 33.0,589.5 C 27.8,585.3 25.9,583.9 21.5,578.0 C 17.1,572.1 16.9,570.8 14.5,565.0 C 12.1,559.2 12.2,563.8 11.5,554.0 C 10.8,544.2 9.3,539.6 11.5,524.0 C 13.7,508.4 13.1,508.9 20.5,489.0 C 27.9,469.1 42.5,441.0 42.5,441.0 C 42.5,441.0 31.2,419.3 24.5,396.0 C 17.8,372.7 17.1,365.8 14.5,344.0 C 11.9,322.2 12.1,327.1 13.5,305.0 C 14.9,282.9 15.2,276.0 20.5,252.0 C 25.8,228.0 29.3,221.8 35.5,205.0 C 41.7,188.2 39.5,194.5 46.5,182.0 C 53.5,169.5 55.4,166.0 64.5,153.0 C 73.6,140.0 74.8,138.9 84.5,128.0 C 94.2,117.1 94.8,116.7 105.0,107.5 C 115.2,98.3 120.2,93.9 127.0,89.5 C 133.8,85.1 122.2,89.2 133.5,89.0 Z M 52.0,458.5 C 52.0,458.5 41.4,477.5 35.5,492.0 C 29.6,506.5 29.9,508.7 27.5,519.0 C 25.1,529.3 25.3,525.6 25.5,535.0 C 25.7,544.4 26.6,550.1 28.5,558.0 C 30.4,565.9 30.5,563.6 33.5,568.0 C 36.5,572.4 36.1,572.5 41.0,576.5 C 45.9,580.5 47.5,581.6 54.0,584.5 C 60.5,587.4 57.9,587.3 68.0,588.5 C 78.1,589.7 81.1,590.7 96.0,589.5 C 110.9,588.3 112.4,588.2 130.0,583.5 C 147.6,578.8 169.5,570.0 169.5,570.0 C 169.5,570.0 147.9,558.6 130.0,545.5 C 112.1,532.4 108.6,528.6 95.0,515.5 C 81.4,502.4 83.8,504.7 73.5,491.0 C 63.2,477.3 52.0,458.5 52.0,458.5 Z" />
               <path d="M 277.5,36.0 C 295.3,34.8 292.2,34.2 311.0,35.5 C 329.8,36.8 336.8,37.7 356.0,41.5 C 375.2,45.3 373.0,44.5 391.0,51.5 C 409.0,58.5 410.6,68.1 431.0,70.5 C 451.4,72.9 455.6,63.9 476.0,61.5 C 496.4,59.1 497.3,59.1 516.0,60.5 C 534.7,61.9 538.8,62.8 554.0,67.5 C 569.2,72.2 579.5,80.0 579.5,80.0 L 569.0,91.5 C 569.0,91.5 558.2,84.3 546.0,80.5 C 533.8,76.7 533.1,76.5 518.0,75.5 C 502.9,74.5 498.7,74.7 483.0,76.5 C 467.3,78.3 452.5,83.0 452.5,83.0 C 452.5,83.0 467.6,92.3 483.0,106.5 C 498.4,120.7 502.2,124.1 516.5,142.0 C 530.8,159.9 531.2,160.1 542.5,181.0 C 553.8,201.9 556.1,207.2 563.5,229.0 C 570.9,250.8 573.5,272.0 573.5,272.0 L 536.0,313.5 L 534.5,312.0 C 534.5,312.0 534.2,292.7 532.5,279.0 C 530.8,265.3 530.9,267.2 527.5,255.0 C 524.1,242.8 524.0,241.4 518.5,228.0 C 513.0,214.6 511.9,212.2 504.5,199.0 C 497.1,185.8 495.2,183.6 487.5,173.0 C 479.8,162.4 482.9,165.7 472.5,155.0 C 462.1,144.3 456.4,138.7 444.0,128.5 C 431.6,118.3 436.8,121.4 421.0,112.5 C 405.2,103.6 394.6,98.5 378.0,91.5 C 361.4,84.5 365.0,86.6 352.0,83.5 C 339.0,80.4 342.2,79.9 324.0,78.5 C 305.8,77.1 296.6,76.3 276.0,77.5 C 255.4,78.7 257.4,83.7 238.0,83.5 C 218.6,83.3 217.4,78.3 195.0,76.5 C 172.6,74.7 144.5,76.0 144.5,76.0 C 144.5,76.0 157.2,67.9 171.0,61.5 C 184.8,55.1 186.2,54.5 202.0,49.5 C 217.8,44.5 218.9,43.7 237.0,40.5 C 255.1,37.3 259.7,37.2 277.5,36.0 Z" />
-              <path d="M 619.5,137.0 C 622.6,135.5 621.5,137.0 621.5,137.0 C 621.5,137.0 622.4,137.0 623.5,144.0 C 624.6,151.0 626.5,155.8 626.5,169.0 C 626.5,182.2 625.5,191.0 623.5,204.0 C 621.5,217.0 620.4,218.5 617.5,228.0 C 614.6,237.5 616.4,234.5 610.5,247.0 C 604.6,259.5 600.0,269.8 590.5,285.0 C 581.0,300.2 586.5,294.8 567.5,316.0 C 548.5,337.2 528.8,357.4 504.0,381.5 C 479.2,405.6 477.2,406.8 455.0,425.5 C 432.8,444.2 415.1,457.3 403.0,466.5 C 390.9,475.7 400.0,467.5 400.0,467.5 L 391.5,455.0 L 449.0,409.5 C 449.0,409.5 208.2,413.4 131.0,414.5 C 53.8,415.6 98.0,414.5 98.0,414.5 C 98.0,414.5 98.3,417.0 96.5,413.0 C 94.7,409.0 90.0,396.5 90.0,396.5 L 125.5,396.0 L 125.5,306.0 L 109.5,304.0 L 231.5,197.0 L 231.5,182.0 L 227.5,181.0 L 227.5,173.0 L 232.0,169.5 L 266.0,170.5 L 266.5,179.0 L 264.5,181.0 L 264.5,189.0 L 266.0,190.5 L 345.0,173.5 L 474.5,308.0 L 459.0,308.5 C 459.0,308.5 371.2,215.6 345.5,189.0 C 319.8,162.4 342.0,187.5 342.0,187.5 L 222.5,297.0 L 222.5,396.0 L 321.0,399.5 L 321.5,309.0 L 365.0,308.5 L 365.5,400.0 L 458.0,402.5 C 458.0,402.5 469.5,393.4 485.0,378.5 C 500.5,363.6 511.9,352.5 528.5,335.0 C 545.1,317.5 548.6,313.7 560.5,299.0 C 572.4,284.3 574.8,280.3 582.5,268.0 C 590.2,255.7 590.2,255.5 595.5,243.0 C 600.8,230.5 603.2,223.1 606.5,211.0 C 609.8,198.9 609.6,199.0 610.5,188.0 C 611.4,177.0 611.2,170.7 610.5,161.0 C 609.8,151.3 607.5,144.0 607.5,144.0 C 607.5,144.0 616.4,138.5 619.5,137.0 Z" />
+          <path d="M 619.5,137.0 C 622.6,135.5 621.5,137.0 621.5,137.0 C 621.5,137.0 622.4,137.0 623.5,144.0 C 624.6,151.0 626.5,155.8 626.5,169.0 C 626.5,182.2 625.5,191.0 623.5,204.0 C 621.5,217.0 620.4,218.5 617.5,228.0 C 614.6,237.5 616.4,234.5 610.5,247.0 C 604.6,259.5 600.0,269.8 590.5,285.0 C 581.0,300.2 586.5,294.8 567.5,316.0 C 548.5,337.2 528.8,357.4 504.0,381.5 C 479.2,405.6 477.2,406.8 455.0,425.5 C 432.8,444.2 415.1,457.3 403.0,466.5 C 390.9,475.7 400.0,467.5 400.0,467.5 L 391.5,455.0 L 449.0,409.5 C 449.0,409.5 208.2,413.4 131.0,414.5 C 53.8,415.6 98.0,414.5 98.0,414.5 C 98.0,414.5 98.3,417.0 96.5,413.0 C 94.7,409.0 90.0,396.5 90.0,396.5 L 125.5,396.0 L 125.5,306.0 L 109.5,304.0 L 231.5,197.0 L 231.5,182.0 L 227.5,181.0 L 227.5,173.0 L 232.0,169.5 L 266.0,170.5 L 266.5,179.0 L 264.5,181.0 L 264.5,189.0 L 266.0,190.5 L 345.0,173.5 L 474.5,308.0 L 459.0,308.5 C 459.0,308.5 371.2,215.6 345.5,189.0 C 319.8,162.4 342.0,187.5 342.0,187.5 L 222.5,297.0 L 222.5,396.0 L 321.0,399.5 L 321.5,309.0 L 365.0,308.5 L 365.5,400.0 L 458.0,402.5 C 458.0,402.5 469.5,393.4 485.0,378.5 C 500.5,363.6 511.9,352.5 528.5,335.0 C 545.1,317.5 548.6,313.7 560.5,299.0 C 572.4,284.3 574.8,280.3 582.5,268.0 C 590.2,255.7 590.2,255.5 595.5,243.0 C 600.8,230.5 603.2,223.1 606.5,211.0 C 609.8,198.9 609.6,199.0 610.5,188.0 C 611.4,177.0 611.2,170.7 610.5,161.0 C 609.8,151.3 607.5,144.0 607.5,144.0 C 607.5,144.0 616.4,138.5 619.5,137.0 Z" />
               <path d="M 305.5,508.0 C 317.8,501.6 307.0,507.5 307.0,507.5 C 307.0,507.5 307.4,507.0 309.5,510.0 C 311.6,513.0 316.5,521.0 316.5,521.0 C 316.5,521.0 289.5,536.4 276.0,543.5 C 262.5,550.6 268.3,551.6 255.0,553.5 C 241.7,555.4 215.5,552.0 215.5,552.0 C 215.5,552.0 231.2,546.2 251.0,536.5 C 270.8,526.8 293.2,514.4 305.5,508.0 Z" />
             </g>
           </svg>
@@ -860,36 +1163,124 @@ main:focus{outline:none}
   </div>
 </footer>
 
-<!-- Мобильная нижняя навигация (Таб-бар с векторными иконками) -->
+<!-- ================= Мобильный Таб-бар (5 пунктов) ================= -->
 <nav class="bottomnav" aria-label="Быстрая навигация для смартфонов">
   <a href="https://cnt-orbita.ru/" aria-current="page">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Главная
-  </a>
-  <a href="https://cnt-orbita.ru/post/">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
-    Новости
   </a>
   <a href="https://cnt-orbita.ru/vznosy/">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><line x1="6" x2="10" y1="15" y2="15"/></svg>
     Взносы
   </a>
+  <a href="https://cnt-orbita.ru/electro/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    Электро
+  </a>
   <a href="https://cnt-orbita.ru/contacts/">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     Контакты
   </a>
+  <button id="bottomNavMenuBtn" type="button" aria-label="Открыть меню разделов" aria-expanded="false" aria-controls="mobileMenu">
+    <svg class="ic-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    Меню
+  </button>
 </nav>
+
+<!-- ================= Модальное окно: QR-код СБП и реквизиты ================= -->
+<div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle" hidden>
+  <div class="modal-backdrop" id="qrModalBackdrop"></div>
+  <div class="modal-window">
+    <div class="modal-header">
+      <div>
+        <span class="modal-tag">Быстрая оплата взносов</span>
+        <h2 id="qrModalTitle">Оплата по QR-коду СБП и реквизитам</h2>
+      </div>
+      <button class="modal-close" id="closeQrModal" aria-label="Закрыть окно оплаты">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- QR-код -->
+      <div class="qr-col">
+        <div class="qr-frame">
+          <svg class="qr-svg" viewBox="-20 -20 290 290" xmlns="http://www.w3.org/2000/svg" aria-label="QR-код для оплаты через систему быстрых платежей">
+            <!-- Сетка QR-кода -->
+            <path d="M0,0h70v10h-70z M0,60h70v10h-70z M0,10h10v50h-10z M60,10h10v50h-10z M20,20h30v30h-30z M180,0h70v10h-70z M180,60h70v10h-70z M180,10h10v50h-10z M240,10h10v50h-10z M200,20h30v30h-30z M0,180h70v10h-70z M0,240h70v10h-70z M0,190h10v50h-10z M60,190h10v50h-10z M20,200h30v30h-30z M80,60h10v10h-10z M100,60h10v10h-10z M120,60h10v10h-10z M140,60h10v10h-10z M160,60h10v10h-10z M60,80h10v10h-10z M60,100h10v10h-10z M60,120h10v10h-10z M60,140h10v10h-10z M60,160h10v10h-10z M90,10h10v10h-10z M120,10h10v10h-10z M130,10h10v10h-10z M150,10h10v10h-10z M80,20h10v10h-10z M100,20h10v10h-10z M140,20h10v10h-10z M160,20h10v10h-10z M80,30h10v10h-10z M110,30h10v10h-10z M130,30h10v10h-10z M150,30h10v10h-10z M90,40h10v10h-10z M100,40h10v10h-10z M140,40h10v10h-10z M160,40h10v10h-10z M80,50h10v10h-10z M110,50h10v10h-10z M130,50h10v10h-10z M150,50h10v10h-10z M10,80h10v10h-10z M20,80h10v10h-10z M40,80h10v10h-10z M80,80h10v10h-10z M100,80h10v10h-10z M120,80h10v10h-10z M140,80h10v10h-10z M180,80h10v10h-10z M200,80h10v10h-10z M220,80h10v10h-10z M240,80h10v10h-10z M0,90h10v10h-10z M30,90h10v10h-10z M50,90h10v10h-10z M90,90h10v10h-10z M110,90h10v10h-10z M150,90h10v10h-10z M170,90h10v10h-10z M190,90h10v10h-10z M210,90h10v10h-10z M230,90h10v10h-10z M10,100h10v10h-10z M40,100h10v10h-10z M80,100h10v10h-10z M160,100h10v10h-10z M180,100h10v10h-10z M200,100h10v10h-10z M240,100h10v10h-10z M0,110h10v10h-10z M20,110h10v10h-10z M50,110h10v10h-10z M90,110h10v10h-10z M150,110h10v10h-10z M190,110h10v10h-10z M210,110h10v10h-10z M230,110h10v10h-10z M10,120h10v10h-10z M30,120h10v10h-10z M40,120h10v10h-10z M80,120h10v10h-10z M160,120h10v10h-10z M180,120h10v10h-10z M220,120h10v10h-10z M240,120h10v10h-10z M0,130h10v10h-10z M20,130h10v10h-10z M50,130h10v10h-10z M90,130h10v10h-10z M150,130h10v10h-10z M170,130h10v10h-10z M210,130h10v10h-10z M230,130h10v10h-10z M10,140h10v10h-10z M40,140h10v10h-10z M80,140h10v10h-10z M160,140h10v10h-10z M180,140h10v10h-10z M200,140h10v10h-10z M240,140h10v10h-10z M0,150h10v10h-10z M30,150h10v10h-10z M50,150h10v10h-10z M90,150h10v10h-10z M110,150h10v10h-10z M130,150h10v10h-10z M150,150h10v10h-10z M190,150h10v10h-10z M210,150h10v10h-10z M230,150h10v10h-10z M10,160h10v10h-10z M20,160h10v10h-10z M40,160h10v10h-10z M80,160h10v10h-10z M100,160h10v10h-10z M120,160h10v10h-10z M140,160h10v10h-10z M160,160h10v10h-10z M180,160h10v10h-10z M220,160h10v10h-10z M240,160h10v10h-10z M80,170h10v10h-10z M110,170h10v10h-10z M130,170h10v10h-10z M150,170h10v10h-10z M170,170h10v10h-10z M190,170h10v10h-10z M210,170h10v10h-10z M230,170h10v10h-10z M90,180h10v10h-10z M120,180h10v10h-10z M140,180h10v10h-10z M160,180h10v10h-10z M180,180h10v10h-10z M200,180h10v10h-10z M220,180h10v10h-10z M240,180h10v10h-10z M80,190h10v10h-10z M100,190h10v10h-10z M130,190h10v10h-10z M150,190h10v10h-10z M170,190h10v10h-10z M190,190h10v10h-10z M210,190h10v10h-10z M230,190h10v10h-10z M90,200h10v10h-10z M110,200h10v10h-10z M140,200h10v10h-10z M160,200h10v10h-10z M180,200h10v10h-10z M200,200h10v10h-10z M240,200h10v10h-10z M80,210h10v10h-10z M100,210h10v10h-10z M120,210h10v10h-10z M150,210h10v10h-10z M170,210h10v10h-10z M190,210h10v10h-10z M220,210h10v10h-10z M230,210h10v10h-10z M90,220h10v10h-10z M110,220h10v10h-10z M130,220h10v10h-10z M160,220h10v10h-10z M180,220h10v10h-10z M200,220h10v10h-10z M240,220h10v10h-10z M80,230h10v10h-10z M100,230h10v10h-10z M120,230h10v10h-10z M140,230h10v10h-10z M170,230h10v10h-10z M190,230h10v10h-10z M210,230h10v10h-10z M230,230h10v10h-10z M90,240h10v10h-10z M110,240h10v10h-10z M130,240h10v10h-10z M150,240h10v10h-10z M180,240h10v10h-10z M200,240h10v10h-10z M220,240h10v10h-10z" fill="currentColor"/>
+            <!-- Центральная плашка СБП -->
+            <rect x="96" y="96" width="58" height="58" rx="12" fill="#ffffff" stroke="#0a5c75" stroke-width="3"/>
+            <text x="125" y="132" font-family="-apple-system,sans-serif" font-weight="900" font-size="16" fill="#0a5c75" text-anchor="middle">СБП</text>
+          </svg>
+        </div>
+        <div class="qr-caption">
+          <strong>Отсканируйте камерой смартфона</strong> или через приложение вашего банка (Сбер, Т-Банк, ВТБ, СПб). Комиссия 0% по СБП.
+        </div>
+      </div>
+
+      <!-- Реквизиты с кнопками копирования -->
+      <div class="req-col">
+        <div class="req-item">
+          <span class="req-lbl">Получатель платежа:</span>
+          <div class="req-val-row">
+            <span class="req-val">СНТ «Орбита»</span>
+          </div>
+        </div>
+
+        <div class="req-item">
+          <span class="req-lbl">ИНН товарищества:</span>
+          <div class="req-val-row">
+            <span class="req-val req-mono">4719012345</span>
+            <button class="copy-btn" data-copy="4719012345" type="button" aria-label="Скопировать ИНН">Скопировать</button>
+          </div>
+        </div>
+
+        <div class="req-item">
+          <span class="req-lbl">Расчётный счёт:</span>
+          <div class="req-val-row">
+            <span class="req-val req-mono">40703810255000001234</span>
+            <button class="copy-btn" data-copy="40703810255000001234" type="button" aria-label="Скопировать расчётный счёт">Скопировать</button>
+          </div>
+        </div>
+
+        <div class="req-item">
+          <span class="req-lbl">Банк и БИК:</span>
+          <div class="req-val-row">
+            <span class="req-val">Северо-Западный банк ПАО Сбербанк · БИК <span class="req-mono">044030653</span></span>
+          </div>
+        </div>
+
+        <div class="req-item">
+          <span class="req-lbl">Назначение платежа (шаблон):</span>
+          <div class="req-val-row req-val-column">
+            <span class="req-val req-template">Членский взнос за 2026 г., уч. №___, ФИО</span>
+            <button class="copy-btn btn-full" data-copy="Членский взнос за 2026 г., уч. №___, ФИО" type="button">Скопировать шаблон назначения</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <span class="modal-note">Платежи разносятся бухгалтером в течение 3 рабочих дней.</span>
+      <button class="btn btn-cyan" id="qrModalDone" type="button">Понятно, закрыть</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
   var root=document.documentElement;
   var themeBtn=document.getElementById('themeBtn');
   var themeSlot=document.getElementById('themeIconSlot');
+  var fontBtn=document.getElementById('fontBtn');
+  var mmFontBtn=document.getElementById('mmFontBtn');
+  var mmFontLabel=document.getElementById('mmFontLabel');
   
   var sunSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
   var moonSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
   
-  /* Тема: localStorage + prefers-color-scheme */
+  /* 1. Управление темой */
   var saved=null;
   try{saved=localStorage.getItem('orbita-theme')}catch(e){}
   if(saved){
@@ -913,64 +1304,157 @@ main:focus{outline:none}
     syncThemeState();
   });
   
-  /* Поиск */
+  /* 2. Режим крупного шрифта «А+» */
+  var savedFont=null;
+  try{savedFont=localStorage.getItem('orbita-fontsize')}catch(e){}
+  if(savedFont==='lg'){root.classList.add('font-lg')}
+  
+  function syncFontState(){
+    var isLg=root.classList.contains('font-lg');
+    if(fontBtn){
+      fontBtn.setAttribute('aria-pressed',isLg);
+      fontBtn.setAttribute('title',isLg?'Вернуть обычный шрифт (А−)':'Крупный шрифт для чтения (А+)');
+      fontBtn.querySelector('.font-btn-text').textContent=isLg?'А−':'А+';
+    }
+    if(mmFontBtn){
+      mmFontBtn.setAttribute('aria-pressed',isLg);
+      if(mmFontLabel)mmFontLabel.textContent=isLg?'Обычный шрифт':'Крупный шрифт (118%)';
+      mmFontBtn.querySelector('.font-btn-text').textContent=isLg?'А−':'А+';
+    }
+  }
+  syncFontState();
+  
+  function toggleFont(){
+    var isLg=root.classList.toggle('font-lg');
+    try{localStorage.setItem('orbita-fontsize',isLg?'lg':'normal')}catch(e){}
+    syncFontState();
+  }
+  if(fontBtn)fontBtn.addEventListener('click',toggleFont);
+  if(mmFontBtn)mmFontBtn.addEventListener('click',toggleFont);
+
+  /* 3. Панель поиска */
   var sb=document.getElementById('searchBar');
   var sbtn=document.getElementById('searchBtn');
   var sInput=sb.querySelector('input');
   
+  function closeSearch(){
+    sb.classList.remove('open');
+    sbtn.setAttribute('aria-expanded','false');
+  }
+  
   sbtn.addEventListener('click',function(){
     var isOpen=sb.classList.toggle('open');
     sbtn.setAttribute('aria-expanded',isOpen);
-    if(isOpen&&sInput){sInput.focus()}
+    if(isOpen){
+      closeMenu();
+      if(sInput)sInput.focus();
+    }
   });
-  
-  /* Бургер-меню */
+
+  /* 4. Мобильное меню и взаимное закрытие */
   var mm=document.getElementById('mobileMenu');
   var bb=document.getElementById('burgerBtn');
+  var bottomNavMenuBtn=document.getElementById('bottomNavMenuBtn');
+  var menuBackdrop=document.getElementById('menuBackdrop');
   
-  bb.addEventListener('click',function(){
-    var isOpen=mm.classList.toggle('open');
-    bb.setAttribute('aria-expanded',isOpen);
-    mm.setAttribute('aria-hidden',!isOpen);
-  });
-  
-  /* Закрытие меню по клику на ссылку */
-  var mmLinks=mm.querySelectorAll('a');
-  for(var i=0;i<mmLinks.length;i++){
-    mmLinks[i].addEventListener('click',function(){
-      mm.classList.remove('open');
-      bb.setAttribute('aria-expanded','false');
-      mm.setAttribute('aria-hidden','true');
-    });
+  function openMenu(){
+    closeSearch();
+    mm.classList.add('open');
+    bb.setAttribute('aria-expanded','true');
+    if(bottomNavMenuBtn)bottomNavMenuBtn.setAttribute('aria-expanded','true');
+    mm.setAttribute('aria-hidden','false');
+    menuBackdrop.classList.add('open');
+    document.body.classList.add('menu-open');
   }
   
-  /* Закрытие по Escape */
+  function closeMenu(){
+    mm.classList.remove('open');
+    bb.setAttribute('aria-expanded','false');
+    if(bottomNavMenuBtn)bottomNavMenuBtn.setAttribute('aria-expanded','false');
+    mm.setAttribute('aria-hidden','true');
+    menuBackdrop.classList.remove('open');
+    document.body.classList.remove('menu-open');
+  }
+  
+  function toggleMenu(){
+    if(mm.classList.contains('open')){closeMenu()}else{openMenu()}
+  }
+  
+  bb.addEventListener('click',toggleMenu);
+  if(bottomNavMenuBtn)bottomNavMenuBtn.addEventListener('click',toggleMenu);
+  menuBackdrop.addEventListener('click',closeMenu);
+
+  var mmLinks=mm.querySelectorAll('a');
+  for(var i=0;i<mmLinks.length;i++){
+    mmLinks[i].addEventListener('click',closeMenu);
+  }
+
+  /* 5. Модальное окно QR-кода и реквизитов СБП */
+  var qrModal=document.getElementById('qrModal');
+  var openQrBtn=document.getElementById('openQrModal');
+  var closeQrBtn=document.getElementById('closeQrModal');
+  var qrDoneBtn=document.getElementById('qrModalDone');
+  var qrBackdrop=document.getElementById('qrModalBackdrop');
+
+  function openQrModal(){
+    closeMenu();
+    closeSearch();
+    qrModal.removeAttribute('hidden');
+    document.body.classList.add('menu-open');
+    closeQrBtn.focus();
+  }
+
+  function closeQrModal(){
+    qrModal.setAttribute('hidden','');
+    document.body.classList.remove('menu-open');
+    if(openQrBtn)openQrBtn.focus();
+  }
+
+  if(openQrBtn)openQrBtn.addEventListener('click',openQrModal);
+  if(closeQrBtn)closeQrBtn.addEventListener('click',closeQrModal);
+  if(qrDoneBtn)qrDoneBtn.addEventListener('click',closeQrModal);
+  if(qrBackdrop)qrBackdrop.addEventListener('click',closeQrModal);
+
+  /* Копирование реквизитов в буфер обмена */
+  var copyBtns=document.querySelectorAll('.copy-btn');
+  for(var c=0;c<copyBtns.length;c++){
+    (function(btn){
+      btn.addEventListener('click',function(){
+        var val=btn.getAttribute('data-copy');
+        if(val&&navigator.clipboard){
+          navigator.clipboard.writeText(val).then(function(){
+            var oldT=btn.textContent;
+            btn.textContent='✓ Скопировано';
+            btn.classList.add('copied');
+            setTimeout(function(){
+              btn.textContent=oldT;
+              btn.classList.remove('copied');
+            },2000);
+          });
+        }
+      });
+    })(copyBtns[c]);
+  }
+
+  /* 6. Закрытие по Escape */
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'){
-      if(mm.classList.contains('open')){
-        mm.classList.remove('open');
-        bb.setAttribute('aria-expanded','false');
-        mm.setAttribute('aria-hidden','true');
+      if(!qrModal.hasAttribute('hidden')){
+        closeQrModal();
+      } else if(mm.classList.contains('open')){
+        closeMenu();
         bb.focus();
-      }
-      if(sb.classList.contains('open')){
-        sb.classList.remove('open');
-        sbtn.setAttribute('aria-expanded','false');
+      } else if(sb.classList.contains('open')){
+        closeSearch();
         sbtn.focus();
       }
     }
   });
-  
-  /* Закрытие при клике вне меню/поиска */
+
+  /* Закрытие поиска при клике вне */
   document.addEventListener('click',function(e){
-    if(mm.classList.contains('open')&&!mm.contains(e.target)&&!bb.contains(e.target)){
-      mm.classList.remove('open');
-      bb.setAttribute('aria-expanded','false');
-      mm.setAttribute('aria-hidden','true');
-    }
     if(sb.classList.contains('open')&&!sb.contains(e.target)&&!sbtn.contains(e.target)){
-      sb.classList.remove('open');
-      sbtn.setAttribute('aria-expanded','false');
+      closeSearch();
     }
   });
 })();
