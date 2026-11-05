@@ -163,6 +163,46 @@ params:
     license:
       enabled: false
 
+# Главное меню сайта (строго по новому дизайну orbita-redesign.html)
+menu:
+  main:
+    - identifier: vznosy
+      name: "Взносы"
+      url: "/vznosy/"
+      weight: 10
+      params:
+        icon: coins
+    - identifier: electro
+      name: "Электроэнергия"
+      url: "/electro/"
+      weight: 20
+      params:
+        icon: bolt
+    - identifier: dorogi
+      name: "Дороги"
+      url: "/p/sbor-sredstv-na-remont-dorogi-2025/"
+      weight: 30
+      params:
+        icon: road
+    - identifier: documents
+      name: "Документы"
+      url: "/documents/"
+      weight: 40
+      params:
+        icon: file-check
+    - identifier: pravlenie
+      name: "Правление"
+      url: "/pravlenie/"
+      weight: 50
+      params:
+        icon: user
+    - identifier: post
+      name: "Новости"
+      url: "/post/"
+      weight: 60
+      params:
+        icon: news
+
 # Пагинация
 pagination:
     pagerSize: 15

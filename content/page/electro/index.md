@@ -1,11 +1,7 @@
 ---
 title: Электроэнергия
 slug: electro
-menu:
-  main:
-    weight: -90
-    params:
-      icon: bolt
+layout: electro
 ---
 
 # ⚡ Электроэнергия в СНТ «Орбита»

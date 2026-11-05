@@ -1,11 +1,6 @@
 ---
 title: Контакты и реквизиты
 slug: contacts
-menu:
-  main:
-    weight: -80
-    params:
-      icon: address-book
 ---
 
 # 📞 Контакты СНТ «Орбита»

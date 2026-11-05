@@ -1,11 +1,6 @@
 ---
 title: Взносы
 slug: vznosy
-menu:
-  main:
-    weight: -75
-    params:
-      icon: coins
 ---
 
 Информация по оплате членских и целевых взносов.

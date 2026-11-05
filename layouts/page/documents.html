@@ -1,0 +1,265 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Документы и регламенты</span>
+  </nav>
+
+  <!-- Шапка страницы с быстрым переходом -->
+  <section class="page-hero">
+    <h1>Официальные документы, тарифы и руководство СНТ «Орбита»</h1>
+    <p>Справочный раздел для садоводов и постоянных жителей: Устав товарищества, бланки доверенностей, актуальные тарифы АО «ПСК», график личного приёма и состав выборных органов.</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход по справочнику">
+      <a class="jump-pill" href="#docs">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+        Официальные документы (6)
+      </a>
+      <a class="jump-pill" href="#electro">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Тарифы и свет
+      </a>
+      <a class="jump-pill" href="#pravlenie">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Правление и ревизоры
+      </a>
+      <a class="jump-pill" href="#komfort">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Подать обращение
+      </a>
+    </div>
+  </section>
+
+  <!-- 1. РАЗДЕЛ ДОКУМЕНТОВ -->
+  <section class="sec-block" id="docs" aria-labelledby="docsTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="docsTitle">Официальные документы и бланки СНТ «Орбита»</h2>
+      <span class="sec-sub">Раздел <code>/documents/</code> · прямые ссылки на PDF и DOCX</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Устав СНТ «Орбита» (действующая редакция)</div>
+            <div class="doc-desc">Основной учредительный документ товарищества: права и обязанности членов СНТ, порядок созыва собраний и уплаты взносов.</div>
+            <div class="doc-meta">Файл: ustav.pdf · 1.4 МБ · Проверено Правлением</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/ustav/ustav.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext docx">DOCX</div>
+          <div>
+            <div class="doc-name">Бланк доверенности на голосование на общем собрании</div>
+            <div class="doc-desc">Заполняется в простой письменной форме, если собственник участка поручает проголосовать члену семьи или соседу.</div>
+            <div class="doc-meta">Файл: doverka.docx · 24 КБ · Шаблон Word для печати</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/docs/doverka.docx" | relURL }}">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать бланк
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Правила внутреннего распорядка СНТ «Орбита»</div>
+            <div class="doc-desc">Режим тишины, содержание территорий общего пользования, противопожарные расстояния и выгул домашних животных.</div>
+            <div class="doc-meta">Файл: pravila_rasporadka.pdf · Утверждено общим собранием</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/pravila/pravila_rasporadka.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Открыть PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Положение о въезде грузового транспорта и работе шлагбаума</div>
+            <div class="doc-desc">Ограничения по тоннажу в период весенней распутицы и порядок пропуска спецтехники на участки.</div>
+            <div class="doc-meta">Файл: polozhenie_o_ts.pdf · Контроль въезда</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/pravila/polozhenie_o_ts.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Открыть PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Приходно-расходные сметы и ФЭО взносов (2023–2026 гг.)</div>
+            <div class="doc-desc">Финансово-экономическое обоснование размера членских и целевых взносов, статьи расходов на обслуживание СНТ.</div>
+            <div class="doc-meta">Архив смет: 2025, 2024, 2023 гг. · Финансовая отчётность</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/smeta/smeta_2025.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Смета 2025 (PDF)
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Распределение долей (% голосов) по участкам СНТ «Орбита»</div>
+            <div class="doc-desc">Справочная ведомость расчёта голосов пропорционально площади садовых участков для подсчёта кворума собрания.</div>
+            <div class="doc-meta">Файл: golosa.pdf · Реестр 334 участков</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/pravila/golosa.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Открыть реестр
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ЭЛЕКТРОЭНЕРГИЯ И ТАРИФЫ -->
+  <section class="sec-block" id="electro" aria-labelledby="electroTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="electroTitle">Электроэнергия: тарифы АО «ПСК» и передача показаний</h2>
+      <span class="sec-sub">Раздел <a href="{{ "/electro/" | relURL }}"><code>/electro/</code></a> · 1-й диапазон потребления (до 1500 кВт·ч/мес)</span>
+    </div>
+
+    <div class="tariff-grid">
+      <div class="tariff-card highlight">
+        <span class="t-badge">Двухтарифный · День (Т1)</span>
+        <div class="t-name">Дневная зона (07:00 – 23:00)</div>
+        <div class="t-price">7,25 ₽ <small>/ кВт·ч</small></div>
+        <p class="t-note">Действует для садоводов с двухтарифными приборами учёта в Ленинградской области.</p>
+      </div>
+
+      <div class="tariff-card highlight">
+        <span class="t-badge">Двухтарифный · Ночь (Т2)</span>
+        <div class="t-name">Ночная зона (23:00 – 07:00)</div>
+        <div class="t-price">3,95 ₽ <small>/ кВт·ч</small></div>
+        <p class="t-note">Льготный ночной тариф для водонагревателей, электроотопления и бытовой техники.</p>
+      </div>
+
+      <div class="tariff-card">
+        <span class="t-badge">Одноставочный тариф</span>
+        <div class="t-name">Круглосуточно единый</div>
+        <div class="t-price">6,59 ₽ <small>/ кВт·ч</small></div>
+        <p class="t-note">Применяется при однотарифном счётчике без разделения на дневную и ночную зоны.</p>
+      </div>
+    </div>
+
+    <div class="electro-ActionBar">
+      <div class="eab-info">
+        <div class="eab-title">Передача показаний счётчиков — ежемесячно с 1 по 25 число</div>
+        <div class="eab-sub">Поставщик: АО «Петербургская сбытовая компания» (ПСК). При аварии или обрыве линии звоните напрямую дежурному диспетчеру ПАО «Россети Ленэнерго».</div>
+      </div>
+      <div class="eab-btns">
+        <a class="btn-solid" href="{{ site.Params.snt.pskCabinetUrl | default "https://ikus.pesc.ru/auth/login" }}" target="_blank" rel="noopener">
+          Личный кабинет ПСК
+        </a>
+        <a class="btn-solid" href="tel:88126789600">
+          ПСК: 8 (812) 678-96-00
+        </a>
+        <a class="btn-danger-soft" href="tel:88002200220">
+          Аварийная Ленэнерго: 8 (800) 220-02-20
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. ПРАВЛЕНИЕ И РЕВИЗИОННАЯ КОМИССИЯ -->
+  <section class="sec-block" id="pravlenie" aria-labelledby="pravTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="pravTitle">Состав Правления и Ревизионной комиссии СНТ «Орбита»</h2>
+      <span class="sec-sub">Раздел <a href="{{ "/pravlenie/" | relURL }}"><code>/pravlenie/</code></a> · личный приём каждую субботу с 12:00 до 14:00</span>
+    </div>
+
+    <div class="people-grid">
+      <div class="person-card chairman">
+        <span class="p-role">Председатель СНТ «Орбита»</span>
+        <div class="p-name">{{ site.Params.snt.chairman | default "Витер Андрей Дмитриевич" }}</div>
+        <div class="p-area">Общее руководство деятельностью товарищества, договоры с подрядчиками, личный приём садоводов по субботам 12:00–14:00.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Лобанов Николай</div>
+        <div class="p-area">Куратор направления: электрохозяйство посёлка, уличное освещение, взаимодействие с ПСК и Ленэнерго.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Красавина Екатерина</div>
+        <div class="p-area">Юридические вопросы, регламенты СНТ, подготовка нормативных актов и положений к общим собраниям.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Чумак Екатерина</div>
+        <div class="p-area">Благоустройство территории общего пользования, детские и спортивные площадки, пожарные водоёмы.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Степанова Анна</div>
+        <div class="p-area">Делопроизводство, реестр членов товарищества, выдача справок и прием заявлений садоводов.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Ткаченко Сергей</div>
+        <div class="p-area">Дорожная инфраструктура, обслуживание шлагбаума, контроль весенней просушки дорог и подсыпки щебня.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Ревизионная комиссия</span>
+        <div class="p-name">Копылов Геннадий</div>
+        <div class="p-area">Проверка финансово-хозяйственной деятельности, исполнения сметы и целевого расходования средств товарищества.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Ревизионная комиссия</span>
+        <div class="p-name">Ковалёва Ирина</div>
+        <div class="p-area">Аудит бухгалтерской документации, банковских выписок и договоров с подрядными организациями.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Ревизионная комиссия</span>
+        <div class="p-name">Комарова Анастасия</div>
+        <div class="p-area">Контроль своевременности поступления взносов и подготовка ежегодного отчёта Ревизионной комиссии общему собранию.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ОБРАЩЕНИЯ И КОМФОРТ -->
+  <section class="sec-block" id="komfort" aria-labelledby="komfortTitle">
+    <div class="appeal-box">
+      <div class="ab-text">
+        <h2 class="ab-title" id="komfortTitle">Комфортная жизнь в СНТ — подать обращение или заявку онлайн</h2>
+        <p class="ab-desc">Заметили неисправный фонарь уличного освещения, яму на проезде или есть предложение к Правлению? Оставьте заявку через электронную форму и отслеживайте статус её выполнения в открытой таблице.</p>
+      </div>
+      <div class="ab-actions">
+        <a class="btn-solid" href="https://forms.gle/VBFi8jxwGUGyLHwR9" target="_blank" rel="noopener">
+          Заполнить обращение в Правление
+        </a>
+        <a class="btn-solid" href="https://docs.google.com/spreadsheets/d/1Q2NyoYwGBnp8Rw9oG3ys2UO2CBBw4DODBbgIaZzgtlw/edit?usp=sharing" target="_blank" rel="noopener">
+          Таблица статусов заявок
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

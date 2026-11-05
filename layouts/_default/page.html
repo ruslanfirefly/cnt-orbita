@@ -23,24 +23,25 @@
 
       <!-- Прикрепленные документы страницы -->
       {{ with .Params.documents }}
-        <section id="files" style="margin-top:28px;">
-          <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:14px;color:var(--ink);">Официальные документы и файлы</h3>
+        <section class="attachments" id="files">
+          <h3 class="attachments-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l7.88-7.88"/></svg>
+            Официальные документы и файлы
+          </h3>
           <div class="doc-list">
             {{ range . }}
-              <a class="doc-item" href="{{ .url }}" target="_blank" rel="noopener">
+              {{ $ext := default "PDF" .type | upper }}
+              <a class="doc-card" href="{{ .url }}" target="_blank" rel="noopener">
                 <div class="doc-left">
-                  <span class="doc-ext">{{ default "PDF" .type }}</span>
+                  <span class="doc-badge{{ if eq $ext "DOCX" }} docx{{ else if or (eq $ext "XLS") (eq $ext "XLSX") }} xlsx{{ end }}">{{ $ext }}</span>
                   <div class="doc-info">
                     <b>{{ .title }}</b>
-                    <div class="doc-sub">
-                      <span>{{ default "PDF-документ" .type }}</span>
-                      {{ with .size }}<span class="dot" aria-hidden="true"></span><span>{{ . }}</span>{{ end }}
-                    </div>
+                    <span>{{ default "Официальный документ" .type }}{{ with .size }} · {{ . }}{{ end }} · {{ $ext }}</span>
                   </div>
                 </div>
                 <span class="doc-dl">
                   Скачать
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                 </span>
               </a>
             {{ end }}
@@ -50,7 +51,7 @@
 
       <div class="article-actions" style="margin-top:32px;">
         <button class="act-btn" type="button" onclick="window.print()" aria-label="Распечатать страницу">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
           <span>Распечатать</span>
         </button>
         <a class="act-btn" href="{{ "/" | relURL }}">← На главную</a>
@@ -62,7 +63,7 @@
       {{ if and .TableOfContents (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}
         <div class="side-card">
           <h3>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="8" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
             Навигация по странице
           </h3>
           <div class="toc-list">
@@ -72,12 +73,15 @@
       {{ end }}
 
       <div class="side-card">
-        <h3>Правление СНТ «Орбита»</h3>
+        <h3>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Правление СНТ «Орбита»
+        </h3>
         <p style="margin:0 0 10px;font-size:.9rem;color:var(--ink2)">По всем вопросам начисления взносов, работы шлагбаума и справок:</p>
         <div style="display:flex;flex-direction:column;gap:8px;font-size:.92rem;font-weight:700">
-          <a href="tel:{{ site.Params.snt.phone | default "+79219670642" }}">{{ site.Params.snt.phoneDisplay | default "+7 (921) 967-06-42" }}</a>
+          <a href="tel:{{ site.Params.snt.phoneTel | default "+79219670642" }}">{{ site.Params.snt.phoneDisplay | default "+7 (921) 967-06-42" }}</a>
           <a href="mailto:{{ site.Params.snt.email | default "sntorbita56@yandex.ru" }}">{{ site.Params.snt.email | default "sntorbita56@yandex.ru" }}</a>
-          <a href="https://max.ru/id4720008674_biz" target="_blank" rel="noopener">Канал СНТ в мессенджере MAX →</a>
+          <a href="{{ site.Params.snt.maxChannelUrl | default "https://max.ru/id4720008674_biz" }}" target="_blank" rel="noopener">Канал СНТ в мессенджере MAX →</a>
         </div>
       </div>
     </aside>

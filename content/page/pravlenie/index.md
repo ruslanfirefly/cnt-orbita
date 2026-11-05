@@ -1,11 +1,7 @@
 ---
 title: Правление
 slug: pravlenie
-menu:
-  main:
-    weight: -90
-    params:
-      icon: user
+layout: pravlenie
 ---
 
 # 👤 Руководство СНТ «Орбита»

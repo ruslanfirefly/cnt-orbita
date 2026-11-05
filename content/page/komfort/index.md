@@ -1,11 +1,6 @@
 ---
 title: Комфортная жизнь в СНТ
 slug: komfort
-menu:
-  main:
-    weight: -72
-    params:
-      icon: messages
 ---
 
 # 🏡 Комфортная жизнь в СНТ
