@@ -11,33 +11,33 @@
 :root{
   --bg:#f3f7fb;
   --card:#ffffff;
-  --ink:#17233b;        /* основной текст, ~14.9:1 на белом */
-  --ink2:#4a5a76;       /* вторичный текст, ~7:1 */
-  --ink3:#74859e;       /* мета-текст, ≥4.5:1 */
-  --line:#e4ebf3;
-  --cyan:#22d3ee;       /* акцент из логотипа */
-  --cyan-deep:#0e7490;  /* ссылки/иконки, контраст ≥4.5:1 */
-  --cyan-soft:#e3fbfe;
+  --ink:#17233b;        /* основной текст, ~15.7:1 на белом (WCAG AAA) */
+  --ink2:#4a5a76;       /* вторичный текст, ~7.0:1 (WCAG AAA) */
+  --ink3:#526480;       /* мета-текст, даты, подписи: 6.0:1 на белом, 5.6:1 на фоне (WCAG AA) */
+  --line:#dbe4ef;       /* более четкие границы карточек для людей старшего возраста */
+  --cyan:#22d3ee;       /* фирменный бирюзовый акцент */
+  --cyan-deep:#0e7490;  /* ссылки и кнопки: 5.4:1 на белом (WCAG AA) */
+  --cyan-soft:#e3fbfe;  /* мягкая бирюзовая подложка */
   --radius:16px;
   --r-sm:12px;
-  --header-h:64px;
-  --shadow:0 1px 2px rgba(23,35,59,.05), 0 6px 20px rgba(23,35,59,.06);
-  --shadow-lg:0 12px 32px rgba(23,35,59,.14);
-  --grad:linear-gradient(135deg,#22d3ee 0%,#3b82c4 55%,#17233b 100%);
+  --header-h:68px;
+  --shadow:0 1px 3px rgba(23,35,59,.06), 0 6px 20px rgba(23,35,59,.07);
+  --shadow-lg:0 14px 34px rgba(23,35,59,.14);
+  --grad:linear-gradient(135deg,#22d3ee 0%,#2b6f96 55%,#17233b 100%);
 }
 [data-theme="dark"]{
   --bg:#0e1524;
   --card:#182238;
-  --ink:#e9eff9;
-  --ink2:#aab8cf;
-  --ink3:#7e90ac;
+  --ink:#e9eff9;        /* 13.7:1 на карточке */
+  --ink2:#aab8cf;       /* 7.9:1 на карточке */
+  --ink3:#94a5c3;       /* 6.4:1 на карточке, 5.4:1 на мягком фоне (WCAG AA) */
   --line:#26344f;
   --cyan:#22d3ee;
-  --cyan-deep:#67e8f9;
+  --cyan-deep:#67e8f9;  /* 10.9:1 на карточке */
   --cyan-soft:#123243;
-  --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.35);
-  --shadow-lg:0 12px 32px rgba(0,0,0,.5);
-  --grad:linear-gradient(135deg,#22d3ee 0%,#2b6f96 55%,#182238 100%);
+  --shadow:0 1px 3px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.4);
+  --shadow-lg:0 14px 34px rgba(0,0,0,.6);
+  --grad:linear-gradient(135deg,#22d3ee 0%,#245e83 55%,#121b2d 100%);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -47,14 +47,25 @@ body{
   color:var(--ink);
   font:400 17px/1.6 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
-img{max-width:100%}
+img{max-width:100%;height:auto}
 a{color:var(--cyan-deep);text-decoration:none}
 a:hover{text-decoration:underline}
-:focus-visible{outline:3px solid var(--cyan-deep);outline-offset:2px;border-radius:6px}
+:focus-visible{outline:3px solid var(--cyan-deep);outline-offset:2px;border-radius:8px}
+
 .container{max-width:1120px;margin:0 auto;padding:0 20px}
-.skip-link{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;z-index:100}
-.skip-link:focus{left:8px}
+@media (max-width:480px){
+  .container{padding:0 14px}
+}
+
+.skip-link{
+  position:absolute;left:-999px;top:10px;
+  background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;
+  font-weight:700;z-index:1000;
+}
+.skip-link:focus{left:14px;top:10px}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
@@ -63,48 +74,63 @@ a:hover{text-decoration:underline}
 /* ============ Шапка ============ */
 .header{
   position:sticky;top:0;z-index:50;
-  background:color-mix(in srgb, var(--card) 86%, transparent);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  background:color-mix(in srgb, var(--card) 90%, transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
 }
 .header-in{display:flex;align-items:center;gap:16px;height:var(--header-h)}
-.brand{display:flex;align-items:center;gap:11px;color:var(--ink);min-width:0}
+.brand{display:flex;align-items:center;gap:12px;color:var(--ink);min-width:0;flex-shrink:1}
 .brand:hover{text-decoration:none}
-.brand svg{width:38px;height:38px;color:var(--ink);flex:none}
-.brand-t{display:flex;flex-direction:column;line-height:1.2;min-width:0}
-.brand-name{font-weight:700;font-size:1.05rem;letter-spacing:.01em;white-space:nowrap}
-.brand-sub{font-size:.72rem;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nav{display:flex;gap:2px;margin-left:auto}
+.brand svg{width:42px;height:42px;color:var(--ink);flex:none;display:block}
+.brand-t{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.brand-name{font-weight:700;font-size:1.1rem;letter-spacing:.01em;white-space:nowrap}
+.brand-sub{font-size:.82rem;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.nav{display:flex;gap:4px;margin-left:auto}
 .nav a{
-  padding:9px 13px;border-radius:10px;color:var(--ink2);font-weight:500;font-size:.95rem;
+  padding:10px 14px;border-radius:10px;color:var(--ink2);font-weight:600;font-size:.97rem;
+  transition:background .15s,color .15s;
 }
 .nav a:hover{background:var(--cyan-soft);color:var(--ink);text-decoration:none}
 .nav a[aria-current="page"]{color:var(--cyan-deep);font-weight:700;background:var(--cyan-soft)}
+
+.actions{display:flex;align-items:center;gap:6px}
 .hbtn{
   display:inline-flex;align-items:center;justify-content:center;
-  width:42px;height:42px;border-radius:12px;border:1px solid transparent;
-  background:transparent;color:var(--ink2);font-size:1.15rem;cursor:pointer;
-  transition:background .15s,border-color .15s;
+  width:44px;height:44px;border-radius:12px;border:1px solid transparent;
+  background:transparent;color:var(--ink2);font-size:1.2rem;cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s;
 }
 .hbtn:hover{background:var(--cyan-soft);border-color:var(--line);color:var(--ink)}
-.hbtn svg{width:20px;height:20px}
+.hbtn svg{width:22px;height:22px}
 .burger{display:none}
+
 @media (max-width:899px){
   .nav{display:none}
-  .burger{display:inline-flex;margin-left:0}
-  .header-in{gap:8px}
+  .burger{display:inline-flex}
+  .header-in{gap:10px}
   .actions{margin-left:auto}
 }
+@media (max-width:380px){
+  .brand-sub{display:none}
+  .brand{gap:8px}
+  .actions{gap:4px}
+  .hbtn{width:40px;height:40px}
+}
 
-/* Панель поиска (общая) */
-.searchbar{overflow:hidden;max-height:0;transition:max-height .25s ease;border-bottom:1px solid var(--line)}
-.searchbar.open{max-height:84px}
-.searchbar-in{display:flex;gap:10px;padding:12px 0 16px}
+/* Панель поиска */
+.searchbar{
+  overflow:hidden;max-height:0;transition:max-height .25s ease;
+  border-bottom:1px solid transparent;background:var(--card);
+}
+.searchbar.open{max-height:90px;border-color:var(--line)}
+.searchbar-in{display:flex;gap:10px;padding:14px 0 16px;align-items:center}
 .searchbar input{
   flex:1;font-size:1.05rem;padding:12px 16px;border-radius:12px;
-  border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:0;
+  border:1px solid var(--line);background:var(--bg);color:var(--ink);min-width:0;
 }
 .searchbar input:focus{outline:2px solid var(--cyan-deep);outline-offset:1px}
+
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:12px 22px;border-radius:12px;border:0;cursor:pointer;
@@ -113,184 +139,206 @@ a:hover{text-decoration:underline}
 }
 .btn:hover{box-shadow:var(--shadow);transform:translateY(-1px);text-decoration:none}
 .btn:active{transform:none}
-.btn-cyan{background:var(--cyan);color:#0b1220}
-.btn-cyan:hover{background:#2edcf0}
+.btn-cyan{background:var(--cyan);color:#081426}
+.btn-cyan:hover{background:#32e3fa}
 
 /* Мобильное меню */
 .mobile-menu{
-  position:fixed;inset:calc(var(--header-h) + 2px) 0 auto 0;z-index:49;
+  position:fixed;inset:calc(var(--header-h) + 1px) 0 auto 0;z-index:49;
   background:var(--card);border-bottom:1px solid var(--line);
-  box-shadow:var(--shadow-lg);padding:10px 20px 18px;
+  box-shadow:var(--shadow-lg);padding:10px 16px 20px;
   transform:translateY(-8px);opacity:0;visibility:hidden;transition:.2s ease;
-  max-height:calc(100vh - var(--header-h) - 20px);overflow:auto;
+  max-height:calc(100vh - var(--header-h) - 20px);overflow-y:auto;
 }
 .mobile-menu.open{transform:none;opacity:1;visibility:visible}
 .mobile-menu a{
-  display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:12px;
+  display:flex;align-items:center;gap:14px;padding:14px 12px;border-radius:12px;
   color:var(--ink);font-weight:600;font-size:1.05rem;border-bottom:1px solid var(--line);
+  min-height:48px;
 }
 .mobile-menu a:last-child{border-bottom:0}
 .mobile-menu a:hover{background:var(--cyan-soft);text-decoration:none}
-.mobile-menu .mm-emoji{font-size:1.25rem;width:28px;text-align:center;flex:none}
+.mobile-menu .mm-emoji{font-size:1.3rem;width:30px;text-align:center;flex:none}
 
-/* ============ Основная сетка ============ */
-main{padding:24px 0 56px}
+/* ============ Основная часть ============ */
+main{padding:24px 0 60px}
+main:focus{outline:none}
+
+/* Срочный баннер */
 .banner{
   display:flex;align-items:center;gap:16px;
-  background:var(--card);border:1px solid var(--line);border-left:5px solid var(--cyan);
-  border-radius:var(--r-sm);padding:16px 18px;margin-bottom:20px;box-shadow:var(--shadow);
-  transition:box-shadow .15s,transform .15s;
+  background:var(--card);border:1px solid var(--line);border-left:6px solid var(--cyan);
+  border-radius:var(--radius);padding:16px 20px;margin-bottom:24px;box-shadow:var(--shadow);
+  transition:box-shadow .15s,transform .15s,border-color .15s;
 }
-.banner:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.banner:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);text-decoration:none}
 .banner-ic{
-  flex:none;width:48px;height:48px;border-radius:14px;background:var(--cyan-soft);
-  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+  flex:none;width:50px;height:50px;border-radius:14px;background:var(--cyan-soft);
+  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
 }
 .banner-t{flex:1;min-width:0}
-.banner-t b{display:block;font-size:1.05rem}
-.banner-t span{color:var(--ink2);font-size:.92rem}
+.banner-t b{display:block;font-size:1.1rem;color:var(--ink);margin-bottom:2px}
+.banner-t span{color:var(--ink2);font-size:.95rem;line-height:1.45}
 .banner-chip{
-  flex:none;background:var(--cyan);color:#0b1220;font-weight:800;font-size:.85rem;
-  padding:8px 14px;border-radius:999px;white-space:nowrap;
+  flex:none;background:var(--cyan);color:#081426;font-weight:800;font-size:.88rem;
+  padding:8px 16px;border-radius:999px;white-space:nowrap;letter-spacing:.02em;
 }
 @media (max-width:639px){
-  .banner{flex-wrap:wrap;gap:10px}
-  .banner-chip{order:-1}
+  .banner{flex-wrap:wrap;gap:12px;padding:14px 16px}
+  .banner-chip{order:-1;margin-left:auto}
+  .banner-t b{font-size:1.05rem}
 }
 
+/* Секции и заголовки */
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:28px 0 16px}
+.section-h h2{margin:0;font-size:1.35rem;letter-spacing:-.01em;color:var(--ink)}
+.section-h a{font-size:.95rem;font-weight:700;white-space:nowrap}
+
 /* Быстрые действия */
-.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:26px 0 14px}
-.section-h h2{margin:0;font-size:1.3rem;letter-spacing:-.01em}
-.section-h a{font-size:.92rem;font-weight:600;white-space:nowrap}
-.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px}
+.quick{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+}
+@media (max-width:899px){
+  .quick{grid-template-columns:repeat(2,1fr);gap:12px}
+}
+@media (max-width:420px){
+  .quick{grid-template-columns:repeat(2,1fr);gap:10px}
+}
 .quick a{
   display:flex;flex-direction:column;gap:10px;
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:16px;box-shadow:var(--shadow);color:var(--ink);
-  transition:transform .15s,box-shadow .15s;
+  padding:18px 16px;box-shadow:var(--shadow);color:var(--ink);
+  transition:transform .15s,box-shadow .15s,border-color .15s;
 }
-.quick a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);text-decoration:none}
+.quick a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);text-decoration:none;border-color:var(--cyan)}
+.quick a:active{transform:scale(0.98)}
 .quick .ic{
-  width:46px;height:46px;border-radius:14px;background:var(--cyan-soft);
-  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  width:48px;height:48px;border-radius:14px;background:var(--cyan-soft);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex:none;
 }
-.quick b{font-size:1.02rem}
-.quick span{font-size:.85rem;color:var(--ink2);line-height:1.45}
+.quick b{font-size:1.05rem;line-height:1.3}
+.quick span{font-size:.88rem;color:var(--ink2);line-height:1.45;overflow-wrap:break-word}
 
 /* Лента новостей */
-.news{display:grid;gap:16px;grid-template-columns:1fr}
+.news{display:grid;gap:18px;grid-template-columns:1fr;margin-top:4px}
 @media (min-width:900px){
-  .news{grid-template-columns:1.05fr 1fr;align-items:start}
+  .news{grid-template-columns:1.08fr 1fr;align-items:start}
   .featured{position:sticky;top:calc(var(--header-h) + 16px)}
 }
+
 .featured{
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;color:var(--ink);
-  transition:box-shadow .15s,transform .15s;
+  transition:box-shadow .15s,transform .15s,border-color .15s;
 }
-.featured:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);text-decoration:none}
+.featured:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);text-decoration:none;border-color:var(--cyan)}
 .featured-media{
-  position:relative;aspect-ratio:16/8.5;background:var(--grad);
-  display:flex;align-items:center;justify-content:center;font-size:4rem;
+  position:relative;aspect-ratio:16/9;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:4.5rem;
 }
 .media-chip{
-  position:absolute;top:14px;left:14px;background:rgba(255,255,255,.92);color:#17233b;
-  font-weight:800;font-size:.8rem;padding:7px 13px;border-radius:999px;
+  position:absolute;top:14px;left:14px;background:rgba(255,255,255,.94);color:#17233b;
+  font-weight:800;font-size:.84rem;padding:7px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
-.media-chip.urgent{background:#fff1c9;color:#7a4b00}
-.featured-body{padding:18px 20px 20px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.media-chip.urgent{background:#fff3cd;color:#7a4b00;border:1px solid #ffeeba}
+.featured-body{padding:20px 22px 22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .chip{
-  font-size:.78rem;font-weight:700;color:var(--cyan-deep);
-  background:var(--cyan-soft);padding:5px 11px;border-radius:999px;
+  font-size:.84rem;font-weight:700;color:var(--cyan-deep);
+  background:var(--cyan-soft);padding:6px 12px;border-radius:999px;
+  transition:background .15s,color .15s;
 }
-.chip:hover{background:var(--cyan);color:#0b1220}
-.featured-body h3{margin:0 0 8px;font-size:1.32rem;line-height:1.35;letter-spacing:-.01em}
-.featured-body p{margin:0 0 14px;color:var(--ink2);font-size:.97rem}
-.meta{display:flex;align-items:center;gap:10px;color:var(--ink3);font-size:.85rem}
-.meta .dot{width:3px;height:3px;border-radius:50%;background:var(--ink3)}
+.chip:hover{background:var(--cyan);color:#081426}
+.featured-body h3{margin:0 0 10px;font-size:1.35rem;line-height:1.35;letter-spacing:-.01em;color:var(--ink)}
+.featured-body p{margin:0 0 16px;color:var(--ink2);font-size:1rem;line-height:1.55}
+.meta{display:flex;align-items:center;gap:10px;color:var(--ink3);font-size:.88rem;font-weight:500}
+.meta .dot{width:4px;height:4px;border-radius:50%;background:var(--ink3);opacity:.8}
 
-.news-list{display:flex;flex-direction:column;gap:10px}
+.news-list{display:flex;flex-direction:column;gap:12px}
 .row{
   display:flex;gap:14px;align-items:center;
   background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);
-  padding:12px;box-shadow:var(--shadow);color:var(--ink);
-  transition:transform .15s,box-shadow .15s,background .15s;
+  padding:14px 16px;box-shadow:var(--shadow);color:var(--ink);
+  transition:transform .15s,box-shadow .15s,border-color .15s;
 }
-.row:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);text-decoration:none}
+.row:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);text-decoration:none;border-color:var(--cyan)}
+.row:active{transform:scale(0.99)}
 .row-th{
-  flex:none;width:66px;height:66px;border-radius:12px;background:var(--cyan-soft);
-  display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+  flex:none;width:64px;height:64px;border-radius:12px;background:var(--cyan-soft);
+  display:flex;align-items:center;justify-content:center;font-size:1.75rem;
 }
-.row-th.g2{background:linear-gradient(135deg,#dcefff,#e3fbfe)}
+.row-th.g2{background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(43,111,150,.18))}
 .row-t{flex:1;min-width:0}
 .row-t b{
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  font-size:1rem;line-height:1.4;font-weight:600;
+  font-size:1.02rem;line-height:1.45;font-weight:600;overflow-wrap:break-word;color:var(--ink);
 }
-.row-t .meta{margin-top:4px}
-@media (max-width:899px){ .news-list{gap:12px} }
+.row-t .meta{margin-top:6px}
 
 /* Категории и архив */
-.cats{display:flex;flex-wrap:wrap;gap:8px}
+.cats{display:flex;flex-wrap:wrap;gap:10px}
 .cats a{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:9px 15px;border-radius:999px;background:var(--card);
-  border:1px solid var(--line);color:var(--ink2);font-weight:600;font-size:.88rem;
-  transition:background .15s,color .15s,border-color .15s;
+  display:inline-flex;align-items:center;gap:8px;min-height:42px;
+  padding:9px 16px;border-radius:999px;background:var(--card);
+  border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:.92rem;
+  transition:background .15s,color .15s,border-color .15s,transform .15s;
 }
-.cats a:hover{background:var(--cyan-soft);color:var(--cyan-deep);border-color:var(--cyan);text-decoration:none}
-.cats a b{color:var(--ink3);font-weight:700;font-size:.8rem}
+.cats a:hover{background:var(--cyan-soft);color:var(--cyan-deep);border-color:var(--cyan);text-decoration:none;transform:translateY(-1px)}
+.cats a b{
+  color:var(--ink3);font-weight:700;font-size:.82rem;background:var(--bg);
+  padding:2px 7px;border-radius:999px;border:1px solid var(--line);
+}
 .archives{
-  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
   background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);
-  padding:12px 14px;margin-top:14px;
+  padding:14px 18px;margin-top:16px;
 }
-.archives .lbl{font-size:.85rem;color:var(--ink3);font-weight:600;margin-right:4px}
+.archives .lbl{font-size:.92rem;color:var(--ink2);font-weight:700;margin-right:4px}
 .archives a{
-  padding:7px 13px;border-radius:10px;background:var(--cyan-soft);color:var(--cyan-deep);
-  font-weight:700;font-size:.88rem;
+  padding:8px 14px;border-radius:10px;background:var(--cyan-soft);color:var(--cyan-deep);
+  font-weight:700;font-size:.92rem;min-height:38px;display:inline-flex;align-items:center;
+  transition:background .15s,color .15s;
 }
-.archives a:hover{background:var(--cyan);color:#0b1220;text-decoration:none}
+.archives a:hover{background:var(--cyan);color:#081426;text-decoration:none}
 
 /* ============ Футер ============ */
-.footer{border-top:1px solid var(--line);background:var(--card);padding:34px 0 30px;margin-top:12px}
-.footer-grid{display:grid;gap:28px;grid-template-columns:1fr}
-@media (min-width:900px){.footer-grid{grid-template-columns:1.3fr 1fr 1fr}}
-.footer h4{margin:0 0 10px;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
-.footer p,.footer li{color:var(--ink2);font-size:.93rem}
-.footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.footer a{color:var(--ink2)}
+.footer{border-top:1px solid var(--line);background:var(--card);padding:40px 0 34px;margin-top:20px}
+.footer-grid{display:grid;gap:32px;grid-template-columns:1fr}
+@media (min-width:900px){.footer-grid{grid-template-columns:1.35fr 1fr 1fr}}
+.footer h4{margin:0 0 12px;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
+.footer p,.footer li{color:var(--ink2);font-size:.95rem;line-height:1.55}
+.footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.footer a{color:var(--ink2);font-weight:500}
 .footer a:hover{color:var(--cyan-deep)}
-.footer-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px;color:var(--ink)}
-.footer-brand svg{width:44px;height:44px;color:var(--ink)}
-.footer-brand b{font-size:1.1rem}
+.footer-brand{display:flex;align-items:center;gap:14px;margin-bottom:14px;color:var(--ink)}
+.footer-brand svg{width:48px;height:48px;color:var(--ink);flex:none;display:block}
+.footer-brand b{font-size:1.15rem;letter-spacing:.01em}
 .footer-bottom{
-  border-top:1px solid var(--line);margin-top:26px;padding-top:16px;
-  display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;
-  color:var(--ink3);font-size:.83rem;
+  border-top:1px solid var(--line);margin-top:30px;padding-top:18px;
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
+  color:var(--ink3);font-size:.88rem;
 }
 
 /* ============ Мобильная нижняя навигация ============ */
 .bottomnav{display:none}
 @media (max-width:639px){
-  body{padding-bottom:74px}
+  body{padding-bottom:80px}
   .bottomnav{
     display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:50;
     left:0;right:0;bottom:0;
-    background:color-mix(in srgb, var(--card) 92%, transparent);
-    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    background:color-mix(in srgb, var(--card) 94%, transparent);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
     border-top:1px solid var(--line);
     padding:6px 6px calc(6px + env(safe-area-inset-bottom));
   }
   .bottomnav a{
-    display:flex;flex-direction:column;align-items:center;gap:3px;
-    padding:8px 4px;border-radius:12px;color:var(--ink3);font-size:.7rem;font-weight:600;
-    min-height:44px;justify-content:center;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:8px 4px;border-radius:12px;color:var(--ink3);font-size:.8rem;font-weight:600;
+    min-height:50px;justify-content:center;transition:background .15s,color .15s;
   }
-  .bottomnav a .ic{font-size:1.35rem;line-height:1}
-  .bottomnav a:hover{text-decoration:none;background:var(--cyan-soft)}
-  .bottomnav a[aria-current="page"]{color:var(--cyan-deep)}
+  .bottomnav a .ic{font-size:1.45rem;line-height:1}
+  .bottomnav a:hover{text-decoration:none;background:var(--cyan-soft);color:var(--ink)}
+  .bottomnav a[aria-current="page"]{color:var(--cyan-deep);font-weight:700}
 }
 </style>
 </head>
@@ -301,15 +349,24 @@ main{padding:24px 0 56px}
 <header class="header">
   <div class="container header-in">
     <a class="brand" href="https://cnt-orbita.ru/" aria-label="СНТ «Орбита» — на главную">
-      <!-- Лого: стилизованный SVG-плейсхолдер нового логотипа (заменить на /orlogo.svg) -->
-      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-        <ellipse cx="32" cy="33" rx="27" ry="13.5" transform="rotate(-20 32 33)" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
-        <circle cx="54.5" cy="20.5" r="3.4" fill="currentColor"/>
-        <path d="M15 44l1.7 3.9 4.2.5-3.1 2.9.9 4.2-3.7-2.1-3.7 2.1.9-4.2-3.1-2.9 4.2-.5z" fill="currentColor"/>
-        <path d="M24.5 40.5v-9.8L32 24l7.5 6.7v9.8h-15z" fill="currentColor"/>
-        <path d="M36.6 26.2h2.6v4.6l-2.6-2.3z" fill="currentColor"/>
-        <path d="M40 24c1.6-.8 1.8-2.2.8-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M30.2 40.5v-5.4h3.4v5.4z" fill="var(--card)"/>
+      <!-- Векторный масштабируемый SVG-логотип СНТ «Орбита» (точно по новому фирменному стилю) -->
+      <svg viewBox="0 0 640 640" fill="none" aria-hidden="true">
+        <g fill="currentColor" fill-rule="evenodd">
+          <!-- Спутник / Планета -->
+          <circle cx="599.0" cy="109.0" r="30.5" />
+          <!-- 5-конечная звезда -->
+          <path d="M 351.5,444.0 L 353.0,443.5 L 354.5,446.0 L 363.0,472.5 L 393.5,473.0 L 392.0,476.5 L 369.5,493.0 L 377.5,516.0 L 378.0,522.5 L 353.0,505.5 L 330.0,521.5 L 326.5,522.0 L 335.5,493.0 L 313.0,476.5 L 311.5,473.0 L 342.0,472.5 Z" />
+          <!-- Дым из трубы -->
+          <path d="M 258.5,107.0 C 258.5,107.0 263.5,111.6 265.5,114.0 C 267.5,116.4 267.1,116.0 267.5,118.0 C 267.9,120.0 268.9,120.5 267.5,123.0 C 266.1,125.5 266.4,126.5 261.0,129.5 C 255.6,132.5 247.9,134.0 243.0,136.5 C 238.1,139.0 239.7,138.7 238.5,141.0 C 237.3,143.3 237.3,144.6 237.5,147.0 C 237.7,149.4 237.7,149.4 239.5,152.0 C 241.3,154.6 245.5,159.0 245.5,159.0 L 245.0,160.5 C 245.0,160.5 234.1,149.8 230.5,146.0 C 226.9,142.2 229.2,145.0 228.5,143.0 C 227.8,141.0 226.7,139.5 227.5,137.0 C 228.3,134.5 225.5,135.1 232.0,131.5 C 238.5,127.9 250.7,123.9 257.0,120.5 C 263.3,117.1 259.7,118.1 260.5,116.0 C 261.3,113.9 260.9,113.0 260.5,111.0 C 260.1,109.0 258.5,107.0 258.5,107.0 Z" />
+          <!-- Основное кольцо и петля орбиты -->
+          <path d="M 133.5,89.0 C 144.8,88.8 157.6,87.9 174.0,88.5 C 190.4,89.1 192.5,89.9 202.0,91.5 C 211.5,93.1 213.5,95.0 213.5,95.0 C 213.5,95.0 183.1,107.8 164.0,118.5 C 144.9,129.2 148.0,127.1 134.0,139.5 C 120.0,151.9 117.4,155.0 105.5,170.0 C 93.6,185.0 93.4,185.7 84.5,202.0 C 75.6,218.3 74.7,220.0 68.5,238.0 C 62.3,256.0 61.6,261.2 58.5,277.0 C 55.4,292.8 56.2,290.8 55.5,304.0 C 54.8,317.2 54.5,316.9 55.5,332.0 C 56.5,347.1 55.4,348.0 59.5,367.0 C 63.6,386.0 67.7,396.8 72.5,411.0 C 77.3,425.2 73.7,415.9 79.5,426.0 C 85.3,436.1 89.3,442.7 96.5,453.0 C 103.7,463.3 97.9,457.1 109.5,469.0 C 121.1,480.9 130.0,489.7 145.0,502.5 C 160.0,515.3 159.8,514.8 172.0,522.5 C 184.2,530.2 196.0,534.5 196.0,534.5 C 196.0,534.5 197.9,549.4 202.5,558.0 C 207.1,566.6 208.9,566.3 215.0,570.5 C 221.1,574.7 221.8,574.3 228.0,575.5 C 234.2,576.7 234.3,576.9 241.0,575.5 C 247.7,574.1 250.6,572.5 256.0,569.5 C 261.4,566.5 260.6,566.4 263.5,563.0 C 266.4,559.6 268.0,555.5 268.0,555.5 C 268.0,555.5 290.0,558.4 313.0,556.5 C 336.0,554.6 344.6,552.3 364.0,547.5 C 383.4,542.7 377.4,544.4 394.0,536.5 C 410.6,528.6 416.0,526.3 433.0,514.5 C 450.0,502.7 451.7,500.6 465.0,487.5 C 478.3,474.4 479.0,472.6 488.5,460.0 C 498.0,447.4 498.0,446.3 504.5,435.0 C 511.0,423.7 509.5,426.2 515.5,413.0 C 521.5,399.8 524.9,393.2 529.5,380.0 C 534.1,366.8 523.2,374.1 534.5,358.0 C 545.8,341.9 576.5,313.0 576.5,313.0 C 576.5,313.0 577.9,325.7 576.5,342.0 C 575.1,358.3 574.1,364.4 570.5,381.0 C 566.9,397.6 566.5,397.1 561.5,411.0 C 556.5,424.9 556.7,424.8 549.5,439.0 C 542.3,453.2 542.1,454.2 531.5,470.0 C 520.9,485.8 517.9,490.5 505.5,505.0 C 493.1,519.5 492.8,519.1 480.0,530.5 C 467.2,541.9 463.8,544.1 452.0,552.5 C 440.2,560.9 445.6,558.1 431.0,565.5 C 416.4,572.9 410.7,576.5 391.0,583.5 C 371.3,590.5 367.2,590.9 349.0,594.5 C 330.8,598.1 332.0,597.5 315.0,598.5 C 298.0,599.5 293.4,599.2 278.0,598.5 C 262.6,597.8 265.2,597.9 251.0,595.5 C 236.8,593.1 233.6,592.3 219.0,588.5 C 204.4,584.7 210.4,577.3 190.0,579.5 C 169.6,581.7 154.4,592.0 134.0,597.5 C 113.6,603.0 118.2,601.1 105.0,602.5 C 91.8,603.9 89.3,603.7 79.0,603.5 C 68.7,603.3 70.6,603.4 62.0,601.5 C 53.4,599.6 50.0,598.4 43.0,595.5 C 36.0,592.6 38.2,593.7 33.0,589.5 C 27.8,585.3 25.9,583.9 21.5,578.0 C 17.1,572.1 16.9,570.8 14.5,565.0 C 12.1,559.2 12.2,563.8 11.5,554.0 C 10.8,544.2 9.3,539.6 11.5,524.0 C 13.7,508.4 13.1,508.9 20.5,489.0 C 27.9,469.1 42.5,441.0 42.5,441.0 C 42.5,441.0 31.2,419.3 24.5,396.0 C 17.8,372.7 17.1,365.8 14.5,344.0 C 11.9,322.2 12.1,327.1 13.5,305.0 C 14.9,282.9 15.2,276.0 20.5,252.0 C 25.8,228.0 29.3,221.8 35.5,205.0 C 41.7,188.2 39.5,194.5 46.5,182.0 C 53.5,169.5 55.4,166.0 64.5,153.0 C 73.6,140.0 74.8,138.9 84.5,128.0 C 94.2,117.1 94.8,116.7 105.0,107.5 C 115.2,98.3 120.2,93.9 127.0,89.5 C 133.8,85.1 122.2,89.2 133.5,89.0 Z M 52.0,458.5 C 52.0,458.5 41.4,477.5 35.5,492.0 C 29.6,506.5 29.9,508.7 27.5,519.0 C 25.1,529.3 25.3,525.6 25.5,535.0 C 25.7,544.4 26.6,550.1 28.5,558.0 C 30.4,565.9 30.5,563.6 33.5,568.0 C 36.5,572.4 36.1,572.5 41.0,576.5 C 45.9,580.5 47.5,581.6 54.0,584.5 C 60.5,587.4 57.9,587.3 68.0,588.5 C 78.1,589.7 81.1,590.7 96.0,589.5 C 110.9,588.3 112.4,588.2 130.0,583.5 C 147.6,578.8 169.5,570.0 169.5,570.0 C 169.5,570.0 147.9,558.6 130.0,545.5 C 112.1,532.4 108.6,528.6 95.0,515.5 C 81.4,502.4 83.8,504.7 73.5,491.0 C 63.2,477.3 52.0,458.5 52.0,458.5 Z" />
+          <!-- Верхняя дуга кольца и орбитальный трек -->
+          <path d="M 277.5,36.0 C 295.3,34.8 292.2,34.2 311.0,35.5 C 329.8,36.8 336.8,37.7 356.0,41.5 C 375.2,45.3 373.0,44.5 391.0,51.5 C 409.0,58.5 410.6,68.1 431.0,70.5 C 451.4,72.9 455.6,63.9 476.0,61.5 C 496.4,59.1 497.3,59.1 516.0,60.5 C 534.7,61.9 538.8,62.8 554.0,67.5 C 569.2,72.2 579.5,80.0 579.5,80.0 L 569.0,91.5 C 569.0,91.5 558.2,84.3 546.0,80.5 C 533.8,76.7 533.1,76.5 518.0,75.5 C 502.9,74.5 498.7,74.7 483.0,76.5 C 467.3,78.3 452.5,83.0 452.5,83.0 C 452.5,83.0 467.6,92.3 483.0,106.5 C 498.4,120.7 502.2,124.1 516.5,142.0 C 530.8,159.9 531.2,160.1 542.5,181.0 C 553.8,201.9 556.1,207.2 563.5,229.0 C 570.9,250.8 573.5,272.0 573.5,272.0 L 536.0,313.5 L 534.5,312.0 C 534.5,312.0 534.2,292.7 532.5,279.0 C 530.8,265.3 530.9,267.2 527.5,255.0 C 524.1,242.8 524.0,241.4 518.5,228.0 C 513.0,214.6 511.9,212.2 504.5,199.0 C 497.1,185.8 495.2,183.6 487.5,173.0 C 479.8,162.4 482.9,165.7 472.5,155.0 C 462.1,144.3 456.4,138.7 444.0,128.5 C 431.6,118.3 436.8,121.4 421.0,112.5 C 405.2,103.6 394.6,98.5 378.0,91.5 C 361.4,84.5 365.0,86.6 352.0,83.5 C 339.0,80.4 342.2,79.9 324.0,78.5 C 305.8,77.1 296.6,76.3 276.0,77.5 C 255.4,78.7 257.4,83.7 238.0,83.5 C 218.6,83.3 217.4,78.3 195.0,76.5 C 172.6,74.7 144.5,76.0 144.5,76.0 C 144.5,76.0 157.2,67.9 171.0,61.5 C 184.8,55.1 186.2,54.5 202.0,49.5 C 217.8,44.5 218.9,43.7 237.0,40.5 C 255.1,37.3 259.7,37.2 277.5,36.0 Z" />
+          <!-- Дом, фасад, дверь, крыша и правый сегмент орбиты -->
+          <path d="M 619.5,137.0 C 622.6,135.5 621.5,137.0 621.5,137.0 C 621.5,137.0 622.4,137.0 623.5,144.0 C 624.6,151.0 626.5,155.8 626.5,169.0 C 626.5,182.2 625.5,191.0 623.5,204.0 C 621.5,217.0 620.4,218.5 617.5,228.0 C 614.6,237.5 616.4,234.5 610.5,247.0 C 604.6,259.5 600.0,269.8 590.5,285.0 C 581.0,300.2 586.5,294.8 567.5,316.0 C 548.5,337.2 528.8,357.4 504.0,381.5 C 479.2,405.6 477.2,406.8 455.0,425.5 C 432.8,444.2 415.1,457.3 403.0,466.5 C 390.9,475.7 400.0,467.5 400.0,467.5 L 391.5,455.0 L 449.0,409.5 C 449.0,409.5 208.2,413.4 131.0,414.5 C 53.8,415.6 98.0,414.5 98.0,414.5 C 98.0,414.5 98.3,417.0 96.5,413.0 C 94.7,409.0 90.0,396.5 90.0,396.5 L 125.5,396.0 L 125.5,306.0 L 109.5,304.0 L 231.5,197.0 L 231.5,182.0 L 227.5,181.0 L 227.5,173.0 L 232.0,169.5 L 266.0,170.5 L 266.5,179.0 L 264.5,181.0 L 264.5,189.0 L 266.0,190.5 L 345.0,173.5 L 474.5,308.0 L 459.0,308.5 C 459.0,308.5 371.2,215.6 345.5,189.0 C 319.8,162.4 342.0,187.5 342.0,187.5 L 222.5,297.0 L 222.5,396.0 L 321.0,399.5 L 321.5,309.0 L 365.0,308.5 L 365.5,400.0 L 458.0,402.5 C 458.0,402.5 469.5,393.4 485.0,378.5 C 500.5,363.6 511.9,352.5 528.5,335.0 C 545.1,317.5 548.6,313.7 560.5,299.0 C 572.4,284.3 574.8,280.3 582.5,268.0 C 590.2,255.7 590.2,255.5 595.5,243.0 C 600.8,230.5 603.2,223.1 606.5,211.0 C 609.8,198.9 609.6,199.0 610.5,188.0 C 611.4,177.0 611.2,170.7 610.5,161.0 C 609.8,151.3 607.5,144.0 607.5,144.0 C 607.5,144.0 616.4,138.5 619.5,137.0 Z" />
+          <!-- Нижний направляющий трек орбиты -->
+          <path d="M 305.5,508.0 C 317.8,501.6 307.0,507.5 307.0,507.5 C 307.0,507.5 307.4,507.0 309.5,510.0 C 311.6,513.0 316.5,521.0 316.5,521.0 C 316.5,521.0 289.5,536.4 276.0,543.5 C 262.5,550.6 268.3,551.6 255.0,553.5 C 241.7,555.4 215.5,552.0 215.5,552.0 C 215.5,552.0 231.2,546.2 251.0,536.5 C 270.8,526.8 293.2,514.4 305.5,508.0 Z" />
+        </g>
       </svg>
       <span class="brand-t">
         <span class="brand-name">СНТ «Орбита»</span>
@@ -320,56 +377,56 @@ main{padding:24px 0 56px}
     <nav class="nav" aria-label="Основная навигация">
       <a href="https://cnt-orbita.ru/" aria-current="page">Главная</a>
       <a href="https://cnt-orbita.ru/post/">Новости</a>
-      <a href="https://cnt-orbita.ru/contacts/">Контакты</a>
-      <a href="https://cnt-orbita.ru/documents/">Документы</a>
-      <a href="https://cnt-orbita.ru/electro/">Электроэнергия</a>
       <a href="https://cnt-orbita.ru/vznosy/">Взносы</a>
+      <a href="https://cnt-orbita.ru/electro/">Электроэнергия</a>
+      <a href="https://cnt-orbita.ru/documents/">Документы</a>
+      <a href="https://cnt-orbita.ru/contacts/">Контакты</a>
     </nav>
 
-    <div class="actions" style="display:flex;gap:6px">
-      <button class="hbtn" id="searchBtn" aria-label="Поиск" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <div class="actions">
+      <button class="hbtn" id="searchBtn" aria-label="Открыть поиск по сайту" aria-expanded="false" aria-controls="searchBar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       </button>
-      <button class="hbtn" id="themeBtn" aria-label="Переключить тему">
-        <span id="themeIcon" style="font-size:1.1rem;line-height:1">☀️</span>
+      <button class="hbtn" id="themeBtn" aria-label="Переключить тему оформления">
+        <span id="themeIcon" style="font-size:1.2rem;line-height:1" aria-hidden="true">☀️</span>
       </button>
-      <button class="hbtn burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <button class="hbtn burger" id="burgerBtn" aria-label="Открыть главное меню" aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
   </div>
 
-  <div class="searchbar" id="searchBar">
-    <div class="container searchbar-in">
-      <input type="search" placeholder="Поиск по сайту: взносы, собрание, дороги…" aria-label="Поиск по сайту">
-      <button class="btn" type="button">Найти</button>
-    </div>
+  <div class="searchbar" id="searchBar" role="region" aria-label="Панель поиска">
+    <form class="container searchbar-in" id="searchForm" action="https://cnt-orbita.ru/search/" method="get" role="search">
+      <input type="search" name="q" placeholder="Поиск по сайту: взносы, собрание, дороги, тарифы…" aria-label="Поисковый запрос">
+      <button class="btn btn-cyan" type="submit">Найти</button>
+    </form>
   </div>
 </header>
 
 <!-- Мобильное меню: полный список разделов -->
-<nav class="mobile-menu" id="mobileMenu" aria-label="Полное меню">
-  <a href="https://cnt-orbita.ru/"><span class="mm-emoji">🏠</span>Главная</a>
-  <a href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/"><span class="mm-emoji">🗳️</span>Голосование — 20 июня</a>
-  <a href="https://cnt-orbita.ru/post/"><span class="mm-emoji">📰</span>Новости и объявления</a>
-  <a href="https://cnt-orbita.ru/vznosy/"><span class="mm-emoji">💳</span>Взносы</a>
-  <a href="https://cnt-orbita.ru/electro/"><span class="mm-emoji">⚡</span>Электроэнергия</a>
-  <a href="https://cnt-orbita.ru/documents/"><span class="mm-emoji">📄</span>Документы</a>
-  <a href="https://cnt-orbita.ru/doroga-2025/"><span class="mm-emoji">🛣️</span>Дорога 2025</a>
-  <a href="https://cnt-orbita.ru/contacts/"><span class="mm-emoji">☎️</span>Контакты и реквизиты</a>
-  <a href="https://cnt-orbita.ru/archives/"><span class="mm-emoji">🗂️</span>Архивы</a>
-  <a href="https://cnt-orbita.ru/about/"><span class="mm-emoji">👨‍🌾</span>Правление</a>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Полное меню сайта" aria-hidden="true">
+  <a href="https://cnt-orbita.ru/"><span class="mm-emoji" aria-hidden="true">🏠</span>Главная страница</a>
+  <a href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/"><span class="mm-emoji" aria-hidden="true">🗳️</span>Голосование — до 20 июня</a>
+  <a href="https://cnt-orbita.ru/post/"><span class="mm-emoji" aria-hidden="true">📰</span>Новости и объявления</a>
+  <a href="https://cnt-orbita.ru/vznosy/"><span class="mm-emoji" aria-hidden="true">💳</span>Членские и целевые взносы</a>
+  <a href="https://cnt-orbita.ru/electro/"><span class="mm-emoji" aria-hidden="true">⚡</span>Электроэнергия и тарифы</a>
+  <a href="https://cnt-orbita.ru/documents/"><span class="mm-emoji" aria-hidden="true">📄</span>Устав, сметы и протоколы</a>
+  <a href="https://cnt-orbita.ru/doroga-2025/"><span class="mm-emoji" aria-hidden="true">🛣️</span>Ремонт дорог 2025–2026</a>
+  <a href="https://cnt-orbita.ru/contacts/"><span class="mm-emoji" aria-hidden="true">☎️</span>Контакты правления и реквизиты</a>
+  <a href="https://cnt-orbita.ru/archives/"><span class="mm-emoji" aria-hidden="true">🗂️</span>Архив публикаций</a>
+  <a href="https://cnt-orbita.ru/about/"><span class="mm-emoji" aria-hidden="true">👨‍🌾</span>Состав органов управления</a>
 </nav>
 
 <!-- ================= Содержимое ================= -->
-<main id="main" class="container">
+<main id="main" class="container" tabindex="-1">
 
   <!-- Срочное объявление -->
   <a class="banner" href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/">
     <span class="banner-ic" aria-hidden="true">📣</span>
     <span class="banner-t">
       <b>Приходите на голосование!</b>
-      <span>Выборы органов управления СНТ «Орбита» — важно участие каждого участка</span>
+      <span>Выборы органов управления СНТ «Орбита» — важно участие каждого собственника участка</span>
     </span>
     <span class="banner-chip">до 20 июня</span>
   </a>
@@ -385,17 +442,17 @@ main{padding:24px 0 56px}
       <a href="https://cnt-orbita.ru/electro/">
         <span class="ic" aria-hidden="true">⚡</span>
         <b>Электроэнергия</b>
-        <span>Тарифы, показания счётчиков, перерывы</span>
+        <span>Тарифы, передача показаний, перерывы</span>
       </a>
       <a href="https://cnt-orbita.ru/documents/">
         <span class="ic" aria-hidden="true">📄</span>
         <b>Документы</b>
-        <span>Устав, протоколы собраний, сметы</span>
+        <span>Устав товарищества, протоколы собраний, сметы</span>
       </a>
       <a href="https://cnt-orbita.ru/contacts/">
         <span class="ic" aria-hidden="true">☎️</span>
         <b>Контакты</b>
-        <span>Правление, адрес, электронная почта</span>
+        <span>Правление, председатель, телефон и почта</span>
       </a>
     </div>
   </section>
@@ -403,7 +460,7 @@ main{padding:24px 0 56px}
   <!-- Лента новостей -->
   <div class="section-h">
     <h2>Новости и объявления</h2>
-    <a href="https://cnt-orbita.ru/post/">Все новости →</a>
+    <a href="https://cnt-orbita.ru/post/">Все новости товарищества →</a>
   </div>
 
   <div class="news">
@@ -415,10 +472,10 @@ main{padding:24px 0 56px}
       <span class="featured-body">
         <span class="chips">
           <span class="chip">Объявления</span>
-          <span class="chip">Собрания</span>
+          <span class="chip">Благоустройство</span>
         </span>
         <h3>Весенний субботник: сделаем наше СНТ чище!</h3>
-        <p>Приглашаем всех на общее мероприятие: приведём в порядок общественные зоны, уберём листву и мусор. Инструменты и мешки — предоставляются.</p>
+        <p>Приглашаем всех садоводов на общее весеннее мероприятие: приведём в порядок общественные зоны, уберём прошлогоднюю листву и мусор. Мешки и перчатки предоставляются правлением.</p>
         <span class="meta">
           <span>24 мая 2026</span>
           <span class="dot"></span>
@@ -460,14 +517,14 @@ main{padding:24px 0 56px}
         <span class="row-th" aria-hidden="true">🎈</span>
         <span class="row-t">
           <b>Мастер-класс по мыловарению и аппликации из песка</b>
-          <span class="meta"><span>25 янв 2026</span><span class="dot"></span><span>Дети</span></span>
+          <span class="meta"><span>25 янв 2026</span><span class="dot"></span><span>Дети и досуг</span></span>
         </span>
       </a>
     </div>
   </div>
 
   <!-- Категории -->
-  <div class="section-h"><h2>Темы</h2></div>
+  <div class="section-h"><h2>Темы публикаций</h2></div>
   <div class="cats">
     <a href="https://cnt-orbita.ru/categories/новости/">Новости <b>38</b></a>
     <a href="https://cnt-orbita.ru/categories/объявления/">Объявления <b>24</b></a>
@@ -476,18 +533,18 @@ main{padding:24px 0 56px}
     <a href="https://cnt-orbita.ru/categories/электричество/">Электричество <b>7</b></a>
     <a href="https://cnt-orbita.ru/categories/благоустройство/">Благоустройство <b>6</b></a>
     <a href="https://cnt-orbita.ru/categories/выборы/">Выборы <b>5</b></a>
-    <a href="https://cnt-orbita.ru/categories/дети/">Дети и досуг <b>5</b></a>
+    <a href="https://cnt-orbita.ru/categories/дети-и-досуг/">Дети и досуг <b>5</b></a>
     <a href="https://cnt-orbita.ru/categories/безопасность/">Безопасность <b>4</b></a>
     <a href="https://cnt-orbita.ru/categories/документы/">Документы <b>3</b></a>
   </div>
 
   <!-- Архив -->
   <div class="archives">
-    <span class="lbl">Архив:</span>
-    <a href="https://cnt-orbita.ru/archives/">2026 · 10</a>
-    <a href="https://cnt-orbita.ru/archives/">2025 · 43</a>
-    <a href="https://cnt-orbita.ru/archives/">2024 · 11</a>
-    <a href="https://cnt-orbita.ru/archives/">2023 · 12</a>
+    <span class="lbl">Архив по годам:</span>
+    <a href="https://cnt-orbita.ru/archives/">2026 год · 10 статей</a>
+    <a href="https://cnt-orbita.ru/archives/">2025 год · 43 статьи</a>
+    <a href="https://cnt-orbita.ru/archives/">2024 год · 11 статей</a>
+    <a href="https://cnt-orbita.ru/archives/">2023 год · 12 статей</a>
   </div>
 </main>
 
@@ -497,84 +554,145 @@ main{padding:24px 0 56px}
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-            <ellipse cx="32" cy="33" rx="27" ry="13.5" transform="rotate(-20 32 33)" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
-            <circle cx="54.5" cy="20.5" r="3.4" fill="currentColor"/>
-            <path d="M15 44l1.7 3.9 4.2.5-3.1 2.9.9 4.2-3.7-2.1-3.7 2.1.9-4.2-3.1-2.9 4.2-.5z" fill="currentColor"/>
-            <path d="M24.5 40.5v-9.8L32 24l7.5 6.7v9.8h-15z" fill="currentColor"/>
-            <path d="M36.6 26.2h2.6v4.6l-2.6-2.3z" fill="currentColor"/>
-            <path d="M40 24c1.6-.8 1.8-2.2.8-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M30.2 40.5v-5.4h3.4v5.4z" fill="var(--card)"/>
+          <!-- Векторный масштабируемый SVG-логотип СНТ «Орбита» в футере -->
+          <svg viewBox="0 0 640 640" fill="none" aria-hidden="true">
+            <g fill="currentColor" fill-rule="evenodd">
+              <circle cx="599.0" cy="109.0" r="30.5" />
+              <path d="M 351.5,444.0 L 353.0,443.5 L 354.5,446.0 L 363.0,472.5 L 393.5,473.0 L 392.0,476.5 L 369.5,493.0 L 377.5,516.0 L 378.0,522.5 L 353.0,505.5 L 330.0,521.5 L 326.5,522.0 L 335.5,493.0 L 313.0,476.5 L 311.5,473.0 L 342.0,472.5 Z" />
+              <path d="M 258.5,107.0 C 258.5,107.0 263.5,111.6 265.5,114.0 C 267.5,116.4 267.1,116.0 267.5,118.0 C 267.9,120.0 268.9,120.5 267.5,123.0 C 266.1,125.5 266.4,126.5 261.0,129.5 C 255.6,132.5 247.9,134.0 243.0,136.5 C 238.1,139.0 239.7,138.7 238.5,141.0 C 237.3,143.3 237.3,144.6 237.5,147.0 C 237.7,149.4 237.7,149.4 239.5,152.0 C 241.3,154.6 245.5,159.0 245.5,159.0 L 245.0,160.5 C 245.0,160.5 234.1,149.8 230.5,146.0 C 226.9,142.2 229.2,145.0 228.5,143.0 C 227.8,141.0 226.7,139.5 227.5,137.0 C 228.3,134.5 225.5,135.1 232.0,131.5 C 238.5,127.9 250.7,123.9 257.0,120.5 C 263.3,117.1 259.7,118.1 260.5,116.0 C 261.3,113.9 260.9,113.0 260.5,111.0 C 260.1,109.0 258.5,107.0 258.5,107.0 Z" />
+              <path d="M 133.5,89.0 C 144.8,88.8 157.6,87.9 174.0,88.5 C 190.4,89.1 192.5,89.9 202.0,91.5 C 211.5,93.1 213.5,95.0 213.5,95.0 C 213.5,95.0 183.1,107.8 164.0,118.5 C 144.9,129.2 148.0,127.1 134.0,139.5 C 120.0,151.9 117.4,155.0 105.5,170.0 C 93.6,185.0 93.4,185.7 84.5,202.0 C 75.6,218.3 74.7,220.0 68.5,238.0 C 62.3,256.0 61.6,261.2 58.5,277.0 C 55.4,292.8 56.2,290.8 55.5,304.0 C 54.8,317.2 54.5,316.9 55.5,332.0 C 56.5,347.1 55.4,348.0 59.5,367.0 C 63.6,386.0 67.7,396.8 72.5,411.0 C 77.3,425.2 73.7,415.9 79.5,426.0 C 85.3,436.1 89.3,442.7 96.5,453.0 C 103.7,463.3 97.9,457.1 109.5,469.0 C 121.1,480.9 130.0,489.7 145.0,502.5 C 160.0,515.3 159.8,514.8 172.0,522.5 C 184.2,530.2 196.0,534.5 196.0,534.5 C 196.0,534.5 197.9,549.4 202.5,558.0 C 207.1,566.6 208.9,566.3 215.0,570.5 C 221.1,574.7 221.8,574.3 228.0,575.5 C 234.2,576.7 234.3,576.9 241.0,575.5 C 247.7,574.1 250.6,572.5 256.0,569.5 C 261.4,566.5 260.6,566.4 263.5,563.0 C 266.4,559.6 268.0,555.5 268.0,555.5 C 268.0,555.5 290.0,558.4 313.0,556.5 C 336.0,554.6 344.6,552.3 364.0,547.5 C 383.4,542.7 377.4,544.4 394.0,536.5 C 410.6,528.6 416.0,526.3 433.0,514.5 C 450.0,502.7 451.7,500.6 465.0,487.5 C 478.3,474.4 479.0,472.6 488.5,460.0 C 498.0,447.4 498.0,446.3 504.5,435.0 C 511.0,423.7 509.5,426.2 515.5,413.0 C 521.5,399.8 524.9,393.2 529.5,380.0 C 534.1,366.8 523.2,374.1 534.5,358.0 C 545.8,341.9 576.5,313.0 576.5,313.0 C 576.5,313.0 577.9,325.7 576.5,342.0 C 575.1,358.3 574.1,364.4 570.5,381.0 C 566.9,397.6 566.5,397.1 561.5,411.0 C 556.5,424.9 556.7,424.8 549.5,439.0 C 542.3,453.2 542.1,454.2 531.5,470.0 C 520.9,485.8 517.9,490.5 505.5,505.0 C 493.1,519.5 492.8,519.1 480.0,530.5 C 467.2,541.9 463.8,544.1 452.0,552.5 C 440.2,560.9 445.6,558.1 431.0,565.5 C 416.4,572.9 410.7,576.5 391.0,583.5 C 371.3,590.5 367.2,590.9 349.0,594.5 C 330.8,598.1 332.0,597.5 315.0,598.5 C 298.0,599.5 293.4,599.2 278.0,598.5 C 262.6,597.8 265.2,597.9 251.0,595.5 C 236.8,593.1 233.6,592.3 219.0,588.5 C 204.4,584.7 210.4,577.3 190.0,579.5 C 169.6,581.7 154.4,592.0 134.0,597.5 C 113.6,603.0 118.2,601.1 105.0,602.5 C 91.8,603.9 89.3,603.7 79.0,603.5 C 68.7,603.3 70.6,603.4 62.0,601.5 C 53.4,599.6 50.0,598.4 43.0,595.5 C 36.0,592.6 38.2,593.7 33.0,589.5 C 27.8,585.3 25.9,583.9 21.5,578.0 C 17.1,572.1 16.9,570.8 14.5,565.0 C 12.1,559.2 12.2,563.8 11.5,554.0 C 10.8,544.2 9.3,539.6 11.5,524.0 C 13.7,508.4 13.1,508.9 20.5,489.0 C 27.9,469.1 42.5,441.0 42.5,441.0 C 42.5,441.0 31.2,419.3 24.5,396.0 C 17.8,372.7 17.1,365.8 14.5,344.0 C 11.9,322.2 12.1,327.1 13.5,305.0 C 14.9,282.9 15.2,276.0 20.5,252.0 C 25.8,228.0 29.3,221.8 35.5,205.0 C 41.7,188.2 39.5,194.5 46.5,182.0 C 53.5,169.5 55.4,166.0 64.5,153.0 C 73.6,140.0 74.8,138.9 84.5,128.0 C 94.2,117.1 94.8,116.7 105.0,107.5 C 115.2,98.3 120.2,93.9 127.0,89.5 C 133.8,85.1 122.2,89.2 133.5,89.0 Z M 52.0,458.5 C 52.0,458.5 41.4,477.5 35.5,492.0 C 29.6,506.5 29.9,508.7 27.5,519.0 C 25.1,529.3 25.3,525.6 25.5,535.0 C 25.7,544.4 26.6,550.1 28.5,558.0 C 30.4,565.9 30.5,563.6 33.5,568.0 C 36.5,572.4 36.1,572.5 41.0,576.5 C 45.9,580.5 47.5,581.6 54.0,584.5 C 60.5,587.4 57.9,587.3 68.0,588.5 C 78.1,589.7 81.1,590.7 96.0,589.5 C 110.9,588.3 112.4,588.2 130.0,583.5 C 147.6,578.8 169.5,570.0 169.5,570.0 C 169.5,570.0 147.9,558.6 130.0,545.5 C 112.1,532.4 108.6,528.6 95.0,515.5 C 81.4,502.4 83.8,504.7 73.5,491.0 C 63.2,477.3 52.0,458.5 52.0,458.5 Z" />
+              <path d="M 277.5,36.0 C 295.3,34.8 292.2,34.2 311.0,35.5 C 329.8,36.8 336.8,37.7 356.0,41.5 C 375.2,45.3 373.0,44.5 391.0,51.5 C 409.0,58.5 410.6,68.1 431.0,70.5 C 451.4,72.9 455.6,63.9 476.0,61.5 C 496.4,59.1 497.3,59.1 516.0,60.5 C 534.7,61.9 538.8,62.8 554.0,67.5 C 569.2,72.2 579.5,80.0 579.5,80.0 L 569.0,91.5 C 569.0,91.5 558.2,84.3 546.0,80.5 C 533.8,76.7 533.1,76.5 518.0,75.5 C 502.9,74.5 498.7,74.7 483.0,76.5 C 467.3,78.3 452.5,83.0 452.5,83.0 C 452.5,83.0 467.6,92.3 483.0,106.5 C 498.4,120.7 502.2,124.1 516.5,142.0 C 530.8,159.9 531.2,160.1 542.5,181.0 C 553.8,201.9 556.1,207.2 563.5,229.0 C 570.9,250.8 573.5,272.0 573.5,272.0 L 536.0,313.5 L 534.5,312.0 C 534.5,312.0 534.2,292.7 532.5,279.0 C 530.8,265.3 530.9,267.2 527.5,255.0 C 524.1,242.8 524.0,241.4 518.5,228.0 C 513.0,214.6 511.9,212.2 504.5,199.0 C 497.1,185.8 495.2,183.6 487.5,173.0 C 479.8,162.4 482.9,165.7 472.5,155.0 C 462.1,144.3 456.4,138.7 444.0,128.5 C 431.6,118.3 436.8,121.4 421.0,112.5 C 405.2,103.6 394.6,98.5 378.0,91.5 C 361.4,84.5 365.0,86.6 352.0,83.5 C 339.0,80.4 342.2,79.9 324.0,78.5 C 305.8,77.1 296.6,76.3 276.0,77.5 C 255.4,78.7 257.4,83.7 238.0,83.5 C 218.6,83.3 217.4,78.3 195.0,76.5 C 172.6,74.7 144.5,76.0 144.5,76.0 C 144.5,76.0 157.2,67.9 171.0,61.5 C 184.8,55.1 186.2,54.5 202.0,49.5 C 217.8,44.5 218.9,43.7 237.0,40.5 C 255.1,37.3 259.7,37.2 277.5,36.0 Z" />
+              <path d="M 619.5,137.0 C 622.6,135.5 621.5,137.0 621.5,137.0 C 621.5,137.0 622.4,137.0 623.5,144.0 C 624.6,151.0 626.5,155.8 626.5,169.0 C 626.5,182.2 625.5,191.0 623.5,204.0 C 621.5,217.0 620.4,218.5 617.5,228.0 C 614.6,237.5 616.4,234.5 610.5,247.0 C 604.6,259.5 600.0,269.8 590.5,285.0 C 581.0,300.2 586.5,294.8 567.5,316.0 C 548.5,337.2 528.8,357.4 504.0,381.5 C 479.2,405.6 477.2,406.8 455.0,425.5 C 432.8,444.2 415.1,457.3 403.0,466.5 C 390.9,475.7 400.0,467.5 400.0,467.5 L 391.5,455.0 L 449.0,409.5 C 449.0,409.5 208.2,413.4 131.0,414.5 C 53.8,415.6 98.0,414.5 98.0,414.5 C 98.0,414.5 98.3,417.0 96.5,413.0 C 94.7,409.0 90.0,396.5 90.0,396.5 L 125.5,396.0 L 125.5,306.0 L 109.5,304.0 L 231.5,197.0 L 231.5,182.0 L 227.5,181.0 L 227.5,173.0 L 232.0,169.5 L 266.0,170.5 L 266.5,179.0 L 264.5,181.0 L 264.5,189.0 L 266.0,190.5 L 345.0,173.5 L 474.5,308.0 L 459.0,308.5 C 459.0,308.5 371.2,215.6 345.5,189.0 C 319.8,162.4 342.0,187.5 342.0,187.5 L 222.5,297.0 L 222.5,396.0 L 321.0,399.5 L 321.5,309.0 L 365.0,308.5 L 365.5,400.0 L 458.0,402.5 C 458.0,402.5 469.5,393.4 485.0,378.5 C 500.5,363.6 511.9,352.5 528.5,335.0 C 545.1,317.5 548.6,313.7 560.5,299.0 C 572.4,284.3 574.8,280.3 582.5,268.0 C 590.2,255.7 590.2,255.5 595.5,243.0 C 600.8,230.5 603.2,223.1 606.5,211.0 C 609.8,198.9 609.6,199.0 610.5,188.0 C 611.4,177.0 611.2,170.7 610.5,161.0 C 609.8,151.3 607.5,144.0 607.5,144.0 C 607.5,144.0 616.4,138.5 619.5,137.0 Z" />
+              <path d="M 305.5,508.0 C 317.8,501.6 307.0,507.5 307.0,507.5 C 307.0,507.5 307.4,507.0 309.5,510.0 C 311.6,513.0 316.5,521.0 316.5,521.0 C 316.5,521.0 289.5,536.4 276.0,543.5 C 262.5,550.6 268.3,551.6 255.0,553.5 C 241.7,555.4 215.5,552.0 215.5,552.0 C 215.5,552.0 231.2,546.2 251.0,536.5 C 270.8,526.8 293.2,514.4 305.5,508.0 Z" />
+            </g>
           </svg>
           <b>СНТ «Орбита»</b>
         </div>
-        <p>Садовое некоммерческое товарищество. Ленинградская область, Ломоносовский район, Виллозское городское поселение.</p>
+        <p>Садоводческое некоммерческое товарищество. Ленинградская область, Ломоносовский район, Виллозское городское поселение.</p>
       </div>
       <div>
-        <h4>Разделы</h4>
+        <h4>Разделы сайта</h4>
         <ul>
-          <li><a href="https://cnt-orbita.ru/post/">Новости</a></li>
-          <li><a href="https://cnt-orbita.ru/documents/">Документы</a></li>
-          <li><a href="https://cnt-orbita.ru/electro/">Электроэнергия</a></li>
-          <li><a href="https://cnt-orbita.ru/vznosy/">Взносы</a></li>
-          <li><a href="https://cnt-orbita.ru/archives/">Архив</a></li>
+          <li><a href="https://cnt-orbita.ru/post/">Новости и объявления</a></li>
+          <li><a href="https://cnt-orbita.ru/documents/">Официальные документы</a></li>
+          <li><a href="https://cnt-orbita.ru/electro/">Электроэнергия и счётчики</a></li>
+          <li><a href="https://cnt-orbita.ru/vznosy/">Членские взносы и реквизиты</a></li>
+          <li><a href="https://cnt-orbita.ru/archives/">Архив публикаций</a></li>
         </ul>
       </div>
       <div>
-        <h4>Контакты</h4>
+        <h4>Контакты и связь</h4>
         <ul>
           <li><a href="mailto:info@cnt-orbita.ru">info@cnt-orbita.ru</a></li>
-          <li><a href="https://cnt-orbita.ru/contacts/">Правление и реквизиты</a></li>
-          <li><a href="https://cnt-orbita.ru/index.xml">RSS-лента</a></li>
+          <li><a href="https://cnt-orbita.ru/contacts/">Правление и часы приёма</a></li>
+          <li><a href="https://cnt-orbita.ru/index.xml">RSS-лента новостей</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2023–2026 СНТ «Орбита»</span>
-      <span>Прототип редизайна · Hugo + Stack theme</span>
+      <span>© 2023–2026 СНТ «Орбита». Все права защищены.</span>
+      <span>Прототип редизайна сайта · Hugo Theme Stack</span>
     </div>
   </div>
 </footer>
 
 <!-- Мобильная нижняя навигация -->
-<nav class="bottomnav" aria-label="Быстрая навигация">
-  <a href="https://cnt-orbita.ru/" aria-current="page"><span class="ic">🏠</span>Главная</a>
-  <a href="https://cnt-orbita.ru/post/"><span class="ic">📢</span>Объявления</a>
-  <a href="https://cnt-orbita.ru/vznosy/"><span class="ic">💳</span>Взносы</a>
-  <a href="https://cnt-orbita.ru/contacts/"><span class="ic">☎️</span>Контакты</a>
+<nav class="bottomnav" aria-label="Быстрая навигация для мобильных">
+  <a href="https://cnt-orbita.ru/" aria-current="page"><span class="ic" aria-hidden="true">🏠</span>Главная</a>
+  <a href="https://cnt-orbita.ru/post/"><span class="ic" aria-hidden="true">📢</span>Новости</a>
+  <a href="https://cnt-orbita.ru/vznosy/"><span class="ic" aria-hidden="true">💳</span>Взносы</a>
+  <a href="https://cnt-orbita.ru/contacts/"><span class="ic" aria-hidden="true">☎️</span>Контакты</a>
 </nav>
 
 <script>
 (function(){
   var root=document.documentElement;
-  /* Тема: localStorage + системная */
+  var themeBtn=document.getElementById('themeBtn');
+  var themeIcon=document.getElementById('themeIcon');
+  
+  /* Тема: localStorage + системная prefers-color-scheme */
   var saved=null;
   try{saved=localStorage.getItem('orbita-theme')}catch(e){}
-  if(saved){root.dataset.theme=saved}
-  else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){root.dataset.theme='dark'}
-  var icon=document.getElementById('themeIcon');
-  function syncIcon(){icon.textContent=root.dataset.theme==='dark'?'☀️':'🌙'}
-  syncIcon();
-  document.getElementById('themeBtn').addEventListener('click',function(){
+  if(saved){
+    root.dataset.theme=saved;
+  } else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){
+    root.dataset.theme='dark';
+  }
+  
+  function syncThemeState(){
+    var isDark=root.dataset.theme==='dark';
+    themeIcon.textContent=isDark?'☀️':'🌙';
+    themeBtn.setAttribute('aria-label',isDark?'Переключить на светлую тему':'Переключить на тёмную тему');
+    var metaTheme=document.querySelector('meta[name="theme-color"]');
+    if(metaTheme){metaTheme.setAttribute('content',isDark?'#0e1524':'#17233b')}
+  }
+  syncThemeState();
+  
+  themeBtn.addEventListener('click',function(){
     root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
     try{localStorage.setItem('orbita-theme',root.dataset.theme)}catch(e){}
-    syncIcon();
+    syncThemeState();
   });
+  
   /* Поиск */
-  var sb=document.getElementById('searchBar'),sbtn=document.getElementById('searchBtn');
+  var sb=document.getElementById('searchBar');
+  var sbtn=document.getElementById('searchBtn');
+  var sInput=sb.querySelector('input');
+  
   sbtn.addEventListener('click',function(){
-    sb.classList.toggle('open');
-    sbtn.setAttribute('aria-expanded',sb.classList.contains('open'));
-    if(sb.classList.contains('open')){var i=sb.querySelector('input');if(i)i.focus()}
+    var isOpen=sb.classList.toggle('open');
+    sbtn.setAttribute('aria-expanded',isOpen);
+    if(isOpen&&sInput){sInput.focus()}
   });
+  
   /* Бургер-меню */
-  var mm=document.getElementById('mobileMenu'),bb=document.getElementById('burgerBtn');
+  var mm=document.getElementById('mobileMenu');
+  var bb=document.getElementById('burgerBtn');
+  
   bb.addEventListener('click',function(){
-    mm.classList.toggle('open');
-    bb.setAttribute('aria-expanded',mm.classList.contains('open'));
+    var isOpen=mm.classList.toggle('open');
+    bb.setAttribute('aria-expanded',isOpen);
+    mm.setAttribute('aria-hidden',!isOpen);
   });
+  
+  /* Закрытие меню по клику на ссылку */
+  var mmLinks=mm.querySelectorAll('a');
+  for(var i=0;i<mmLinks.length;i++){
+    mmLinks[i].addEventListener('click',function(){
+      mm.classList.remove('open');
+      bb.setAttribute('aria-expanded','false');
+      mm.setAttribute('aria-hidden','true');
+    });
+  }
+  
+  /* Закрытие меню и поиска по Escape */
   document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){mm.classList.remove('open');bb.setAttribute('aria-expanded','false');sb.classList.remove('open')}
+    if(e.key==='Escape'){
+      if(mm.classList.contains('open')){
+        mm.classList.remove('open');
+        bb.setAttribute('aria-expanded','false');
+        mm.setAttribute('aria-hidden','true');
+        bb.focus();
+      }
+      if(sb.classList.contains('open')){
+        sb.classList.remove('open');
+        sbtn.setAttribute('aria-expanded','false');
+        sbtn.focus();
+      }
+    }
+  });
+  
+  /* Закрытие при клике вне меню/поиска */
+  document.addEventListener('click',function(e){
+    if(mm.classList.contains('open')&&!mm.contains(e.target)&&!bb.contains(e.target)){
+      mm.classList.remove('open');
+      bb.setAttribute('aria-expanded','false');
+      mm.setAttribute('aria-hidden','true');
+    }
+    if(sb.classList.contains('open')&&!sb.contains(e.target)&&!sbtn.contains(e.target)){
+      sb.classList.remove('open');
+      sbtn.setAttribute('aria-expanded','false');
+    }
   });
 })();
 </script>

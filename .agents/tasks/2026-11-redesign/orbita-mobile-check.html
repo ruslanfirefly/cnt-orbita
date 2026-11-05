@@ -3,53 +3,113 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Проверка мобильной версии — СНТ «Орбита»</title>
+<title>Проверка адаптивности — СНТ «Орбита»</title>
 <style>
-  body{margin:0;background:#0e1524;font:14px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#e9eff9;display:flex;flex-direction:column;height:100vh}
-  .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#182238;border-bottom:1px solid #26344f;flex-wrap:wrap}
-  .bar b{font-size:14px;margin-right:6px}
-  .bar button{background:#123243;color:#e9eff9;border:1px solid #26344f;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;min-height:36px}
+  body{
+    margin:0;background:#0e1524;font:14px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    color:#e9eff9;display:flex;flex-direction:column;height:100vh;overflow:hidden;
+  }
+  .bar{
+    display:flex;align-items:center;gap:8px;padding:10px 16px;
+    background:#182238;border-bottom:1px solid #26344f;flex-wrap:wrap;
+  }
+  .bar b{font-size:14px;margin-right:8px;display:flex;align-items:center;gap:6px}
+  .btn-group{display:flex;align-items:center;gap:6px}
+  .bar button{
+    background:#123243;color:#e9eff9;border:1px solid #26344f;border-radius:8px;
+    padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;min-height:36px;
+    transition:background .15s,border-color .15s,color .15s;
+  }
   .bar button:hover{border-color:#22d3ee;color:#22d3ee}
-  .bar button.active{background:#22d3ee;color:#0b1220;border-color:#22d3ee}
-  .w{margin-left:auto;font-size:13px;color:#aab8cf}
-  .frame{flex:1;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden;min-height:0}
-  .device{position:relative;background:#000;border-radius:26px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:8px;border:1px solid #26344f}
-  iframe{border:0;border-radius:20px;background:#fff;display:block}
-  .hint{padding:8px 14px;color:#aab8cf;font-size:13px;text-align:center}
+  .bar button.active{background:#22d3ee;color:#0b1220;border-color:#22d3ee;font-weight:700}
+  .tools{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .tools button{
+    background:#20314f;border-color:#33486c;display:inline-flex;align-items:center;gap:6px;
+  }
+  .tools button:hover{background:#263c62;border-color:#22d3ee}
+  .w{font-size:13px;color:#aab8cf;font-weight:600;min-width:64px;text-align:right}
+  .frame{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    padding:16px;overflow:auto;min-height:0;
+  }
+  .device{
+    position:relative;background:#000;border-radius:26px;
+    box-shadow:0 24px 70px rgba(0,0,0,.65);padding:10px;
+    border:1px solid #26344f;transition:width .25s ease;max-width:100%;
+  }
+  .device.desktop{border-radius:12px;padding:6px}
+  iframe{border:0;border-radius:18px;background:#fff;display:block;transition:width .25s ease}
+  .device.desktop iframe{border-radius:8px}
+  .hint{
+    padding:8px 16px;color:#aab8cf;font-size:12.5px;text-align:center;
+    background:#131c2e;border-top:1px solid #1f2c44;
+  }
 </style>
 </head>
 <body>
   <div class="bar">
     <b>📱 Проверка адаптивности</b>
-    <button data-w="320">320</button>
-    <button data-w="390" class="active">390</button>
-    <button data-w="768">768</button>
-    <button data-w="1200">1200</button>
-    <span class="w" id="w">390 px</span>
+    <div class="btn-group">
+      <button data-w="320" title="Компактный смартфон (320px)">320 px</button>
+      <button data-w="390" class="active" title="Смартфон iPhone/Android (390px)">390 px</button>
+      <button data-w="768" title="Планшет iPad (768px)">768 px</button>
+      <button data-w="1200" title="Ноутбук / Desktop (1200px)">1200 px</button>
+      <button data-w="1920" title="Широкий экран Full HD (1920px)">1920 px</button>
+    </div>
+    <div class="tools">
+      <button id="toggleTheme" title="Переключить тему во фрейме">🌓 Тема: светлая/тёмная</button>
+      <span class="w" id="w">390 px</span>
+    </div>
   </div>
   <div class="frame">
-    <div class="device">
+    <div class="device" id="device">
       <iframe id="f" src="orbita-redesign.html" title="Прототип редизайна СНТ «Орбита»"></iframe>
     </div>
   </div>
-  <div class="hint">Прототип во фрейме: ширина меняется кнопками сверху, содержимое листается внутри.</div>
+  <div class="hint">Прототип во фрейме: ширина переключается кнопками, тема проверяется кнопкой «🌓 Тема», прокрутка внутри фрейма.</div>
 <script>
-  var f=document.getElementById('f'),wEl=document.getElementById('w');
+  var f=document.getElementById('f'),
+      wEl=document.getElementById('w'),
+      device=document.getElementById('device'),
+      themeBtn=document.getElementById('toggleTheme');
+
   function setW(w){
-    var bs=document.querySelectorAll('.bar button');
-    for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',+bs[i].dataset.w===w)}
+    var bs=document.querySelectorAll('.btn-group button');
+    for(var i=0;i<bs.length;i++){
+      bs[i].classList.toggle('active',+bs[i].dataset.w===w);
+    }
     f.style.width=w+'px';
     f.style.height=Math.max(480,window.innerHeight-170)+'px';
+    device.classList.toggle('desktop',w>=1000);
     wEl.textContent=w+' px';
   }
-  var bs=document.querySelectorAll('.bar button');
+
+  var bs=document.querySelectorAll('.btn-group button');
   for(var i=0;i<bs.length;i++){
-    (function(b){b.addEventListener('click',function(){setW(+b.dataset.w)})})(bs[i]);
+    (function(b){
+      b.addEventListener('click',function(){setW(+b.dataset.w)});
+    })(bs[i]);
   }
+
   window.addEventListener('resize',function(){
     var w=parseInt(f.style.width,10)||390;
     f.style.height=Math.max(480,window.innerHeight-170)+'px';
   });
+
+  /* Управление темой внутри iframe */
+  themeBtn.addEventListener('click',function(){
+    try{
+      var doc=f.contentDocument||f.contentWindow.document;
+      var cur=doc.documentElement.dataset.theme==='dark'?'light':'dark';
+      doc.documentElement.dataset.theme=cur;
+      var icon=doc.getElementById('themeIcon');
+      if(icon)icon.textContent=cur==='dark'?'☀️':'🌙';
+      try{f.contentWindow.localStorage.setItem('orbita-theme',cur)}catch(e){}
+    }catch(e){
+      console.warn('Iframe theme toggle error:',e);
+    }
+  });
+
   setW(390);
 </script>
 </body>
