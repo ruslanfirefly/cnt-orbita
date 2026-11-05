@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Проверка мобильной версии — СНТ «Орбита»</title>
+<style>
+  body{margin:0;background:#0e1524;font:14px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#e9eff9;display:flex;flex-direction:column;height:100vh}
+  .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#182238;border-bottom:1px solid #26344f;flex-wrap:wrap}
+  .bar b{font-size:14px;margin-right:6px}
+  .bar button{background:#123243;color:#e9eff9;border:1px solid #26344f;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;min-height:36px}
+  .bar button:hover{border-color:#22d3ee;color:#22d3ee}
+  .bar button.active{background:#22d3ee;color:#0b1220;border-color:#22d3ee}
+  .w{margin-left:auto;font-size:13px;color:#aab8cf}
+  .frame{flex:1;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden;min-height:0}
+  .device{position:relative;background:#000;border-radius:26px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:8px;border:1px solid #26344f}
+  iframe{border:0;border-radius:20px;background:#fff;display:block}
+  .hint{padding:8px 14px;color:#aab8cf;font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <b>📱 Проверка адаптивности</b>
+    <button data-w="320">320</button>
+    <button data-w="390" class="active">390</button>
+    <button data-w="768">768</button>
+    <button data-w="1200">1200</button>
+    <span class="w" id="w">390 px</span>
+  </div>
+  <div class="frame">
+    <div class="device">
+      <iframe id="f" src="orbita-redesign.html" title="Прототип редизайна СНТ «Орбита»"></iframe>
+    </div>
+  </div>
+  <div class="hint">Прототип во фрейме: ширина меняется кнопками сверху, содержимое листается внутри.</div>
+<script>
+  var f=document.getElementById('f'),wEl=document.getElementById('w');
+  function setW(w){
+    var bs=document.querySelectorAll('.bar button');
+    for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',+bs[i].dataset.w===w)}
+    f.style.width=w+'px';
+    f.style.height=Math.max(480,window.innerHeight-170)+'px';
+    wEl.textContent=w+' px';
+  }
+  var bs=document.querySelectorAll('.bar button');
+  for(var i=0;i<bs.length;i++){
+    (function(b){b.addEventListener('click',function(){setW(+b.dataset.w)})})(bs[i]);
+  }
+  window.addEventListener('resize',function(){
+    var w=parseInt(f.style.width,10)||390;
+    f.style.height=Math.max(480,window.innerHeight-170)+'px';
+  });
+  setW(390);
+</script>
+</body>
+</html>

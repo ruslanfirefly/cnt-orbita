@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17233b">
+<title>СНТ «Орбита» — прототип редизайна</title>
+<meta name="description" content="Прототип нового дизайна сайта СНТ «Орбита»: адаптивная вёрстка, тёмная тема, быстрые действия, крупные шрифты и высокий контраст для всех поколений.">
+<style>
+/* ============ Дизайн-токены (бренд: navy ink + cyan из нового логотипа) ============ */
+:root{
+  --bg:#f3f7fb;
+  --card:#ffffff;
+  --ink:#17233b;        /* основной текст, ~14.9:1 на белом */
+  --ink2:#4a5a76;       /* вторичный текст, ~7:1 */
+  --ink3:#74859e;       /* мета-текст, ≥4.5:1 */
+  --line:#e4ebf3;
+  --cyan:#22d3ee;       /* акцент из логотипа */
+  --cyan-deep:#0e7490;  /* ссылки/иконки, контраст ≥4.5:1 */
+  --cyan-soft:#e3fbfe;
+  --radius:16px;
+  --r-sm:12px;
+  --header-h:64px;
+  --shadow:0 1px 2px rgba(23,35,59,.05), 0 6px 20px rgba(23,35,59,.06);
+  --shadow-lg:0 12px 32px rgba(23,35,59,.14);
+  --grad:linear-gradient(135deg,#22d3ee 0%,#3b82c4 55%,#17233b 100%);
+}
+[data-theme="dark"]{
+  --bg:#0e1524;
+  --card:#182238;
+  --ink:#e9eff9;
+  --ink2:#aab8cf;
+  --ink3:#7e90ac;
+  --line:#26344f;
+  --cyan:#22d3ee;
+  --cyan-deep:#67e8f9;
+  --cyan-soft:#123243;
+  --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.35);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.5);
+  --grad:linear-gradient(135deg,#22d3ee 0%,#2b6f96 55%,#182238 100%);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:400 17px/1.6 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+a{color:var(--cyan-deep);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--cyan-deep);outline-offset:2px;border-radius:6px}
+.container{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip-link{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;z-index:100}
+.skip-link:focus{left:8px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ============ Шапка ============ */
+.header{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb, var(--card) 86%, transparent);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.header-in{display:flex;align-items:center;gap:16px;height:var(--header-h)}
+.brand{display:flex;align-items:center;gap:11px;color:var(--ink);min-width:0}
+.brand:hover{text-decoration:none}
+.brand svg{width:38px;height:38px;color:var(--ink);flex:none}
+.brand-t{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.brand-name{font-weight:700;font-size:1.05rem;letter-spacing:.01em;white-space:nowrap}
+.brand-sub{font-size:.72rem;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav{display:flex;gap:2px;margin-left:auto}
+.nav a{
+  padding:9px 13px;border-radius:10px;color:var(--ink2);font-weight:500;font-size:.95rem;
+}
+.nav a:hover{background:var(--cyan-soft);color:var(--ink);text-decoration:none}
+.nav a[aria-current="page"]{color:var(--cyan-deep);font-weight:700;background:var(--cyan-soft)}
+.hbtn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:12px;border:1px solid transparent;
+  background:transparent;color:var(--ink2);font-size:1.15rem;cursor:pointer;
+  transition:background .15s,border-color .15s;
+}
+.hbtn:hover{background:var(--cyan-soft);border-color:var(--line);color:var(--ink)}
+.hbtn svg{width:20px;height:20px}
+.burger{display:none}
+@media (max-width:899px){
+  .nav{display:none}
+  .burger{display:inline-flex;margin-left:0}
+  .header-in{gap:8px}
+  .actions{margin-left:auto}
+}
+
+/* Панель поиска (общая) */
+.searchbar{overflow:hidden;max-height:0;transition:max-height .25s ease;border-bottom:1px solid var(--line)}
+.searchbar.open{max-height:84px}
+.searchbar-in{display:flex;gap:10px;padding:12px 0 16px}
+.searchbar input{
+  flex:1;font-size:1.05rem;padding:12px 16px;border-radius:12px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:0;
+}
+.searchbar input:focus{outline:2px solid var(--cyan-deep);outline-offset:1px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:12px;border:0;cursor:pointer;
+  background:var(--ink);color:var(--bg);font-weight:700;font-size:1rem;
+  min-height:48px;transition:transform .15s,box-shadow .15s,background .15s;
+}
+.btn:hover{box-shadow:var(--shadow);transform:translateY(-1px);text-decoration:none}
+.btn:active{transform:none}
+.btn-cyan{background:var(--cyan);color:#0b1220}
+.btn-cyan:hover{background:#2edcf0}
+
+/* Мобильное меню */
+.mobile-menu{
+  position:fixed;inset:calc(var(--header-h) + 2px) 0 auto 0;z-index:49;
+  background:var(--card);border-bottom:1px solid var(--line);
+  box-shadow:var(--shadow-lg);padding:10px 20px 18px;
+  transform:translateY(-8px);opacity:0;visibility:hidden;transition:.2s ease;
+  max-height:calc(100vh - var(--header-h) - 20px);overflow:auto;
+}
+.mobile-menu.open{transform:none;opacity:1;visibility:visible}
+.mobile-menu a{
+  display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:12px;
+  color:var(--ink);font-weight:600;font-size:1.05rem;border-bottom:1px solid var(--line);
+}
+.mobile-menu a:last-child{border-bottom:0}
+.mobile-menu a:hover{background:var(--cyan-soft);text-decoration:none}
+.mobile-menu .mm-emoji{font-size:1.25rem;width:28px;text-align:center;flex:none}
+
+/* ============ Основная сетка ============ */
+main{padding:24px 0 56px}
+.banner{
+  display:flex;align-items:center;gap:16px;
+  background:var(--card);border:1px solid var(--line);border-left:5px solid var(--cyan);
+  border-radius:var(--r-sm);padding:16px 18px;margin-bottom:20px;box-shadow:var(--shadow);
+  transition:box-shadow .15s,transform .15s;
+}
+.banner:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.banner-ic{
+  flex:none;width:48px;height:48px;border-radius:14px;background:var(--cyan-soft);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+}
+.banner-t{flex:1;min-width:0}
+.banner-t b{display:block;font-size:1.05rem}
+.banner-t span{color:var(--ink2);font-size:.92rem}
+.banner-chip{
+  flex:none;background:var(--cyan);color:#0b1220;font-weight:800;font-size:.85rem;
+  padding:8px 14px;border-radius:999px;white-space:nowrap;
+}
+@media (max-width:639px){
+  .banner{flex-wrap:wrap;gap:10px}
+  .banner-chip{order:-1}
+}
+
+/* Быстрые действия */
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:26px 0 14px}
+.section-h h2{margin:0;font-size:1.3rem;letter-spacing:-.01em}
+.section-h a{font-size:.92rem;font-weight:600;white-space:nowrap}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px}
+.quick a{
+  display:flex;flex-direction:column;gap:10px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;box-shadow:var(--shadow);color:var(--ink);
+  transition:transform .15s,box-shadow .15s;
+}
+.quick a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);text-decoration:none}
+.quick .ic{
+  width:46px;height:46px;border-radius:14px;background:var(--cyan-soft);
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+}
+.quick b{font-size:1.02rem}
+.quick span{font-size:.85rem;color:var(--ink2);line-height:1.45}
+
+/* Лента новостей */
+.news{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:900px){
+  .news{grid-template-columns:1.05fr 1fr;align-items:start}
+  .featured{position:sticky;top:calc(var(--header-h) + 16px)}
+}
+.featured{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;color:var(--ink);
+  transition:box-shadow .15s,transform .15s;
+}
+.featured:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);text-decoration:none}
+.featured-media{
+  position:relative;aspect-ratio:16/8.5;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:4rem;
+}
+.media-chip{
+  position:absolute;top:14px;left:14px;background:rgba(255,255,255,.92);color:#17233b;
+  font-weight:800;font-size:.8rem;padding:7px 13px;border-radius:999px;
+}
+.media-chip.urgent{background:#fff1c9;color:#7a4b00}
+.featured-body{padding:18px 20px 20px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{
+  font-size:.78rem;font-weight:700;color:var(--cyan-deep);
+  background:var(--cyan-soft);padding:5px 11px;border-radius:999px;
+}
+.chip:hover{background:var(--cyan);color:#0b1220}
+.featured-body h3{margin:0 0 8px;font-size:1.32rem;line-height:1.35;letter-spacing:-.01em}
+.featured-body p{margin:0 0 14px;color:var(--ink2);font-size:.97rem}
+.meta{display:flex;align-items:center;gap:10px;color:var(--ink3);font-size:.85rem}
+.meta .dot{width:3px;height:3px;border-radius:50%;background:var(--ink3)}
+
+.news-list{display:flex;flex-direction:column;gap:10px}
+.row{
+  display:flex;gap:14px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:12px;box-shadow:var(--shadow);color:var(--ink);
+  transition:transform .15s,box-shadow .15s,background .15s;
+}
+.row:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);text-decoration:none}
+.row-th{
+  flex:none;width:66px;height:66px;border-radius:12px;background:var(--cyan-soft);
+  display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+}
+.row-th.g2{background:linear-gradient(135deg,#dcefff,#e3fbfe)}
+.row-t{flex:1;min-width:0}
+.row-t b{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:1rem;line-height:1.4;font-weight:600;
+}
+.row-t .meta{margin-top:4px}
+@media (max-width:899px){ .news-list{gap:12px} }
+
+/* Категории и архив */
+.cats{display:flex;flex-wrap:wrap;gap:8px}
+.cats a{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 15px;border-radius:999px;background:var(--card);
+  border:1px solid var(--line);color:var(--ink2);font-weight:600;font-size:.88rem;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.cats a:hover{background:var(--cyan-soft);color:var(--cyan-deep);border-color:var(--cyan);text-decoration:none}
+.cats a b{color:var(--ink3);font-weight:700;font-size:.8rem}
+.archives{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:12px 14px;margin-top:14px;
+}
+.archives .lbl{font-size:.85rem;color:var(--ink3);font-weight:600;margin-right:4px}
+.archives a{
+  padding:7px 13px;border-radius:10px;background:var(--cyan-soft);color:var(--cyan-deep);
+  font-weight:700;font-size:.88rem;
+}
+.archives a:hover{background:var(--cyan);color:#0b1220;text-decoration:none}
+
+/* ============ Футер ============ */
+.footer{border-top:1px solid var(--line);background:var(--card);padding:34px 0 30px;margin-top:12px}
+.footer-grid{display:grid;gap:28px;grid-template-columns:1fr}
+@media (min-width:900px){.footer-grid{grid-template-columns:1.3fr 1fr 1fr}}
+.footer h4{margin:0 0 10px;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3)}
+.footer p,.footer li{color:var(--ink2);font-size:.93rem}
+.footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.footer a{color:var(--ink2)}
+.footer a:hover{color:var(--cyan-deep)}
+.footer-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px;color:var(--ink)}
+.footer-brand svg{width:44px;height:44px;color:var(--ink)}
+.footer-brand b{font-size:1.1rem}
+.footer-bottom{
+  border-top:1px solid var(--line);margin-top:26px;padding-top:16px;
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;
+  color:var(--ink3);font-size:.83rem;
+}
+
+/* ============ Мобильная нижняя навигация ============ */
+.bottomnav{display:none}
+@media (max-width:639px){
+  body{padding-bottom:74px}
+  .bottomnav{
+    display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:50;
+    left:0;right:0;bottom:0;
+    background:color-mix(in srgb, var(--card) 92%, transparent);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+    padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+  }
+  .bottomnav a{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:8px 4px;border-radius:12px;color:var(--ink3);font-size:.7rem;font-weight:600;
+    min-height:44px;justify-content:center;
+  }
+  .bottomnav a .ic{font-size:1.35rem;line-height:1}
+  .bottomnav a:hover{text-decoration:none;background:var(--cyan-soft)}
+  .bottomnav a[aria-current="page"]{color:var(--cyan-deep)}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержанию</a>
+
+<!-- ================= Шапка ================= -->
+<header class="header">
+  <div class="container header-in">
+    <a class="brand" href="https://cnt-orbita.ru/" aria-label="СНТ «Орбита» — на главную">
+      <!-- Лого: стилизованный SVG-плейсхолдер нового логотипа (заменить на /orlogo.svg) -->
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <ellipse cx="32" cy="33" rx="27" ry="13.5" transform="rotate(-20 32 33)" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+        <circle cx="54.5" cy="20.5" r="3.4" fill="currentColor"/>
+        <path d="M15 44l1.7 3.9 4.2.5-3.1 2.9.9 4.2-3.7-2.1-3.7 2.1.9-4.2-3.1-2.9 4.2-.5z" fill="currentColor"/>
+        <path d="M24.5 40.5v-9.8L32 24l7.5 6.7v9.8h-15z" fill="currentColor"/>
+        <path d="M36.6 26.2h2.6v4.6l-2.6-2.3z" fill="currentColor"/>
+        <path d="M40 24c1.6-.8 1.8-2.2.8-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M30.2 40.5v-5.4h3.4v5.4z" fill="var(--card)"/>
+      </svg>
+      <span class="brand-t">
+        <span class="brand-name">СНТ «Орбита»</span>
+        <span class="brand-sub">Ломоносовский р-н, Лен. обл.</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="https://cnt-orbita.ru/" aria-current="page">Главная</a>
+      <a href="https://cnt-orbita.ru/post/">Новости</a>
+      <a href="https://cnt-orbita.ru/contacts/">Контакты</a>
+      <a href="https://cnt-orbita.ru/documents/">Документы</a>
+      <a href="https://cnt-orbita.ru/electro/">Электроэнергия</a>
+      <a href="https://cnt-orbita.ru/vznosy/">Взносы</a>
+    </nav>
+
+    <div class="actions" style="display:flex;gap:6px">
+      <button class="hbtn" id="searchBtn" aria-label="Поиск" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="hbtn" id="themeBtn" aria-label="Переключить тему">
+        <span id="themeIcon" style="font-size:1.1rem;line-height:1">☀️</span>
+      </button>
+      <button class="hbtn burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="searchbar" id="searchBar">
+    <div class="container searchbar-in">
+      <input type="search" placeholder="Поиск по сайту: взносы, собрание, дороги…" aria-label="Поиск по сайту">
+      <button class="btn" type="button">Найти</button>
+    </div>
+  </div>
+</header>
+
+<!-- Мобильное меню: полный список разделов -->
+<nav class="mobile-menu" id="mobileMenu" aria-label="Полное меню">
+  <a href="https://cnt-orbita.ru/"><span class="mm-emoji">🏠</span>Главная</a>
+  <a href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/"><span class="mm-emoji">🗳️</span>Голосование — 20 июня</a>
+  <a href="https://cnt-orbita.ru/post/"><span class="mm-emoji">📰</span>Новости и объявления</a>
+  <a href="https://cnt-orbita.ru/vznosy/"><span class="mm-emoji">💳</span>Взносы</a>
+  <a href="https://cnt-orbita.ru/electro/"><span class="mm-emoji">⚡</span>Электроэнергия</a>
+  <a href="https://cnt-orbita.ru/documents/"><span class="mm-emoji">📄</span>Документы</a>
+  <a href="https://cnt-orbita.ru/doroga-2025/"><span class="mm-emoji">🛣️</span>Дорога 2025</a>
+  <a href="https://cnt-orbita.ru/contacts/"><span class="mm-emoji">☎️</span>Контакты и реквизиты</a>
+  <a href="https://cnt-orbita.ru/archives/"><span class="mm-emoji">🗂️</span>Архивы</a>
+  <a href="https://cnt-orbita.ru/about/"><span class="mm-emoji">👨‍🌾</span>Правление</a>
+</nav>
+
+<!-- ================= Содержимое ================= -->
+<main id="main" class="container">
+
+  <!-- Срочное объявление -->
+  <a class="banner" href="https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/">
+    <span class="banner-ic" aria-hidden="true">📣</span>
+    <span class="banner-t">
+      <b>Приходите на голосование!</b>
+      <span>Выборы органов управления СНТ «Орбита» — важно участие каждого участка</span>
+    </span>
+    <span class="banner-chip">до 20 июня</span>
+  </a>
+
+  <!-- Быстрые действия -->
+  <section aria-label="Быстрые действия">
+    <div class="quick">
+      <a href="https://cnt-orbita.ru/vznosy/">
+        <span class="ic" aria-hidden="true">💳</span>
+        <b>Взносы</b>
+        <span>Сроки, размеры, реквизиты и порядок оплаты</span>
+      </a>
+      <a href="https://cnt-orbita.ru/electro/">
+        <span class="ic" aria-hidden="true">⚡</span>
+        <b>Электроэнергия</b>
+        <span>Тарифы, показания счётчиков, перерывы</span>
+      </a>
+      <a href="https://cnt-orbita.ru/documents/">
+        <span class="ic" aria-hidden="true">📄</span>
+        <b>Документы</b>
+        <span>Устав, протоколы собраний, сметы</span>
+      </a>
+      <a href="https://cnt-orbita.ru/contacts/">
+        <span class="ic" aria-hidden="true">☎️</span>
+        <b>Контакты</b>
+        <span>Правление, адрес, электронная почта</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Лента новостей -->
+  <div class="section-h">
+    <h2>Новости и объявления</h2>
+    <a href="https://cnt-orbita.ru/post/">Все новости →</a>
+  </div>
+
+  <div class="news">
+    <a class="featured" href="https://cnt-orbita.ru/p/vesennij-subbotnik-2026/">
+      <span class="featured-media" aria-hidden="true">
+        <span class="media-chip urgent">🧹 Субботник</span>
+        🌳
+      </span>
+      <span class="featured-body">
+        <span class="chips">
+          <span class="chip">Объявления</span>
+          <span class="chip">Собрания</span>
+        </span>
+        <h3>Весенний субботник: сделаем наше СНТ чище!</h3>
+        <p>Приглашаем всех на общее мероприятие: приведём в порядок общественные зоны, уберём листву и мусор. Инструменты и мешки — предоставляются.</p>
+        <span class="meta">
+          <span>24 мая 2026</span>
+          <span class="dot"></span>
+          <span>3 мин чтения</span>
+        </span>
+      </span>
+    </a>
+
+    <div class="news-list">
+      <a class="row" href="https://cnt-orbita.ru/p/itogi-soveshaniya-rabochey-gruppy-po-remontu-dorog/">
+        <span class="row-th" aria-hidden="true">🛣️</span>
+        <span class="row-t">
+          <b>Итоги совещания рабочей группы по ремонту дорог</b>
+          <span class="meta"><span>14 марта 2026</span><span class="dot"></span><span>Дороги</span></span>
+        </span>
+      </a>
+      <a class="row" href="https://cnt-orbita.ru/p/akciya-bessmertnyj-polk-v-snt-orbita/">
+        <span class="row-th g2" aria-hidden="true">🎖️</span>
+        <span class="row-t">
+          <b>Акция «Бессмертный полк» в СНТ «Орбита»</b>
+          <span class="meta"><span>8 мая 2026</span><span class="dot"></span><span>Память</span></span>
+        </span>
+      </a>
+      <a class="row" href="https://cnt-orbita.ru/p/sbor-pomoshchi-postradavshim-ot-pozhara-yuzhnaya-346/">
+        <span class="row-th" aria-hidden="true">🤝</span>
+        <span class="row-t">
+          <b>Сбор помощи пострадавшим от пожара на Южной, 346</b>
+          <span class="meta"><span>17 дек 2025</span><span class="dot"></span><span>Объявления</span></span>
+        </span>
+      </a>
+      <a class="row" href="https://cnt-orbita.ru/p/itogi-vyborov-predsedatelya-snt-orbita/">
+        <span class="row-th g2" aria-hidden="true">🗳️</span>
+        <span class="row-t">
+          <b>Итоги выборов Председателя СНТ «Орбита»</b>
+          <span class="meta"><span>10 нояб 2025</span><span class="dot"></span><span>Выборы</span></span>
+        </span>
+      </a>
+      <a class="row" href="https://cnt-orbita.ru/p/master-klass-mylo-varenie/">
+        <span class="row-th" aria-hidden="true">🎈</span>
+        <span class="row-t">
+          <b>Мастер-класс по мыловарению и аппликации из песка</b>
+          <span class="meta"><span>25 янв 2026</span><span class="dot"></span><span>Дети</span></span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Категории -->
+  <div class="section-h"><h2>Темы</h2></div>
+  <div class="cats">
+    <a href="https://cnt-orbita.ru/categories/новости/">Новости <b>38</b></a>
+    <a href="https://cnt-orbita.ru/categories/объявления/">Объявления <b>24</b></a>
+    <a href="https://cnt-orbita.ru/categories/собрания/">Собрания <b>12</b></a>
+    <a href="https://cnt-orbita.ru/categories/дороги/">Дороги <b>9</b></a>
+    <a href="https://cnt-orbita.ru/categories/электричество/">Электричество <b>7</b></a>
+    <a href="https://cnt-orbita.ru/categories/благоустройство/">Благоустройство <b>6</b></a>
+    <a href="https://cnt-orbita.ru/categories/выборы/">Выборы <b>5</b></a>
+    <a href="https://cnt-orbita.ru/categories/дети/">Дети и досуг <b>5</b></a>
+    <a href="https://cnt-orbita.ru/categories/безопасность/">Безопасность <b>4</b></a>
+    <a href="https://cnt-orbita.ru/categories/документы/">Документы <b>3</b></a>
+  </div>
+
+  <!-- Архив -->
+  <div class="archives">
+    <span class="lbl">Архив:</span>
+    <a href="https://cnt-orbita.ru/archives/">2026 · 10</a>
+    <a href="https://cnt-orbita.ru/archives/">2025 · 43</a>
+    <a href="https://cnt-orbita.ru/archives/">2024 · 11</a>
+    <a href="https://cnt-orbita.ru/archives/">2023 · 12</a>
+  </div>
+</main>
+
+<!-- ================= Футер ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <ellipse cx="32" cy="33" rx="27" ry="13.5" transform="rotate(-20 32 33)" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+            <circle cx="54.5" cy="20.5" r="3.4" fill="currentColor"/>
+            <path d="M15 44l1.7 3.9 4.2.5-3.1 2.9.9 4.2-3.7-2.1-3.7 2.1.9-4.2-3.1-2.9 4.2-.5z" fill="currentColor"/>
+            <path d="M24.5 40.5v-9.8L32 24l7.5 6.7v9.8h-15z" fill="currentColor"/>
+            <path d="M36.6 26.2h2.6v4.6l-2.6-2.3z" fill="currentColor"/>
+            <path d="M40 24c1.6-.8 1.8-2.2.8-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M30.2 40.5v-5.4h3.4v5.4z" fill="var(--card)"/>
+          </svg>
+          <b>СНТ «Орбита»</b>
+        </div>
+        <p>Садовое некоммерческое товарищество. Ленинградская область, Ломоносовский район, Виллозское городское поселение.</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <ul>
+          <li><a href="https://cnt-orbita.ru/post/">Новости</a></li>
+          <li><a href="https://cnt-orbita.ru/documents/">Документы</a></li>
+          <li><a href="https://cnt-orbita.ru/electro/">Электроэнергия</a></li>
+          <li><a href="https://cnt-orbita.ru/vznosy/">Взносы</a></li>
+          <li><a href="https://cnt-orbita.ru/archives/">Архив</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="mailto:info@cnt-orbita.ru">info@cnt-orbita.ru</a></li>
+          <li><a href="https://cnt-orbita.ru/contacts/">Правление и реквизиты</a></li>
+          <li><a href="https://cnt-orbita.ru/index.xml">RSS-лента</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2023–2026 СНТ «Орбита»</span>
+      <span>Прототип редизайна · Hugo + Stack theme</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Мобильная нижняя навигация -->
+<nav class="bottomnav" aria-label="Быстрая навигация">
+  <a href="https://cnt-orbita.ru/" aria-current="page"><span class="ic">🏠</span>Главная</a>
+  <a href="https://cnt-orbita.ru/post/"><span class="ic">📢</span>Объявления</a>
+  <a href="https://cnt-orbita.ru/vznosy/"><span class="ic">💳</span>Взносы</a>
+  <a href="https://cnt-orbita.ru/contacts/"><span class="ic">☎️</span>Контакты</a>
+</nav>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  /* Тема: localStorage + системная */
+  var saved=null;
+  try{saved=localStorage.getItem('orbita-theme')}catch(e){}
+  if(saved){root.dataset.theme=saved}
+  else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){root.dataset.theme='dark'}
+  var icon=document.getElementById('themeIcon');
+  function syncIcon(){icon.textContent=root.dataset.theme==='dark'?'☀️':'🌙'}
+  syncIcon();
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('orbita-theme',root.dataset.theme)}catch(e){}
+    syncIcon();
+  });
+  /* Поиск */
+  var sb=document.getElementById('searchBar'),sbtn=document.getElementById('searchBtn');
+  sbtn.addEventListener('click',function(){
+    sb.classList.toggle('open');
+    sbtn.setAttribute('aria-expanded',sb.classList.contains('open'));
+    if(sb.classList.contains('open')){var i=sb.querySelector('input');if(i)i.focus()}
+  });
+  /* Бургер-меню */
+  var mm=document.getElementById('mobileMenu'),bb=document.getElementById('burgerBtn');
+  bb.addEventListener('click',function(){
+    mm.classList.toggle('open');
+    bb.setAttribute('aria-expanded',mm.classList.contains('open'));
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){mm.classList.remove('open');bb.setAttribute('aria-expanded','false');sb.classList.remove('open')}
+  });
+})();
+</script>
+</body>
+</html>
