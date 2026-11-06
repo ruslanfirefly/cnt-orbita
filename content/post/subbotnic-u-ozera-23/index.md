@@ -3,8 +3,7 @@ title: Субботник на озере 10.06.23 в 11:00
 slug: subbotnic-u-ozera-23
 description: Приглашаем всех садоводов на субботник!
 date: '2023-06-02'
-categories:
-    - благоустройство
+categories: ["Дороги и благоустройство"]
 # aliases:
 #   - about-us
 #   - about-hugo
@@ -12,9 +11,6 @@ categories:
 # license: CC BY-NC-ND
 # lastmod: '2025-05-14'
 ---
-
-
-
 {{< figure src="image.png" alt="Приглашаем всех садоводов на субботник!" >}}
 
 ### 🧹 Ежегодный субботник у озера — 12 июня в 11:00

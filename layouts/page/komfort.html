@@ -1,0 +1,144 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Комфортная жизнь в СНТ</span>
+  </nav>
+
+  <!-- Шапка страницы -->
+  <section class="page-hero page-hero-grad">
+    <h1>Комфортная жизнь в СНТ «Орбита»</h1>
+    <p>Единое окно приёма электронных обращений садоводов, прозрачная таблица статусов выполнения заявок, правила внутреннего распорядка и регламенты благоустройства посёлка.</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход по разделу">
+      <a class="jump-pill" href="#appeal-online">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Отправить обращение
+      </a>
+      <a class="jump-pill" href="#status-table">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        Статусы заявок
+      </a>
+      <a class="jump-pill" href="#rules">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        Положения и правила
+      </a>
+    </div>
+  </section>
+
+  <!-- Онлайн-обращение и таблица статусов -->
+  <section class="sec-block" id="appeal-online" aria-labelledby="appealMainTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="appealMainTitle">Электронная приёмная Правления СНТ «Орбита»</h2>
+      <span class="sec-sub">Все обращения фиксируются в едином реестре и рассматриваются на заседаниях Правления</span>
+    </div>
+
+    <div class="appeal-box">
+      <div class="ab-text">
+        <h3 class="ab-title" style="margin: 0 0 6px;">Отправить обращение, заявку или предложение онлайн</h3>
+        <p class="ab-desc">Мы настроили приём обращений садоводов через онлайн-форму. Любое предложение, вопрос по инфраструктуре, освещению или дорогам можно отправить в Правление в пару кликов — все заявки фиксируются и не теряются.</p>
+      </div>
+      <div class="ab-actions">
+        <a class="btn-solid" href="https://forms.gle/VBFi8jxwGUGyLHwR9" target="_blank" rel="noopener">
+          Открыть форму приёма обращений ↗
+        </a>
+        <a class="btn-solid" href="https://docs.google.com/spreadsheets/d/1Q2NyoYwGBnp8Rw9oG3ys2UO2CBBw4DODBbgIaZzgtlw/edit?usp=sharing" target="_blank" rel="noopener">
+          Таблица с результатами и статусами ↗
+        </a>
+      </div>
+    </div>
+
+    <div class="tariff-grid" id="status-table" style="margin-top: 18px;">
+      <div class="tariff-card highlight">
+        <span class="t-badge">Шаг 1 · Подача заявки</span>
+        <div class="t-name">Заполните онлайн-форму</div>
+        <div class="t-price" style="font-size: 1.35rem;">Google Форма</div>
+        <p class="t-note">Укажите номер вашего участка, контактный телефон и суть вопроса или предложения. <a href="https://forms.gle/VBFi8jxwGUGyLHwR9" target="_blank" rel="noopener" style="color: var(--cyan-deep); font-weight: 700;">Перейти к форме →</a></p>
+      </div>
+
+      <div class="tariff-card highlight">
+        <span class="t-badge">Шаг 2 · Контроль исполнения</span>
+        <div class="t-name">Отслеживайте статус в таблице</div>
+        <div class="t-price" style="font-size: 1.35rem;">Google Таблица</div>
+        <p class="t-note">Все поступившие обращения, ответственные лица и результаты обработки открыто отображаются в <a href="https://docs.google.com/spreadsheets/d/1Q2NyoYwGBnp8Rw9oG3ys2UO2CBBw4DODBbgIaZzgtlw/edit?usp=sharing" target="_blank" rel="noopener" style="color: var(--cyan-deep); font-weight: 700;">таблице статусов →</a></p>
+      </div>
+
+      <div class="tariff-card">
+        <span class="t-badge">Шаг 3 · Регламент</span>
+        <div class="t-name">Положение о приёме заявок</div>
+        <div class="t-price" style="font-size: 1.35rem;">Стандарт СНТ</div>
+        <p class="t-note">Ознакомьтесь с проектом регламента системной обратной связи с садоводами: <a href="https://docs.google.com/document/d/1oOaJH-HjSoumCB89Da9hd01DEcfqakgS_HWqh5R1oGg/edit?tab=t.0" target="_blank" rel="noopener" style="color: var(--cyan-deep); font-weight: 700;">открыть проект положения →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Положения и правила комфортного проживания -->
+  <section class="sec-block" id="rules" aria-labelledby="rulesTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="rulesTitle">Положения и правила добрососедства в СНТ «Орбита»</h2>
+      <span class="sec-sub">Нормативные документы товарищества для комфортной и безопасной жизни</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext docx">DOC</div>
+          <div>
+            <div class="doc-name">Проект положения о порядке приёма и рассмотрения заявок садоводов</div>
+            <div class="doc-desc">Системный регламент обратной связи: сроки регистрации, рассмотрения обращений Правлением и публикации ответов.</div>
+            <div class="doc-meta">Google Документ · Проект к общему собранию</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="https://docs.google.com/document/d/1oOaJH-HjSoumCB89Da9hd01DEcfqakgS_HWqh5R1oGg/edit?tab=t.0" target="_blank" rel="noopener">
+          Открыть документ ↗
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Правила внутреннего распорядка СНТ «Орбита»</div>
+            <div class="doc-desc">Режим тишины, содержание участков и канав, правила выгула домашних животных и пожарной безопасности.</div>
+            <div class="doc-meta">Файл: pravila_rasporadka.pdf · Утверждено собранием</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/documents/pravila/pravila_rasporadka.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Положение о въезде грузового транспорта и работе шлагбаума</div>
+            <div class="doc-desc">Ограничения по тоннажу в период весенней просушки дорог и правила пропуска спецтехники на территорию СНТ.</div>
+            <div class="doc-meta">Файл: polozhenie_o_ts.pdf · Дороги и шлагбаум</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/documents/pravila/polozhenie_o_ts.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Все документы и бланки СНТ «Орбита»</div>
+            <div class="doc-desc">Перейти в полный архив документов: Устав, сметы, бланки доверенностей и протоколы собраний.</div>
+            <div class="doc-meta">Раздел /documents/</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/documents/" | relURL }}">
+          Все документы →
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

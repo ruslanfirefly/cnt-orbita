@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Поиск по сайту, новостям и документам — СНТ «Орбита»</title>
+<meta name="description" content="Быстрый поиск по новостям, протоколам собраний, документам, бланкам и справочным разделам СНТ «Орбита»." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;700;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root,
+  html[data-theme="light"] {
+    --bg:         #f4f6fa;
+    --bg-elev:    #ffffff;
+    --bg-soft:    #eef2f7;
+    --ink:        #0f172a;
+    --ink2:       #3e4c5e;
+    --ink3:       #4b5d78;
+    --line:       #d8e1ee;
+    --line-strong:#bac8dc;
+
+    --navy:       #17233b;
+    --navy-2:     #1e293b;
+    --cyan:       #06b6d4;
+    --cyan-deep:  #0a5c75;
+    --cyan-soft:  #e0f7fa;
+
+    --green:      #15803d;
+    --green-soft: #dcfce7;
+    --amber:      #b45309;
+    --amber-soft: #fef3c7;
+    --danger:     #b91c1c;
+    --danger-soft:#fee2e2;
+
+    --card-tint-blue:  #f0f9ff;
+    --card-tint-amber: #fffbeb;
+    --card-tint-green: #f0fdf4;
+    --card-tint-slate: #f8fafc;
+
+    --shadow-xs:  0 1px 2px rgba(15, 23, 42, .05);
+    --shadow-sm:  0 4px 14px rgba(15, 23, 42, .06);
+    --shadow-md:  0 14px 34px -8px rgba(15, 23, 42, .12);
+    --header-bg:  rgba(255, 255, 255, .94);
+    --grad-hero:  linear-gradient(135deg, #17233b 0%, #0f3f5c 100%);
+  }
+
+  html[data-theme="dark"] {
+    --bg:         #0b1120;
+    --bg-elev:    #131c31;
+    --bg-soft:    #1c2842;
+    --ink:        #f8fafc;
+    --ink2:       #cbd5e1;
+    --ink3:       #94a3b8;
+    --line:       #263554;
+    --line-strong:#384d78;
+
+    --navy:       #38bdf8;
+    --navy-2:     #0f172a;
+    --cyan:       #22d3ee;
+    --cyan-deep:  #67e8f9;
+    --cyan-soft:  #11293d;
+
+    --green:      #4ade80;
+    --green-soft: #0f291e;
+    --amber:      #fbbf24;
+    --amber-soft: #2e2111;
+    --danger:     #f87171;
+    --danger-soft:#2d1418;
+
+    --card-tint-blue:  #112236;
+    --card-tint-amber: #241d12;
+    --card-tint-green: #0f241d;
+    --card-tint-slate: #17223b;
+
+    --shadow-xs:  0 1px 2px rgba(0, 0, 0, .35);
+    --shadow-sm:  0 6px 18px rgba(0, 0, 0, .4);
+    --shadow-md:  0 18px 40px -10px rgba(0, 0, 0, .6);
+    --header-bg:  rgba(19, 28, 49, .94);
+    --grad-hero:  linear-gradient(135deg, #1e293b 0%, #093549 100%);
+  }
+
+  html { font-size: 100%; scroll-behavior: smooth; }
+  html[data-font="large"] { font-size: 114%; }
+  @media (max-width: 420px) {
+    html[data-font="large"] { font-size: 109%; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Golos Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color .2s ease, color .2s ease;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  :focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 2px;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ============ HEADER ============ */
+  .header {
+    position: sticky; top: 0; z-index: 60;
+    background: var(--header-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-in {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 74px; gap: 12px; padding: 8px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; min-width: 0; flex-shrink: 0; }
+  .brand-logo {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: #17233b;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-xs);
+    flex-shrink: 0; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .brand-logo svg { width: 38px; height: 38px; display: block; }
+  .brand-title {
+    font-family: 'Onest', sans-serif;
+    font-weight: 800; font-size: 1.06rem;
+    letter-spacing: -0.02em; line-height: 1.15;
+    color: var(--ink); white-space: nowrap;
+  }
+  .brand-sub {
+    font-size: .78rem; color: var(--ink3); font-weight: 500;
+    display: block; margin-top: 2px; white-space: nowrap;
+  }
+
+  .nav { display: flex; align-items: center; gap: 2px; flex-wrap: nowrap; }
+  .nav a, .nav-more-btn {
+    padding: 9px 11px; border-radius: 9px;
+    font-size: .9rem; font-weight: 600; color: var(--ink2);
+    transition: background .15s, color .15s;
+    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .nav a:hover, .nav-more-btn:hover { background: var(--bg-soft); color: var(--ink); }
+  .nav a.active, .nav-more-btn[aria-expanded="true"] { background: var(--cyan-soft); color: var(--cyan-deep); font-weight: 700; }
+
+  .actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .emergency-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 13px; border-radius: 10px;
+    background: var(--green-soft); color: var(--green);
+    font-size: .85rem; font-weight: 700;
+    border: 1px solid rgba(21,128,61,.25);
+    transition: transform .15s; white-space: nowrap;
+  }
+  .emergency-pill:hover { transform: translateY(-1px); }
+  .emergency-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--green);
+    display: inline-block; flex-shrink: 0;
+  }
+
+  .hbtn {
+    min-width: 44px; height: 44px; border-radius: 10px;
+    padding: 0 10px;
+    background: var(--bg-soft); border: 1px solid var(--line);
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    color: var(--ink2); transition: all .15s; flex-shrink: 0;
+    font-weight: 700; font-size: .88rem;
+  }
+  .hbtn:hover { border-color: var(--cyan); color: var(--ink); background: var(--bg-elev); }
+  .hbtn[aria-pressed="true"], .hbtn[aria-expanded="true"] {
+    background: var(--cyan-soft); color: var(--cyan-deep); border-color: var(--cyan);
+  }
+  .hbtn svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .hbtn-burger { display: none; }
+
+  .theme-icon-sun { display: none; }
+  .theme-icon-moon { display: block; }
+  html[data-theme="dark"] .theme-icon-sun { display: block; }
+  html[data-theme="dark"] .theme-icon-moon { display: none; }
+
+  .menu-backdrop {
+    display: none; position: fixed; inset: 0; top: 74px;
+    background: rgba(15, 23, 42, .45); backdrop-filter: blur(2px); z-index: 48;
+  }
+  .menu-backdrop.open { display: block; }
+
+  .mobile-menu {
+    display: none; position: relative; z-index: 50;
+    background: var(--bg-elev); border-bottom: 2px solid var(--line-strong);
+    padding: 18px 0 24px; box-shadow: var(--shadow-md);
+    max-height: calc(100vh - 76px); overflow-y: auto;
+  }
+  .mobile-menu.open { display: block; }
+  .mm-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  .mm-title { font-family: 'Onest', sans-serif; font-size: .95rem; font-weight: 800; color: var(--ink); }
+  .mm-sub { font-size: .8rem; color: var(--ink3); }
+  .mm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .mobile-menu a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px; border-radius: 12px;
+    font-weight: 600; font-size: .92rem; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    min-height: 48px; transition: border-color .15s, background .15s;
+  }
+  .mobile-menu a:hover { border-color: var(--cyan); background: var(--bg-elev); }
+  .mobile-menu a svg { width: 18px; height: 18px; color: var(--cyan-deep); flex-shrink: 0; }
+  .mm-badge {
+    margin-left: auto; font-size: .72rem; font-weight: 700;
+    padding: 2px 7px; border-radius: 6px;
+    background: var(--cyan-soft); color: var(--cyan-deep); white-space: nowrap;
+  }
+
+  /* ============ BREADCRUMBS ============ */
+  .breadcrumbs {
+    padding: 18px 0 8px;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    font-size: .86rem; color: var(--ink3); font-weight: 500;
+  }
+  .breadcrumbs a {
+    color: var(--ink2); font-weight: 600;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 8px; border-radius: 7px;
+    background: var(--bg-elev); border: 1px solid var(--line);
+    transition: border-color .15s, color .15s;
+  }
+  .breadcrumbs a:hover { border-color: var(--cyan); color: var(--cyan-deep); }
+  .breadcrumbs svg { width: 14px; height: 14px; color: var(--ink3); flex-shrink: 0; }
+
+  /* ============ SEARCH HERO BOX ============ */
+  .search-hero {
+    margin: 8px 0 20px;
+    padding: 26px 28px;
+    border-radius: 20px;
+    background: var(--grad-hero);
+    color: #ffffff;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .search-hero::before {
+    content: ""; position: absolute; right: -40px; top: -60px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,211,238,.2) 0%, rgba(34,211,238,0) 70%);
+    pointer-events: none;
+  }
+  .sh-title {
+    font-family: 'Onest', sans-serif;
+    font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+    font-weight: 800; line-height: 1.2; letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .sh-sub {
+    font-size: .95rem; color: rgba(255,255,255,.86);
+    margin-bottom: 18px;
+  }
+
+  .search-form-main {
+    display: flex; gap: 10px; position: relative; z-index: 1;
+  }
+  .search-input-wrap {
+    flex: 1; position: relative; display: flex; align-items: center;
+  }
+  .search-input-wrap > svg {
+    position: absolute; left: 16px; width: 22px; height: 22px;
+    color: #4b5d78; pointer-events: none;
+  }
+  .search-main-input {
+    width: 100%; min-height: 54px;
+    padding: 12px 46px 12px 48px;
+    border-radius: 14px;
+    border: 2px solid rgba(255,255,255,.3);
+    background: #ffffff; color: #0f172a;
+    font-size: 1.05rem; font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,0,0,.18);
+  }
+  .search-main-input::placeholder { color: #64748b; font-weight: 500; }
+  .search-main-input:focus { outline: none; border-color: #22d3ee; }
+  .search-clear-btn {
+    position: absolute; right: 10px;
+    width: 34px; height: 34px; border-radius: 8px;
+    background: #eef2f7; color: #3e4c5e;
+    display: none; align-items: center; justify-content: center;
+    font-weight: 800; font-size: .95rem;
+  }
+  .search-clear-btn.visible { display: inline-flex; }
+  .search-clear-btn:hover { background: #d8e1ee; color: #0f172a; }
+
+  .search-submit-btn {
+    padding: 0 24px; min-height: 54px; border-radius: 14px;
+    background: #22d3ee; color: #0f172a;
+    font-weight: 800; font-size: .96rem;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    white-space: nowrap; transition: transform .15s, background .15s;
+  }
+  .search-submit-btn:hover { background: #67e8f9; transform: translateY(-1px); }
+
+  /* Quick query chips */
+  .quick-queries {
+    margin-top: 14px;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    position: relative; z-index: 1;
+  }
+  .qq-label {
+    font-size: .82rem; font-weight: 700; color: rgba(255,255,255,.8);
+    margin-right: 4px;
+  }
+  .qq-chip {
+    padding: 6px 12px; border-radius: 99px;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.26);
+    color: #ffffff; font-size: .83rem; font-weight: 600;
+    transition: background .15s, border-color .15s;
+  }
+  .qq-chip:hover {
+    background: rgba(255,255,255,.25);
+    border-color: #67e8f9;
+  }
+
+  /* ============ TYPE TABS + COUNTER ============ */
+  .results-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .type-tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .type-tab {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 14px; min-height: 42px;
+    border-radius: 11px;
+    background: var(--bg-elev); border: 1px solid var(--line);
+    font-size: .88rem; font-weight: 700; color: var(--ink2);
+    transition: all .15s;
+  }
+  .type-tab:hover { border-color: var(--cyan); color: var(--ink); }
+  .type-tab.active {
+    background: var(--cyan-soft); color: var(--cyan-deep);
+    border-color: var(--cyan);
+  }
+  .type-tab-count {
+    font-size: .75rem; font-weight: 800;
+    padding: 2px 7px; border-radius: 99px;
+    background: var(--bg-soft); color: var(--ink3);
+  }
+  .type-tab.active .type-tab-count {
+    background: rgba(6, 182, 212, .2); color: var(--cyan-deep);
+  }
+
+  .results-status {
+    font-size: .9rem; font-weight: 600; color: var(--ink3);
+  }
+  .results-status strong { color: var(--ink); font-weight: 800; }
+
+  /* ============ SEARCH RESULT CARDS ============ */
+  .results-list {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-bottom: 32px;
+  }
+  .res-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow-xs);
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 18px;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+  }
+  .res-card:hover {
+    border-color: var(--cyan);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .res-body { flex: 1; min-width: 0; }
+  .res-meta {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 6px; font-size: .8rem; color: var(--ink3); font-weight: 600;
+  }
+  .res-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px; border-radius: 6px;
+    font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .03em;
+  }
+  .res-badge.news { background: var(--cyan-soft); color: var(--cyan-deep); }
+  .res-badge.doc { background: var(--amber-soft); color: var(--amber); }
+  .res-badge.page { background: var(--green-soft); color: var(--green); }
+
+  .res-title {
+    font-family: 'Onest', sans-serif;
+    font-size: 1.08rem; font-weight: 800; line-height: 1.32;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .res-title a:hover { color: var(--cyan-deep); }
+  .res-snippet {
+    font-size: .92rem; color: var(--ink2); line-height: 1.52;
+  }
+  .res-tags {
+    margin-top: 10px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .res-tag {
+    font-size: .76rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 6px;
+    background: var(--bg-soft); color: var(--ink3);
+    border: 1px solid var(--line);
+  }
+
+  .res-action {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 14px; min-height: 44px;
+    border-radius: 10px;
+    background: var(--bg-soft); border: 1px solid var(--line);
+    color: var(--cyan-deep); font-weight: 700; font-size: .85rem;
+    white-space: nowrap; flex-shrink: 0; align-self: center;
+    transition: all .15s;
+  }
+  .res-card:hover .res-action {
+    background: var(--cyan-soft); border-color: var(--cyan);
+  }
+  .res-action svg { width: 17px; height: 17px; }
+
+  mark {
+    background: #fef08a; color: #0f172a;
+    padding: 0 3px; border-radius: 4px; font-weight: 700;
+  }
+
+  /* Empty state */
+  .empty-box {
+    display: none;
+    background: var(--bg-elev);
+    border: 1px dashed var(--line-strong);
+    border-radius: 18px;
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .empty-box.show { display: block; }
+  .empty-title {
+    font-family: 'Onest', sans-serif;
+    font-size: 1.2rem; font-weight: 800; color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .empty-sub {
+    font-size: .92rem; color: var(--ink2); max-width: 540px; margin: 0 auto 18px;
+  }
+  .empty-links {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
+  }
+  .empty-links a {
+    padding: 10px 16px; border-radius: 10px;
+    background: var(--cyan-soft); color: var(--cyan-deep);
+    font-weight: 700; font-size: .88rem;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    margin-top: 32px;
+    background: #0f172a; color: #cbd5e1;
+    padding: 40px 0 32px;
+    border-top: 1px solid var(--line);
+  }
+  .foot-grid {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 28px;
+    padding-bottom: 26px; border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .foot-title {
+    font-family: 'Onest', sans-serif; font-weight: 700; color: #fff;
+    font-size: .95rem; margin-bottom: 12px;
+  }
+  .foot-list { list-style: none; display: grid; gap: 8px; font-size: .86rem; }
+  .foot-list a { color: #cbd5e1; transition: color .15s; }
+  .foot-list a:hover { color: #38bdf8; }
+  .foot-bottom {
+    padding-top: 20px; display: flex; justify-content: space-between;
+    font-size: .8rem; color: #94a3b8; flex-wrap: wrap; gap: 10px;
+  }
+
+  /* ============ STICKY MOBILE BOTTOM NAV ============ */
+  .bottomnav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+    background: var(--header-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+  }
+  .bottomnav a, .bottomnav button {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; padding: 6px 2px; border-radius: 10px;
+    font-size: .75rem; font-weight: 700; color: var(--ink3);
+    min-height: 48px; line-height: 1.1;
+  }
+  .bottomnav a.active, .bottomnav button[aria-expanded="true"] {
+    color: var(--cyan-deep); background: var(--cyan-soft);
+  }
+  .bottomnav svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  @media (max-width: 1180px) { .brand-sub { display: none; } }
+  @media (max-width: 1040px) { .emergency-pill { display: none; } }
+  @media (max-width: 960px) {
+    .nav { display: none; }
+    .hbtn-burger { display: inline-flex; }
+    .mm-grid { grid-template-columns: repeat(2, 1fr); }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 639px) {
+    body { padding-bottom: 76px; }
+    .wrap { padding: 0 16px; }
+    .header-in { min-height: 64px; gap: 8px; }
+    .menu-backdrop { top: 64px; }
+    .mobile-menu { padding-bottom: 92px; }
+    .mm-grid { grid-template-columns: 1fr; }
+    .search-hero { padding: 20px 18px; }
+    .search-form-main { flex-direction: column; }
+    .search-submit-btn { width: 100%; }
+    .res-card { flex-direction: column; align-items: stretch; gap: 12px; }
+    .res-action { width: 100%; justify-content: center; }
+    .foot-grid { grid-template-columns: 1fr; gap: 22px; }
+    .bottomnav { display: grid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="wrap header-in">
+    <a href="orbita-redesign.html" class="brand" aria-label="СНТ Орбита — на главную">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#f59f0a" d="M359.35 129.88C367.35 128.43 375.56 128.57 383.27 128.27C397.81 127.7 411.15 128.34 425.38 131.69C430.57 132.91 446.63 137.04 449.94 140.9C430.72 139.2 411.88 136.69 392.54 139.22C340.59 146.01 290.89 167.26 249.68 199.48C225.81 218.14 202.98 242.44 191.51 271.13C183.73 290.59 183.86 309.59 197.88 326.54C219.99 353.26 259.65 361.49 292.55 362.53C388.24 365.54 503.9 334.61 564.11 253.68C577.79 235.29 586.58 210.97 572.34 190.15C562.23 175.37 543.52 164.59 527.51 157.16C545.14 162.88 564.52 170.39 579.66 181.36C596.3 193.41 610.33 211.79 606.85 233.68C603.42 255.28 587.64 274.88 573.17 290.14C520.9 345.28 439.96 376.43 366.2 388.2C300.78 398.65 215.72 396.26 164.08 347.92C143.76 328.91 135.87 302.99 146.79 276.62C155.83 254.78 175.87 234.5 193.36 219.15C240.32 177.96 297.72 141.07 359.35 129.88z"/>
+          <path fill="#ffffff" d="M312.69 224.21L414.2 325.73L390.54 349.68L312.95 272.24L235.34 349.71L211.66 325.77L312.69 224.21z"/>
+          <path fill="#ffffff" d="M300.72 299.13C306.82 299.64 323.51 298.48 325.49 301.29C327.06 303.52 326.74 321.11 325.56 324.49C323.7 325.27 298.81 325.23 298.81 324.49L298.78 301.18L300.72 299.13z"/>
+          <path fill="#ffffff" d="M325.56 332.98L325.63 358.38L298.74 358.38L298.81 332.98L325.56 332.98z"/>
+          <path fill="#ffffff" d="M366.85 352.97L366.77 355.02C349.4 359.17 330.6 358.59 312.83 358.5C294.75 358.41 275.34 359.14 257.69 354.78L257.62 321.4L290.16 289.26L290.02 355.29L334.43 355.28L334.28 289.15L366.85 321.37L366.85 352.97z"/>
+          <path fill="#f59f0a" d="M167.26 393.36C228.59 434.29 317.87 424.94 386.6 409.61C437.95 398.16 489.18 377.49 533.17 348.55C542.6 342.34 551.81 335.56 560.75 328.66C554.77 338.88 545.05 348.21 536.12 355.81C482.57 401.36 408.25 429.93 339.4 441.48C268.23 453.42 162.82 448.14 114.61 385.64C98.9 365.27 94.08 339.59 102.63 315.05C110.27 293.12 126.9 271.56 143.11 255.29C135.42 267.97 125.92 281.25 122.97 296.08C115.61 333.13 137.54 373.52 167.26 393.36z"/>
+          <path fill="#ffffff" d="M366.77 355.02L366.73 358.38L334.43 358.38L334.43 355.28L366.77 355.02z"/>
+          <path fill="#ffffff" d="M290.02 355.29L290.02 358.38L257.72 358.38L257.69 354.78L290.02 355.29z"/>
+        </svg>
+      </span>
+      <span>
+        <span class="brand-title">СНТ «Орбита»</span>
+        <span class="brand-sub">Малое Карлино · Ломоносовский р-н</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="orbita-redesign.html">Главная</a>
+      <a href="orbita-news-list.html">Новости</a>
+      <a href="orbita-documents.html">Документы и Правление</a>
+      <a href="orbita-search.html" class="active">Поиск</a>
+      <button class="nav-more-btn" id="allSectionsBtn" type="button" aria-expanded="false" aria-controls="mobileMenu">
+        Все разделы (10)
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </nav>
+
+    <div class="actions">
+      <a class="emergency-pill" href="tel:+79219670642" title="Позвонить в Правление СНТ «Орбита»">
+        <span class="emergency-dot"></span>
+        <span>Правление: +7 (921) 967-06-42</span>
+      </a>
+
+      <button class="hbtn" id="fontBtn" type="button" aria-pressed="false" aria-label="Увеличить размер шрифта" title="Крупный шрифт для чтения (А+)">
+        А+
+      </button>
+
+      <button class="hbtn" id="themeBtn" type="button" aria-label="Переключить светлую или тёмную тему" title="Тема оформления">
+        <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+
+      <button class="hbtn hbtn-burger" id="burgerBtn" type="button" aria-label="Открыть меню разделов" aria-expanded="false" aria-controls="mobileMenu">
+        <span id="burgerIconSlot" style="display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu" aria-label="Каталог всех разделов СНТ Орбита">
+    <div class="wrap">
+      <div class="mm-head">
+        <div>
+          <div class="mm-title">Все разделы сайта СНТ «Орбита»</div>
+          <div class="mm-sub">Быстрый переход к шаблонам и страницам</div>
+        </div>
+      </div>
+      <div class="mm-grid">
+        <a href="orbita-redesign.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Главная страница
+        </a>
+        <a href="orbita-news-list.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Все новости и архив
+          <span class="mm-badge">76 записей</span>
+        </a>
+        <a href="orbita-article.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          Пример статьи (Протокол №31)
+          <span class="mm-badge">Шаблон</span>
+        </a>
+        <a href="orbita-documents.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Документы, Правление и Свет
+          <span class="mm-badge">Справочник</span>
+        </a>
+        <a href="orbita-search.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          Умный поиск по сайту
+          <span class="mm-badge">Текущая</span>
+        </a>
+        <a href="https://cnt-orbita.ru/vznosy/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Взносы и реквизиты
+          <span class="mm-badge">Сверка оплат</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+
+<main class="wrap">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="orbita-redesign.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Главная
+    </a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    <span>Поиск по сайту, новостям и документам</span>
+  </nav>
+
+  <!-- SEARCH HERO -->
+  <section class="search-hero" aria-label="Поиск по сайту">
+    <h1 class="sh-title">Умный поиск по СНТ «Орбита»</h1>
+    <p class="sh-sub">Ищите сразу по новостям, протоколам собраний, PDF-бланкам, тарифам и телефонам служб.</p>
+
+    <form class="search-form-main" id="searchForm" onsubmit="return false;">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input
+          type="search"
+          id="searchInput"
+          class="search-main-input"
+          placeholder="Например: реквизиты, доверенность, тариф свет, кандидаты, дорога..."
+          autocomplete="off"
+          aria-label="Поисковый запрос"
+        />
+        <button type="button" class="search-clear-btn" id="clearSearchBtn" aria-label="Очистить поиск" title="Очистить">✕</button>
+      </div>
+      <button type="submit" class="search-submit-btn">
+        Найти
+      </button>
+    </form>
+
+    <div class="quick-queries" aria-label="Частые запросы садоводов">
+      <span class="qq-label">Часто ищут:</span>
+      <button type="button" class="qq-chip" data-query="реквизиты">Реквизиты и ИНН</button>
+      <button type="button" class="qq-chip" data-query="тариф">Тариф на свет</button>
+      <button type="button" class="qq-chip" data-query="доверенность">Бланк доверенности</button>
+      <button type="button" class="qq-chip" data-query="устав">Устав СНТ</button>
+      <button type="button" class="qq-chip" data-query="кандидат">Кандидаты 2026</button>
+      <button type="button" class="qq-chip" data-query="дорога">Ремонт дороги</button>
+      <button type="button" class="qq-chip" data-query="пожар">Пожарная безопасность</button>
+    </div>
+  </section>
+
+  <!-- TYPE FILTER TABS + COUNTER -->
+  <div class="results-toolbar">
+    <div class="type-tabs" id="typeTabs" role="tablist" aria-label="Тип материалов">
+      <button type="button" class="type-tab active" data-type="all">
+        Все результаты <span class="type-tab-count" id="countAll">12</span>
+      </button>
+      <button type="button" class="type-tab" data-type="news">
+        Новости и объявления <span class="type-tab-count" id="countNews">6</span>
+      </button>
+      <button type="button" class="type-tab" data-type="doc">
+        Документы и бланки PDF <span class="type-tab-count" id="countDoc">4</span>
+      </button>
+      <button type="button" class="type-tab" data-type="page">
+        Разделы и контакты <span class="type-tab-count" id="countPage">2</span>
+      </button>
+    </div>
+
+    <div class="results-status" id="resultsStatus">
+      Найдено материалов: <strong>12</strong>
+    </div>
+  </div>
+
+  <!-- RESULTS CONTAINER -->
+  <div class="results-list" id="resultsList"></div>
+
+  <!-- EMPTY FALLBACK -->
+  <div class="empty-box" id="emptyBox">
+    <div class="empty-title">По вашему запросу точных совпадений не найдено</div>
+    <p class="empty-sub">Попробуйте ввести более короткое слово или выберите один из ключевых разделов СНТ «Орбита» ниже:</p>
+    <div class="empty-links">
+      <a href="orbita-documents.html">Документы, Правление и тарифы</a>
+      <a href="orbita-news-list.html">Архив всех новостей</a>
+      <a href="https://cnt-orbita.ru/vznosy/">Реквизиты и оплата взносов</a>
+      <a href="tel:+79219670642">Позвонить в Правление: +7 (921) 967-06-42</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-title">СНТ «Орбита»</div>
+        <p style="font-size:.86rem; color:#94a3b8; line-height:1.6;">
+          188508, Ленинградская обл., Ломоносовский р-н, Виллозское ГП,<br>
+          д. Малое Карлино, тер. СНТ «Орбита»<br>
+          ИНН 4720008674 · КПП 472501001 · Председатель: Витер А. Д.
+        </p>
+      </div>
+      <div>
+        <div class="foot-title">Шаблоны страниц Hugo</div>
+        <ul class="foot-list">
+          <li><a href="orbita-redesign.html">Главная страница (index.html)</a></li>
+          <li><a href="orbita-news-list.html">Список новостей и архив (list.html)</a></li>
+          <li><a href="orbita-article.html">Страница статьи (single.html)</a></li>
+          <li><a href="orbita-documents.html">Документы и Правление (page.html)</a></li>
+          <li><a href="orbita-search.html">Умный поиск (search.html)</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-title">Документы</div>
+        <ul class="foot-list">
+          <li><a href="https://cnt-orbita.ru/documents/ustav/ustav.pdf">Устав СНТ «Орбита» (PDF)</a></li>
+          <li><a href="https://cnt-orbita.ru/documents/docs/doverka.docx">Бланк доверенности (DOCX)</a></li>
+          <li><a href="https://cnt-orbita.ru/documents/">ФЭО и сметы 2023–2026</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-title">Связь с правлением</div>
+        <ul class="foot-list">
+          <li><a href="tel:+79219670642">+7 (921) 967-06-42 (Сб 12:00–14:00)</a></li>
+          <li><a href="mailto:sntorbita56@yandex.ru">sntorbita56@yandex.ru</a></li>
+          <li><a href="https://max.ru/id4720008674_biz" target="_blank" rel="noopener">Канал СНТ в мессенджере MAX</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 СНТ «Орбита». Официальный информационный портал садоводства.</span>
+      <span>Поиск работает мгновенно по JSON-индексу Hugo</span>
+    </div>
+  </div>
+</footer>
+
+<nav class="bottomnav" aria-label="Быстрое мобильное меню">
+  <a href="orbita-redesign.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    Главная
+  </a>
+  <a href="orbita-news-list.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Новости
+  </a>
+  <a href="orbita-documents.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+    Документы
+  </a>
+  <a href="orbita-search.html" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    Поиск
+  </a>
+  <button type="button" id="bottomMenuBtn" aria-expanded="false" aria-controls="mobileMenu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    Меню
+  </button>
+</nav>
+
+<script>
+  (function() {
+    var root = document.documentElement;
+    var themeBtn = document.getElementById('themeBtn');
+    var fontBtn = document.getElementById('fontBtn');
+    var savedTheme = localStorage.getItem('orbita-theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      root.setAttribute('data-theme', savedTheme);
+    }
+    themeBtn.addEventListener('click', function() {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('orbita-theme', next);
+    });
+
+    var savedFont = localStorage.getItem('orbita-font');
+    if (savedFont === 'large') {
+      root.setAttribute('data-font', 'large');
+      fontBtn.setAttribute('aria-pressed', 'true');
+    }
+    fontBtn.addEventListener('click', function() {
+      var isLarge = root.getAttribute('data-font') === 'large';
+      if (isLarge) {
+        root.removeAttribute('data-font');
+        fontBtn.setAttribute('aria-pressed', 'false');
+        localStorage.setItem('orbita-font', 'normal');
+      } else {
+        root.setAttribute('data-font', 'large');
+        fontBtn.setAttribute('aria-pressed', 'true');
+        localStorage.setItem('orbita-font', 'large');
+      }
+    });
+
+    var burgerBtn = document.getElementById('burgerBtn');
+    var burgerIconSlot = document.getElementById('burgerIconSlot');
+    var bottomMenuBtn = document.getElementById('bottomMenuBtn');
+    var allSectionsBtn = document.getElementById('allSectionsBtn');
+    var mobileMenu = document.getElementById('mobileMenu');
+    var menuBackdrop = document.getElementById('menuBackdrop');
+
+    var iconBars = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+    var iconClose = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+    function setMenuState(open) {
+      mobileMenu.classList.toggle('open', open);
+      menuBackdrop.classList.toggle('open', open);
+      burgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (bottomMenuBtn) bottomMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (allSectionsBtn) allSectionsBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burgerIconSlot.innerHTML = open ? iconClose : iconBars;
+    }
+
+    burgerBtn.addEventListener('click', function() { setMenuState(!mobileMenu.classList.contains('open')); });
+    if (bottomMenuBtn) bottomMenuBtn.addEventListener('click', function() { setMenuState(!mobileMenu.classList.contains('open')); });
+    if (allSectionsBtn) allSectionsBtn.addEventListener('click', function() { setMenuState(!mobileMenu.classList.contains('open')); });
+    menuBackdrop.addEventListener('click', function() { setMenuState(false); });
+
+    // Demo Hugo JSON search index (in Hugo generated via layouts/index.searchindex.json)
+    var SEARCH_INDEX = [
+      {
+        type: 'page',
+        badge: 'Раздел · Финансы',
+        date: 'Обновлено 2026',
+        title: 'Взносы, банковские реквизиты СНТ «Орбита» и таблица сверки оплат',
+        snippet: 'ИНН 4720008674, КПП 472501001, расчётный счёт 40703810155240000156 в Северо-Западном банке ПАО Сбербанк, БИК 044030653. Квитанция с QR-кодом СБП и онлайн-таблица проверки оплаты взносов по номеру участка.',
+        tags: ['реквизиты', 'взносы', 'инн', 'сбп', 'qr', 'оплата'],
+        url: 'https://cnt-orbita.ru/vznosy/',
+        actionText: 'Открыть реквизиты'
+      },
+      {
+        type: 'page',
+        badge: 'Раздел · Справочник',
+        date: 'Тарифы с 01.07.2025',
+        title: 'Электроэнергия: тарифы АО «ПСК», передача показаний и телефон Ленэнерго',
+        snippet: 'Тарифы на электроэнергию в СНТ «Орбита» (1 диапазон до 1500 кВт·ч): День (Т1) — 7,25 ₽/кВт·ч, Ночь (Т2) — 3,95 ₽/кВт·ч, одноставочный — 6,59 ₽/кВт·ч. Передача показаний с 1 по 25 число: 8 (812) 678-96-00. Аварийная Ленэнерго: 8 (800) 220-02-20.',
+        tags: ['тариф', 'свет', 'электроэнергия', 'пск', 'показания', 'ленэнерго'],
+        url: 'orbita-documents.html#electro',
+        actionText: 'Тарифы и телефоны'
+      },
+      {
+        type: 'doc',
+        badge: 'Документ · DOCX (24 КБ)',
+        date: 'Официальный бланк',
+        title: 'Бланк доверенности на голосование на общем собрании СНТ «Орбита»',
+        snippet: 'Официальный шаблон доверенности (doverka.docx) для представления интересов собственника садового участка на очередном и внеочередном общем собрании членов СНТ.',
+        tags: ['доверенность', 'бланк', 'собрание', 'голосование', 'документы'],
+        url: 'https://cnt-orbita.ru/documents/docs/doverka.docx',
+        actionText: 'Скачать DOCX'
+      },
+      {
+        type: 'doc',
+        badge: 'Документ · PDF (1.4 МБ)',
+        date: 'Действующая редакция',
+        title: 'Устав Садоводческого некоммерческого товарищества «Орбита»',
+        snippet: 'Полный текст действующего Устава СНТ «Орбита» (ustav.pdf), права и обязанности членов товарищества, порядок созыва общих собраний, работы Правления и Ревизионной комиссии.',
+        tags: ['устав', 'документы', 'правила', 'правление'],
+        url: 'https://cnt-orbita.ru/documents/ustav/ustav.pdf',
+        actionText: 'Скачать PDF'
+      },
+      {
+        type: 'news',
+        badge: 'Новость · Собрания и выборы',
+        date: '20 июня 2026',
+        title: 'Начало голосования на очередном общем собрании членов СНТ «Орбита» 2026',
+        snippet: 'С 20 июня по 3 июля 2026 (до 20:00) проходит заочная часть голосования по вопросам повестки дня и выборам органов управления. Очная часть состоится 4 июля 2026 с 12:00 у здания Правления.',
+        tags: ['голосование', 'собрание', 'бюллетень', 'выборы', '2026'],
+        url: 'https://cnt-orbita.ru/p/nachalo-golosovaniya-2026/',
+        actionText: 'Читать объявление'
+      },
+      {
+        type: 'news',
+        badge: 'Новость · Протокол №31',
+        date: '5 июня 2026',
+        title: 'Утверждён список кандидатов в органы управления СНТ «Орбита» на 2026 год',
+        snippet: 'Протоколом заседания Правления №31 утверждён итоговый список кандидатов на должность Председателя товарищества (Витер А.Д.), в члены Правления и в Ревизионную комиссию.',
+        tags: ['кандидаты', 'протокол', 'выборы', 'правление', 'витер'],
+        url: 'orbita-article.html',
+        actionText: 'Открыть протокол'
+      },
+      {
+        type: 'doc',
+        badge: 'Документ · PDF (680 КБ)',
+        date: 'Положение СНТ',
+        title: 'Правила внутреннего распорядка и Положение о въезде грузового транспорта',
+        snippet: 'Режим тишины, правила содержания участков и дорог общего пользования, порядок пропуска большегрузного транспорта через шлагбаум СНТ «Орбита» в весенне-осенний период.',
+        tags: ['правила', 'шлагбаум', 'грузовой транспорт', 'тишина', 'документы'],
+        url: 'orbita-documents.html',
+        actionText: 'Открыть документ'
+      },
+      {
+        type: 'news',
+        badge: 'Новость · Дороги и благоустройство',
+        date: '14 марта 2026',
+        title: 'Дорога 2025–2026: целевой сбор и отчёт рабочей группы по ремонту 520 м въезда',
+        snippet: 'Сравнение вариантов ремонта подъездной дороги (334 участка, 450 автомобилей): асфальтовая крошка 1,8 млн ₽ и горячий асфальт 4,1 млн ₽. Коммерческие предложения подрядчиков и таблица сбора средств.',
+        tags: ['дорога', 'ремонт', 'асфальт', 'крошка', 'целевой сбор'],
+        url: 'https://cnt-orbita.ru/p/sbor-sredstv-na-remont-dorogi-2025/',
+        actionText: 'Сметы и таблица'
+      },
+      {
+        type: 'doc',
+        badge: 'Документ · PDF (510 КБ)',
+        date: 'Сметы и ФЭО',
+        title: 'Приходно-расходные сметы и финансово-экономическое обоснование (ФЭО) взносов',
+        snippet: 'Утверждённые сметы доходов и расходов СНТ «Орбита» и расчёт размера членского и целевого взноса с квадратного метра участка.',
+        tags: ['смета', 'фэо', 'взносы', 'бюджет', 'отчет'],
+        url: 'orbita-documents.html',
+        actionText: 'Смотреть сметы'
+      },
+      {
+        type: 'news',
+        badge: 'Новость · Пожарная безопасность',
+        date: '30 апреля 2026',
+        title: 'Особый противопожарный режим в весенне-летний период: памятка МЧС садоводам',
+        snippet: 'Требования к сжиганию сухой травы, установке мангалов, содержанию пожарных проездов и наличию бочек с водой или огнетушителя на каждом участке.',
+        tags: ['пожар', 'мчс', 'безопасность', 'мангал', 'штраф'],
+        url: 'https://cnt-orbita.ru/p/fire-safety-may-2026/',
+        actionText: 'Читать памятку'
+      },
+      {
+        type: 'news',
+        badge: 'Новость · Важное и срочное',
+        date: '17 декабря 2025',
+        title: 'Пожар на Южной линии, участок 346 — сбор посильной помощи пострадавшим соседям',
+        snippet: 'Реквизиты и контакты для оказания помощи семье садоводов после пожара на Южной линии, уч. 346.',
+        tags: ['пожар', 'помощь', 'южная 346'],
+        url: 'https://cnt-orbita.ru/p/pozhar-yuzhnaya-346-pomosh/',
+        actionText: 'Реквизиты помощи'
+      },
+      {
+        type: 'news',
+        badge: 'Новость · Правление и отчёты',
+        date: '10 ноября 2025',
+        title: 'Итоги внеочередного собрания и выборов Председателя СНТ «Орбита»',
+        snippet: 'Опубликован итоговый протокол счётной комиссии по результатам голосования садоводов в ноябре 2025 года.',
+        tags: ['итоги', 'выборы', 'председатель', 'протокол'],
+        url: 'https://cnt-orbita.ru/p/itogi-vyborov-predsedatelya-11-2025/',
+        actionText: 'Итоги протокола'
+      }
+    ];
+
+    var searchInput = document.getElementById('searchInput');
+    var clearSearchBtn = document.getElementById('clearSearchBtn');
+    var resultsList = document.getElementById('resultsList');
+    var resultsStatus = document.getElementById('resultsStatus');
+    var emptyBox = document.getElementById('emptyBox');
+    var typeTabs = document.querySelectorAll('.type-tab');
+    var activeType = 'all';
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, function(ch) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+      });
+    }
+
+    function highlightText(text, query) {
+      var safe = escapeHtml(text);
+      if (!query) return safe;
+      var words = query.trim().split(/\s+/).filter(function(w) { return w.length >= 2; });
+      if (!words.length) return safe;
+      var pattern = words.map(function(w) {
+        return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }).join('|');
+      var re = new RegExp('(' + pattern + ')', 'gi');
+      return safe.replace(re, '<mark>$1</mark>');
+    }
+
+    function renderResults() {
+      var q = (searchInput.value || '').trim().toLowerCase();
+      clearSearchBtn.classList.toggle('visible', q.length > 0);
+
+      var matchedByQuery = SEARCH_INDEX.filter(function(item) {
+        if (!q) return true;
+        var hay = (item.title + ' ' + item.snippet + ' ' + item.tags.join(' ') + ' ' + item.badge).toLowerCase();
+        var words = q.split(/\s+/);
+        return words.every(function(w) { return hay.indexOf(w) !== -1; });
+      });
+
+      var counts = { all: matchedByQuery.length, news: 0, doc: 0, page: 0 };
+      matchedByQuery.forEach(function(it) {
+        if (counts[it.type] !== undefined) counts[it.type]++;
+      });
+
+      document.getElementById('countAll').textContent = counts.all;
+      document.getElementById('countNews').textContent = counts.news;
+      document.getElementById('countDoc').textContent = counts.doc;
+      document.getElementById('countPage').textContent = counts.page;
+
+      var filtered = matchedByQuery.filter(function(it) {
+        return activeType === 'all' || it.type === activeType;
+      });
+
+      resultsStatus.innerHTML = 'Найдено материалов: <strong>' + filtered.length + '</strong>';
+
+      if (!filtered.length) {
+        resultsList.innerHTML = '';
+        emptyBox.classList.add('show');
+        return;
+      }
+
+      emptyBox.classList.remove('show');
+      resultsList.innerHTML = filtered.map(function(item) {
+        var tagsHtml = item.tags.map(function(t) {
+          return '<span class="res-tag">#' + escapeHtml(t) + '</span>';
+        }).join('');
+
+        return (
+          '<article class="res-card">' +
+            '<div class="res-body">' +
+              '<div class="res-meta">' +
+                '<span class="res-badge ' + item.type + '">' + escapeHtml(item.badge) + '</span>' +
+                '<span>' + escapeHtml(item.date) + '</span>' +
+              '</div>' +
+              '<h2 class="res-title"><a href="' + item.url + '">' + highlightText(item.title, q) + '</a></h2>' +
+              '<p class="res-snippet">' + highlightText(item.snippet, q) + '</p>' +
+              '<div class="res-tags">' + tagsHtml + '</div>' +
+            '</div>' +
+            '<a class="res-action" href="' + item.url + '">' +
+              escapeHtml(item.actionText) +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>' +
+            '</a>' +
+          '</article>'
+        );
+      }).join('');
+    }
+
+    searchInput.addEventListener('input', renderResults);
+    clearSearchBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      searchInput.focus();
+      renderResults();
+    });
+
+    document.querySelectorAll('.qq-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        searchInput.value = chip.getAttribute('data-query') || '';
+        activeType = 'all';
+        typeTabs.forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-type') === 'all'); });
+        renderResults();
+      });
+    });
+
+    typeTabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        typeTabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        activeType = tab.getAttribute('data-type');
+        renderResults();
+      });
+    });
+
+    // Read ?q= from URL if passed from header search
+    var params = new URLSearchParams(window.location.search);
+    var initialQ = params.get('q');
+    if (initialQ) {
+      searchInput.value = initialQ;
+    }
+    renderResults();
+  })();
+</script>
+</body>
+</html>

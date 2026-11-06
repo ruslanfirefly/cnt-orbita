@@ -1,0 +1,89 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Электроэнергия и тарифы</span>
+  </nav>
+
+  <!-- Шапка страницы -->
+  <section class="page-hero page-hero-grad">
+    <h1>Электроэнергия в СНТ «Орбита»</h1>
+    <p>Актуальные тарифы АО «Петербургская сбытовая компания» (ПСК), правила передачи показаний, диапазоны потребления и экстренные телефоны при отключении света.</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход">
+      <a class="jump-pill" href="#tariffs">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Тарифная сетка
+      </a>
+      <a class="jump-pill" href="#pokazaniya">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        Передача показаний
+      </a>
+      <a class="jump-pill" href="tel:88002200220">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Аварийная: 8 (800) 220-02-20
+      </a>
+    </div>
+  </section>
+
+  <!-- Сетка базовых тарифов (1-й диапазон) -->
+  <section class="sec-block" id="tariffs" aria-labelledby="tariffsTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="tariffsTitle">Тарифы АО «ПСК» на электроэнергию (с 1 июля 2025 г.)</h2>
+      <span class="sec-sub">1-й диапазон потребления (до 1500 кВт·ч/мес на участок)</span>
+    </div>
+
+    <div class="tariff-grid">
+      <div class="tariff-card highlight">
+        <span class="t-badge">Двухтарифный · День (Т1)</span>
+        <div class="t-name">Дневная зона (07:00 – 23:00)</div>
+        <div class="t-price">7,25 ₽ <small>/ кВт·ч</small></div>
+        <p class="t-note">Действует для садоводов с двухтарифными приборами учёта в Ленинградской области.</p>
+      </div>
+
+      <div class="tariff-card highlight">
+        <span class="t-badge">Двухтарифный · Ночь (Т2)</span>
+        <div class="t-name">Ночная зона (23:00 – 07:00)</div>
+        <div class="t-price">3,95 ₽ <small>/ кВт·ч</small></div>
+        <p class="t-note">Льготный ночной тариф для водонагревателей, электроотопления и бытовой техники.</p>
+      </div>
+
+      <div class="tariff-card">
+        <span class="t-badge">Одноставочный тариф</span>
+        <div class="t-name">Круглосуточно единый</div>
+        <div class="t-price">6,59 ₽ <small>/ кВт·ч</small></div>
+        <p class="t-note">Применяется при однотарифном счётчике без разделения на дневную и ночную зоны.</p>
+      </div>
+    </div>
+
+    <!-- Плашка действий: ЛК, телефон, аварийная -->
+    <div class="electro-ActionBar" id="pokazaniya">
+      <div class="eab-info">
+        <div class="eab-title">Передача показаний счётчиков — ежемесячно с 1 по 25 число</div>
+        <div class="eab-sub">Поставщик: АО «Петербургская сбытовая компания» (ПСК). При аварии на сетях или обрыве проводов звоните круглосуточно в «Россети Ленэнерго».</div>
+      </div>
+      <div class="eab-btns">
+        <a class="btn-solid" href="{{ site.Params.snt.pskCabinetUrl | default "https://ikus.pesc.ru/auth/login" }}" target="_blank" rel="noopener">
+          Личный кабинет ПСК
+        </a>
+        <a class="btn-solid" href="tel:88126789600">
+          ПСК: 8 (812) 678-96-00
+        </a>
+        <a class="btn-danger-soft" href="tel:88002200220">
+          Аварийная Ленэнерго: 8 (800) 220-02-20
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Полный справочный текст из content/page/electro/index.md -->
+  <section class="sec-block">
+    <div class="article-card">
+      <div class="prose">
+        {{ .Content }}
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

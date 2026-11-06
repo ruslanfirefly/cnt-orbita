@@ -1,0 +1,87 @@
+{{- $req := .Site.Params.requisites -}}
+{{- if and $req $req.enabled -}}
+<div class="modal-backdrop" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="qrModalTitle">Оплата взносов СНТ «Орбита»</h3>
+      <button class="modal-close" type="button" aria-label="Закрыть окно реквизитов">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="qr-box">
+      <img src="{{ $req.qrImageUrl | default "/vznosy/qr-oplata.png" | relURL }}" alt="QR-код для оплаты взносов СНТ «Орбита» через приложение банка" width="200" height="200" loading="lazy">
+      <div style="font-size:0.88rem;color:var(--ink2);line-height:1.4">
+        <b>Отсканируйте камерой смартфона</b> в мобильном приложении любого банка (Сбер, Т-Банк, ВТБ) для автоматического заполнения реквизитов.
+      </div>
+    </div>
+
+    <table class="req-table" aria-label="Банковские реквизиты товарищества">
+      <tbody>
+        <tr>
+          <th>Получатель</th>
+          <td>
+            <span>СНТ «Орбита»</span>
+            <button class="copy-btn" type="button" data-copy="СНТ «Орбита»" data-label="Получатель">Копировать</button>
+          </td>
+        </tr>
+        <tr>
+          <th>ИНН</th>
+          <td>
+            <span>{{ $req.inn }}</span>
+            <button class="copy-btn" type="button" data-copy="{{ $req.inn }}" data-label="ИНН">Копировать</button>
+          </td>
+        </tr>
+        <tr>
+          <th>КПП</th>
+          <td>
+            <span>{{ $req.kpp }}</span>
+            <button class="copy-btn" type="button" data-copy="{{ $req.kpp }}" data-label="КПП">Копировать</button>
+          </td>
+        </tr>
+        <tr>
+          <th>Расчётный счёт</th>
+          <td>
+            <span>{{ $req.account }}</span>
+            <button class="copy-btn" type="button" data-copy="{{ $req.account }}" data-label="Расчётный счёт">Копировать</button>
+          </td>
+        </tr>
+        <tr>
+          <th>Банк</th>
+          <td>
+            <span>{{ $req.bank }}</span>
+            <button class="copy-btn" type="button" data-copy="{{ $req.bank }}" data-label="Банк">Копировать</button>
+          </td>
+        </tr>
+        <tr>
+          <th>БИК</th>
+          <td>
+            <span>{{ $req.bik }}</span>
+            <button class="copy-btn" type="button" data-copy="{{ $req.bik }}" data-label="БИК">Копировать</button>
+          </td>
+        </tr>
+        <tr>
+          <th>Корр. счёт</th>
+          <td>
+            <span>{{ $req.corrAccount }}</span>
+            <button class="copy-btn" type="button" data-copy="{{ $req.corrAccount }}" data-label="Корр. счёт">Копировать</button>
+          </td>
+        </tr>
+        <tr>
+          <th>Назначение</th>
+          <td>
+            <span>{{ $req.purposeTemplate }}</span>
+            <button class="copy-btn" type="button" data-copy="{{ $req.purposeTemplate }}" data-label="Назначение платежа">Копировать</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="font-size:0.84rem;color:var(--ink3);line-height:1.45;background:var(--bg);padding:10px 14px;border-radius:10px">
+      ⚠️ <b>Важно:</b> при оплате обязательно указывайте номер вашего дачного участка и ФИО собственника для корректного зачисления бухгалтерией.
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">✓ Скопировано в буфер обмена</div>
+{{- end -}}

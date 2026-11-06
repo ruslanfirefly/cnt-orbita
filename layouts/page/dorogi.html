@@ -1,0 +1,291 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">{{ .Title }}</span>
+  </nav>
+
+  <!-- Шапка страницы -->
+  <section class="page-hero page-hero-grad">
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description | default "Целевой сбор средств на ремонт 520 метров подъездной дороги перед шлагбаумом, отчёты рабочей группы, коммерческие предложения подрядчиков и онлайн-табло сбора." }}</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход по разделу дорог">
+      <a class="jump-pill" href="#campaign">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19 8 5"/><path d="m16 5 4 14"/><path d="M12 5v2"/><path d="M12 11v2"/><path d="M12 17v2"/></svg>
+        Варианты ремонта и табло
+      </a>
+      <a class="jump-pill" href="#progress">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Отчёты рабочей группы
+      </a>
+      <a class="jump-pill" href="#kp-docs">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        Коммерческие предложения (6 PDF)
+      </a>
+      <a class="jump-pill" href="#requisites">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        Как сделать взнос
+      </a>
+      <a class="jump-pill" href="#news">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
+        Новости по дорогам
+      </a>
+    </div>
+  </section>
+
+  <!-- 1. ВАРИАНТЫ РЕМОНТА И ОНЛАЙН-ТАБЛО СБОРА -->
+  <section class="sec-block" id="campaign" aria-labelledby="campaignTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="campaignTitle">Ремонт 520 метров подъездной дороги перед шлагбаумом</h2>
+      <span class="sec-sub">По данным СКУД на КПП через нашу дорогу зарегистрирован проезд 450 автомобилей</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="tariff-card highlight">
+        <span class="t-badge">Вариант №1 · Бюджетный</span>
+        <div class="t-name">Покрытие «Асфальтовая крошка»</div>
+        <div class="t-price">1,8 млн ₽</div>
+        <p class="t-note"><b>Материал:</b> асфальтовая крошка из-под фрезы.<br><b>Результат:</b> значительное улучшение качества дороги, долговечное покрытие.</p>
+      </div>
+
+      <div class="tariff-card highlight">
+        <span class="t-badge">Вариант №2 · Идеальный</span>
+        <div class="t-name">Покрытие «Качественный асфальт»</div>
+        <div class="t-price">4,1 млн ₽</div>
+        <p class="t-note"><b>Материал:</b> плотная мелкозернистая асфальтобетонная смесь.<br><b>Результат:</b> идеально ровное, долговечное и надёжное покрытие на многие годы.</p>
+      </div>
+    </div>
+
+    <div class="callout warn" role="note" style="margin-top: 16px;">
+      <div class="callout-ic" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      </div>
+      <div>
+        <b>Обратите внимание</b>
+        Если не наберём нужную сумму — проведём ремонт своими силами на собранные средства, но результат будет хуже. Любая сумма важна — даже небольшой вклад приближает начало работ!
+      </div>
+    </div>
+
+    <!-- Онлайн-табло и цветовая визуализация вклада -->
+    <div class="electro-ActionBar">
+      <div class="eab-info">
+        <div class="eab-title">Онлайн-табло сбора средств и материалы рабочей группы</div>
+        <div class="eab-sub">На онлайн-табло в реальном времени отображается ход сбора средств по участкам (До 5 000 ₽ — сиреневый, 5 000–10 000 ₽ — зелёный, 10 000–20 000 ₽ — жёлтый, от 20 000 ₽ — красный).</div>
+      </div>
+      <div class="eab-btns">
+        <a class="btn-solid" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQIAtTVOffxTP3PZHrxP-zTb0TQK9IaShjw69BxhFSOJacvy0GipmqK5t4Gt7YDOVqaGFYWpGkY_tKt/pubhtml?gid=100213383&single=true" target="_blank" rel="noopener">
+          Открыть онлайн-табло сбора ↗
+        </a>
+        <a class="btn-solid" href="https://drive.google.com/drive/folders/1O5-lOxspgdbG2SDy0bHKat0onprBXs-V" target="_blank" rel="noopener">
+          Google Drive — Материалы по дорогам ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ОТЧЁТЫ РАБОЧЕЙ ГРУППЫ -->
+  <section class="sec-block" id="progress" aria-labelledby="progressTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="progressTitle">Собрания и отчёты рабочей группы по ремонту дорог</h2>
+      <span class="sec-sub">Принятые решения и проделанная работа</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext docx">20.12</div>
+          <div>
+            <div class="doc-name">Собрание рабочей группы 20 декабря 2025 г.</div>
+            <div class="doc-desc">За счёт добровольных взносов завезено 594 куб. м асфальтовой крошки по цене 30 520 ₽ за машину (22 куб. м). Экономия за счёт зимней закупки составила не менее 400 тыс. ₽. Расчищена площадка перед шлагбаумом.</div>
+            <div class="doc-meta">Отчёт от 22.12.2025 · 594 куб. м асфальтовой крошки</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/p/rabochaya-gruppa-dorogi-20-12-25/" | relURL }}">
+          Читать отчёт →
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext xls">14.03</div>
+          <div>
+            <div class="doc-name">Совещание рабочей группы 14 марта 2026 г.</div>
+            <div class="doc-desc">Определён порядок работ на участке от «звезды» до шлагбаума: профилирование ям силами трактора СНТ, закупка крупного щебня и ЩПС, анализ заявок подрядчиков на конец мая.</div>
+            <div class="doc-meta">Отчёт от 14.03.2026 · План весенне-летних работ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/p/rabochaya-gruppa-dorogi-14-03-26/" | relURL }}">
+          Читать итоги →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. КОММЕРЧЕСКИЕ ПРЕДЛОЖЕНИЯ ПОДРЯДЧИКОВ -->
+  <section class="sec-block" id="kp-docs" aria-labelledby="kpDocsTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="kpDocsTitle">Коммерческие предложения подрядчиков (6 PDF)</h2>
+      <span class="sec-sub">Предложения специализированных организаций, рассмотренные Правлением</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ООО «Мертон» — вариант «Асфальт»</div>
+            <div class="doc-desc">Коммерческое предложение на ремонт подъездной дороги с асфальтовым покрытием.</div>
+            <div class="doc-meta">Файл: option1asfalt.pdf · 412 КБ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/docs/dorogi/option1asfalt.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ООО «Мертон» — вариант «Асфальтовая крошка»</div>
+            <div class="doc-desc">Коммерческое предложение на ремонт подъездной дороги с покрытием из асфальтовой крошки.</div>
+            <div class="doc-meta">Файл: option1kroshka.pdf · 413 КБ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/docs/dorogi/option1kroshka.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ИП Айвазян В.Д. — вариант «Асфальт»</div>
+            <div class="doc-desc">Коммерческое предложение на ремонт подъездной дороги с асфальтовым покрытием.</div>
+            <div class="doc-meta">Файл: option2asfalt.pdf · 83 КБ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/docs/dorogi/option2asfalt.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ИП Айвазян В.Д. — вариант «Асфальтовая крошка»</div>
+            <div class="doc-desc">Коммерческое предложение на ремонт подъездной дороги с покрытием из асфальтовой крошки.</div>
+            <div class="doc-meta">Файл: option2kroshka.pdf · 84 КБ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/docs/dorogi/option2kroshka.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ИП Серобян Ш.Л. — вариант «Асфальт»</div>
+            <div class="doc-desc">Коммерческое предложение на ремонт подъездной дороги с асфальтовым покрытием.</div>
+            <div class="doc-meta">Файл: option3asfalt.pdf · 181 КБ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/docs/dorogi/option3asfalt.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ИП Серобян Ш.Л. — вариант «Асфальтовая крошка»</div>
+            <div class="doc-desc">Коммерческое предложение на ремонт подъездной дороги с покрытием из асфальтовой крошки.</div>
+            <div class="doc-meta">Файл: option3kroshka.pdf · 175 КБ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/docs/dorogi/option3kroshka.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. КАК СДЕЛАТЬ ВЗНОС -->
+  <section class="sec-block" id="requisites" aria-labelledby="reqDorogiTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="reqDorogiTitle">Как сделать целевой взнос на ремонт дороги</h2>
+      <span class="sec-sub">Взносы принимаются официально на расчётный счёт СНТ (никаких личных счетов)</span>
+    </div>
+
+    <div class="callout info" role="note" style="margin-bottom: 18px;">
+      <div class="callout-ic" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      </div>
+      <div>
+        <b>Обязательно укажите назначение платежа</b>
+        При переводе обязательно укажите в поле назначения платежа: <strong>«Целевой взнос на ремонт подъездной дороги, уч. № ___»</strong>.
+        <div style="margin-top: 10px;">
+          <button class="req-pill copy-btn" type="button" data-copy="Целевой взнос на ремонт подъездной дороги, уч. № " data-label="Назначение платежа (дорога)">
+            <span>Скопировать:</span> <b>Целевой взнос на ремонт подъездной дороги, уч. № ___</b>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {{ partial "payment-card.html" . }}
+  </section>
+
+  <!-- 5. ВСЕ НОВОСТИ И ОТЧЁТЫ ПО ДОРОГАМ -->
+  <section class="sec-block" id="news" aria-labelledby="newsDorogiTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="newsDorogiTitle">Все публикации по теме дорог</h2>
+      <span class="sec-sub">Новости и отчёты рабочей группы по ремонту дорог</span>
+    </div>
+
+    {{ $monthsShort := dict "1" "янв" "2" "фев" "3" "мар" "4" "апр" "5" "май" "6" "июн" "7" "июл" "8" "авг" "9" "сен" "10" "окт" "11" "ноя" "12" "дек" }}
+    {{ $allPosts := where site.RegularPages "Type" "in" (slice "post" "posts") }}
+    <div class="post-list">
+      {{ range $allPosts }}
+        {{ $cats := delimit (.Params.categories | default slice) " " | lower }}
+        {{ if or (in $cats "дорог") (in $cats "dorogi") }}
+          <a class="post-card sec-block" href="{{ .RelPermalink }}">
+            <div class="post-date-box" aria-hidden="true">
+              <span class="d-day">{{ .Date.Format "02" }}</span>
+              <span class="d-mon">{{ index $monthsShort (.Date.Format "1") }}</span>
+              <span class="d-year">{{ .Date.Format "2006" }}</span>
+            </div>
+            <div class="post-body">
+              <div class="post-tags">
+                {{ with .Params.categories }}
+                  {{ range first 2 . }}
+                    <span class="p-tag">{{ . }}</span>
+                  {{ end }}
+                {{ end }}
+              </div>
+              <h2>{{ .Title }}</h2>
+              <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 180 }}{{ end }}</p>
+            </div>
+            <span class="post-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+</div>
+{{ end }}

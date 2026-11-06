@@ -1,0 +1,146 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Полоса экстренной связи для мобильных экранов -->
+  {{ partial "emergency-strip.html" . }}
+
+  <!-- Главный баннер важного события / голосования -->
+  {{ partial "hero-banner.html" . }}
+
+  <!-- Справочная сводка инфраструктуры (свет, мусор, приём правления) -->
+  {{ partial "status-bar.html" . }}
+
+  <!-- Сетка сервисов и карточка быстрой оплаты СБП -->
+  <section aria-label="Основные разделы и сервисы СНТ">
+    {{ partial "quick-grid.html" . }}
+    {{ partial "payment-card.html" . }}
+  </section>
+
+  <!-- Блок новостей и объявлений -->
+  {{ $posts := where site.RegularPages "Type" "in" (slice "post" "posts") }}
+  {{ $featured := first 1 (where $posts "Params.featured" true) }}
+  {{ if not $featured }}
+    {{ $featured = first 1 $posts }}
+  {{ end }}
+  {{ $featuredPage := index $featured 0 }}
+  {{ $remaining := where $posts "Permalink" "ne" $featuredPage.Permalink }}
+  {{ $topList := first 5 $remaining }}
+
+  <div class="section-h">
+    <h2>Новости и объявления СНТ «Орбита»</h2>
+    <a href="{{ "/archives/" | relURL }}">
+      Все публикации в архиве
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="news">
+    {{ with $featuredPage }}
+      <a class="featured" href="{{ .RelPermalink }}">
+        <div class="featured-art">
+          {{ $img := .Resources.GetMatch "*{cover,image,header}*" }}
+          {{ if $img }}
+            {{ $thumb := $img.Fill "800x450 Center webp" }}
+            <img src="{{ $thumb.RelPermalink }}" alt="{{ $.Title }}" class="featured-art-img" loading="eager" width="800" height="450">
+          {{ else }}
+            <div class="featured-art-bg" aria-hidden="true"></div>
+            <div class="featured-event-card">
+              <span class="featured-event-lbl">{{ with .Params.protocol }}Протокол №{{ . }}{{ else }}СНТ «Орбита»{{ end }}</span>
+              <span class="featured-event-date">{{ .Title }}</span>
+              <span class="featured-event-place">{{ with .Params.subtitle }}{{ . }}{{ else }}Официальное сообщение{{ end }}</span>
+            </div>
+            <div class="featured-art-center" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+            </div>
+          {{ end }}
+        </div>
+        <div class="featured-body">
+          <div class="chips">
+            {{ with .Params.categories }}{{ range first 2 . }}<span class="chip">{{ . }}</span>{{ end }}{{ end }}
+          </div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 220 }}{{ end }}</p>
+          <div class="meta">
+            <span>{{ .Date.Format "02.01.2006" }}</span>
+            {{ with .Params.protocol }}
+              <span class="dot" aria-hidden="true"></span>
+              <span>Протокол №{{ . }}</span>
+            {{ end }}
+          </div>
+        </div>
+      </a>
+    {{ end }}
+
+    <!-- Список свежих публикаций -->
+    <div class="news-list">
+      {{ range $topList }}
+        {{ $primaryCat := index .Params.categories 0 | default "" }}
+        {{ range .Params.categories }}
+          {{ if and (eq $primaryCat "Праздники и жизнь СНТ") (ne . "Праздники и жизнь СНТ") }}
+            {{ $primaryCat = . }}
+          {{ end }}
+        {{ end }}
+        {{ $cat := lower $primaryCat }}
+        {{ $isUrgent := or .Params.urgent (in $cat "важное") (in $cat "пожар") (in $cat "срочн") }}
+        <a class="row{{ if $isUrgent }} row-urgent{{ end }}" href="{{ .RelPermalink }}">
+          {{ if or (in $cat "пожар") (in $cat "безопасн") (in $cat "мчс") }}
+            <div class="row-ic amber" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+          {{ else if or (in $cat "электро") (in $cat "тариф") (in $cat "свет") }}
+            <div class="row-ic" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+          {{ else if or (in $cat "дорог") (in $cat "ремонт") }}
+            <div class="row-ic" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19 8 5"/><path d="m16 5 4 14"/><path d="M12 5v2"/><path d="M12 11v2"/><path d="M12 17v2"/></svg>
+            </div>
+          {{ else if or (in $cat "субботник") (in $cat "жизнь") (in $cat "памят") (in $cat "праздник") }}
+            <div class="row-ic" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            </div>
+          {{ else }}
+            <div class="row-ic g2" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            </div>
+          {{ end }}
+          <div class="row-t">
+            <b>{{ .Title }}</b>
+            <div class="meta">
+              <span>{{ .Date.Format "02.01.2006" }}</span>
+              {{ with $primaryCat }}
+                <span class="dot" aria-hidden="true"></span>
+                <span>{{ . }}</span>
+              {{ end }}
+            </div>
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+
+  <!-- Быстрые тематические рубрики и сервисы -->
+  <div class="section-h" style="margin-top: 36px;">
+    <h2>Тематические рубрики</h2>
+  </div>
+  <div class="cats">
+    <a href="{{ "categories/важное-и-срочное/" | relURL }}">Важное и срочное <b>Срочно</b></a>
+    <a href="{{ "categories/собрания-и-выборы/" | relURL }}">Собрания и кворум <b>217-ФЗ</b></a>
+    <a href="{{ "categories/правление-и-отчёты/" | relURL }}">Правление и отчёты <b>Протоколы</b></a>
+    <a href="{{ "categories/дороги-и-благоустройство/" | relURL }}">Дороги и ремонт <b>Смета</b></a>
+    <a href="{{ "categories/электроэнергия-и-тарифы/" | relURL }}">Электроэнергия <b>Тарифы</b></a>
+    <a href="{{ "categories/пожарная-безопасность-и-мчс/" | relURL }}">Пожарная безопасность <b>МЧС</b></a>
+    <a href="{{ "/vznosy/" | relURL }}">Взносы и QR-код <b>СБП</b></a>
+    <a href="{{ "/documents/" | relURL }}">Устав и сметы <b>PDF</b></a>
+    <a href="{{ "/contacts/" | relURL }}">Пост охраны и правление <b>Контакты</b></a>
+    <a href="https://max.ru/id4720008674_biz" target="_blank" rel="noopener">Канал СНТ в MAX <b>Официальный</b></a>
+  </div>
+
+  <!-- Архивы по годам -->
+  <div class="archives">
+    <span class="lbl">Архив по годам:</span>
+    {{ range $posts.GroupByDate "2006" }}
+      <a href="{{ "/archives/" | relURL }}#year-{{ .Key }}">{{ .Key }} год · {{ len .Pages }} {{ if eq (len .Pages) 1 }}статья{{ else if and (ge (len .Pages) 2) (le (len .Pages) 4) }}статьи{{ else }}статей{{ end }}</a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

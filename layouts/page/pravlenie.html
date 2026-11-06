@@ -1,0 +1,132 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Правление и органы управления</span>
+  </nav>
+
+  <!-- Шапка страницы -->
+  <section class="page-hero page-hero-grad">
+    <h1>Руководство и органы управления СНТ «Орбита»</h1>
+    <p>Состав выборных органов товарищества: Председатель, члены Правления, Ревизионная комиссия, кураторы направлений и график личного приёма садоводов.</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход">
+      <a class="jump-pill" href="#board">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Состав Правления
+      </a>
+      <a class="jump-pill" href="#revizor">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        Ревизионная комиссия
+      </a>
+      <a class="jump-pill" href="#appeal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Подать обращение
+      </a>
+    </div>
+  </section>
+
+  <!-- Карточки руководства -->
+  <section class="sec-block" id="board" aria-labelledby="boardTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="boardTitle">Состав Правления СНТ «Орбита»</h2>
+      <span class="sec-sub">Личный приём Председателя: каждая суббота с 12:00 до 14:00 в здании Правления</span>
+    </div>
+
+    <div class="people-grid">
+      <div class="person-card chairman">
+        <span class="p-role">Председатель СНТ «Орбита»</span>
+        <div class="p-name">{{ site.Params.snt.chairman | default "Витер Андрей Дмитриевич" }}</div>
+        <div class="p-area">Общее руководство деятельностью товарищества, представление интересов в государственных органах, договоры с подрядчиками, личный приём садоводов по субботам 12:00–14:00.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Лобанов Николай</div>
+        <div class="p-area">Куратор направления: электрохозяйство посёлка, уличное освещение, взаимодействие с ПСК и Ленэнерго.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Красавина Екатерина</div>
+        <div class="p-area">Юридические вопросы, регламенты СНТ, подготовка нормативных актов и положений к общим собраниям.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Чумак Екатерина</div>
+        <div class="p-area">Благоустройство территории общего пользования, детские и спортивные площадки, противопожарные водоёмы.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Степанова Анна</div>
+        <div class="p-area">Делопроизводство, реестр членов товарищества, выдача справок и прием заявлений садоводов.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Член Правления</span>
+        <div class="p-name">Ткаченко Сергей</div>
+        <div class="p-area">Дорожная инфраструктура, обслуживание шлагбаума, контроль весенней просушки дорог и подсыпки щебня.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ревизионная комиссия -->
+  <section class="sec-block" id="revizor" aria-labelledby="revTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="revTitle">Ревизионная комиссия</h2>
+      <span class="sec-sub">Контрольно-ревизионный орган товарищества</span>
+    </div>
+
+    <div class="people-grid">
+      <div class="person-card">
+        <span class="p-role">Ревизионная комиссия</span>
+        <div class="p-name">Копылов Геннадий</div>
+        <div class="p-area">Проверка финансово-хозяйственной деятельности, исполнения сметы и целевого расходования средств товарищества.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Ревизионная комиссия</span>
+        <div class="p-name">Ковалёва Ирина</div>
+        <div class="p-area">Аудит бухгалтерской документации, банковских выписок и договоров с подрядными организациями.</div>
+      </div>
+
+      <div class="person-card">
+        <span class="p-role">Ревизионная комиссия</span>
+        <div class="p-name">Комарова Анастасия</div>
+        <div class="p-area">Контроль своевременности поступления взносов и подготовка ежегодного отчёта Ревизионной комиссии общему собранию.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Блок обращений -->
+  <section class="sec-block" id="appeal" aria-labelledby="appealTitle">
+    <div class="appeal-box">
+      <div class="ab-text">
+        <h2 class="ab-title" id="appealTitle">Подать обращение или заявку онлайн</h2>
+        <p class="ab-desc">Вопрос по начислениям, неисправности освещения или предложение к Правлению? Заполните электронную форму, и ваша заявка будет рассмотрена на ближайшем заседании.</p>
+      </div>
+      <div class="ab-actions">
+        <a class="btn-solid" href="https://forms.gle/VBFi8jxwGUGyLHwR9" target="_blank" rel="noopener">
+          Заполнить обращение в Правление
+        </a>
+        <a class="btn-solid" href="https://docs.google.com/spreadsheets/d/1Q2NyoYwGBnp8Rw9oG3ys2UO2CBBw4DODBbgIaZzgtlw/edit?usp=sharing" target="_blank" rel="noopener">
+          Таблица статусов заявок
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {{ with .Content }}
+    <section class="sec-block" style="margin-top:28px;">
+      <div class="article-card">
+        <div class="prose">
+          {{ . }}
+        </div>
+      </div>
+    </section>
+  {{ end }}
+</div>
+{{ end }}

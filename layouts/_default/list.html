@@ -1,0 +1,87 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Главная
+    </a>
+    <span class="sep" aria-hidden="true">/</span>
+    <a href="{{ "/archives/" | relURL }}">Архив</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">{{ .Title }}</span>
+  </nav>
+
+  {{ $paginator := .Paginate .Pages }}
+  {{ $allPostsCount := len (where site.RegularPages "Section" "post") }}
+
+  <!-- Шапка страницы списка / рубрики -->
+  <section class="page-hero">
+    <div>
+      <h1 id="pageHeading">{{ .Title }}</h1>
+      <p id="pageSubheading">
+        Официальные новости, протоколы Правления и объявления СНТ «Орбита» (всего {{ len .Pages }} материалов{{ if gt $paginator.TotalPages 1 }} · страница {{ $paginator.PageNumber }} из {{ $paginator.TotalPages }}{{ end }}).
+      </p>
+    </div>
+    <div class="year-pills">
+      <a class="year-btn" href="{{ "/archives/" | relURL }}">Архив по годам <span>{{ $allPostsCount }}</span></a>
+    </div>
+  </section>
+
+  <!-- Панель рубрик для быстрого переключения -->
+  <section class="filter-bar" aria-label="Рубрики публикаций">
+    <div class="filter-label">
+      <span>Рубрики и темы публикаций</span>
+      <span>Страница {{ $paginator.PageNumber }} из {{ $paginator.TotalPages }}</span>
+    </div>
+    <div class="cat-chips">
+      <a class="cat-btn {{ if eq .Section "post" }}active{{ end }}" href="{{ "/post/" | relURL }}">Все публикации <b>{{ $allPostsCount }}</b></a>
+      {{ range site.Taxonomies.categories }}
+        <a class="cat-btn {{ if eq .Page.Title $.Title }}active{{ end }}" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <b>{{ .Count }}</b></a>
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- Сетка публикаций -->
+  <section class="year-section" style="margin-top: 28px;">
+    <div class="post-grid">
+      {{ $months := slice "янв" "фев" "мар" "апр" "май" "июн" "июл" "авг" "сен" "окт" "ноя" "дек" }}
+      {{ range $paginator.Pages }}
+        {{ $hasPdf := false }}
+        {{ with .Params.documents }}{{ range . }}{{ if or (eq (lower (default "" .type)) "pdf") (in (lower (default "" .url)) ".pdf") }}{{ $hasPdf = true }}{{ end }}{{ end }}{{ end }}
+        {{ with .Params.attachments }}{{ range . }}{{ if or (eq (lower (default "" .ext)) "pdf") (in (lower (default "" .file)) ".pdf") }}{{ $hasPdf = true }}{{ end }}{{ end }}{{ end }}
+        <a class="post-card{{ if .Params.pinned }} pinned{{ end }}{{ if .Params.urgent }} urgent{{ end }}" href="{{ .RelPermalink }}">
+          <div class="post-date-box" aria-label="Опубликовано {{ .Date.Format "02.01.2006" }}">
+            <b>{{ .Date.Format "02" }}</b>
+            <span>{{ index $months (sub .Date.Month 1) }}</span>
+          </div>
+          <div class="post-body">
+            <div class="post-tags">
+              {{ if .Params.pinned }}
+                <span class="p-tag amber">Закреплено</span>
+              {{ end }}
+              {{ with .Params.categories }}
+                {{ range first 2 . }}
+                  <span class="p-tag">{{ . }}</span>
+                {{ end }}
+              {{ end }}
+              {{ with .Params.protocol }}
+                <span class="p-tag amber">Протокол №{{ . }}</span>
+              {{ end }}
+              {{ if or $hasPdf (in (lower .RawContent) ".pdf") }}
+                <span class="p-tag pdf">Бланк PDF</span>
+              {{ end }}
+            </div>
+            <h3>{{ .Title }}</h3>
+            <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 140 }}{{ end }}</p>
+          </div>
+          <span class="post-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </a>
+      {{ end }}
+    </div>
+    {{ partial "pagination.html" . }}
+  </section>
+</div>
+{{ end }}

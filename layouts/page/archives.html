@@ -1,0 +1,87 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Главная
+    </a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Архив публикаций</span>
+  </nav>
+
+  {{ $posts := where site.RegularPages "Type" "in" (slice "post" "posts") }}
+  {{ $years := $posts.GroupByDate "2006" }}
+  {{ $months := slice "янв" "фев" "мар" "апр" "май" "июн" "июл" "авг" "сен" "окт" "ноя" "дек" }}
+
+  <!-- Шапка страницы архива -->
+  <section class="page-hero">
+    <div>
+      <h1 id="pageHeading">Новости, объявления и архив СНТ «Орбита»</h1>
+      <p id="pageSubheading">Все официальные протоколы, уведомления о собраниях, тарифы и отчеты правления (всего {{ len $posts }} материалов).</p>
+    </div>
+    <div class="year-pills" role="group" aria-label="Фильтр по годам">
+      <button class="year-btn active" type="button" data-year="all">Все годы <span>{{ len $posts }}</span></button>
+      {{ range $years }}
+        <a class="year-btn" href="#year-{{ .Key }}" data-year="{{ .Key }}">{{ .Key }} <span>{{ len .Pages }}</span></a>
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- Панель рубрик -->
+  <section class="filter-bar" aria-label="Рубрики публикаций">
+    <div class="filter-label">
+      <span>Тематические рубрики</span>
+      <span id="filterCounter">Показано: {{ len $posts }} из {{ len $posts }} материалов</span>
+    </div>
+    <div class="cat-chips">
+      <a class="cat-btn active" href="{{ "/archives/" | relURL }}">Все материалы <b>{{ len $posts }}</b></a>
+      {{ range site.Taxonomies.categories }}
+        <a class="cat-btn" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <b>{{ .Count }}</b></a>
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- Секции по годам -->
+  {{ range $years }}
+    <section class="year-section" id="year-{{ .Key }}" data-year-block="{{ .Key }}" style="margin-top: 32px;">
+      <div class="year-header">
+        <h2>{{ .Key }} год</h2>
+        <span class="year-badge">{{ len .Pages }} {{ if eq (len .Pages) 1 }}публикация{{ else if and (ge (len .Pages) 2) (le (len .Pages) 4) }}публикации{{ else }}публикаций{{ end }}</span>
+      </div>
+      <div class="post-grid">
+        {{ range .Pages }}
+          {{ $hasPdf := false }}
+          {{ with .Params.documents }}{{ range . }}{{ if or (eq (lower (default "" .type)) "pdf") (in (lower (default "" .url)) ".pdf") }}{{ $hasPdf = true }}{{ end }}{{ end }}{{ end }}
+          {{ with .Params.attachments }}{{ range . }}{{ if or (eq (lower (default "" .ext)) "pdf") (in (lower (default "" .file)) ".pdf") }}{{ $hasPdf = true }}{{ end }}{{ end }}{{ end }}
+          <a class="post-card{{ if .Params.pinned }} pinned{{ end }}{{ if .Params.urgent }} urgent{{ end }}" href="{{ .RelPermalink }}">
+            <div class="post-date-box" aria-label="Опубликовано {{ .Date.Format "02.01.2006" }}">
+              <b>{{ .Date.Format "02" }}</b>
+              <span>{{ index $months (sub .Date.Month 1) }}</span>
+            </div>
+            <div class="post-body">
+              <div class="post-tags">
+                {{ if .Params.pinned }}
+                  <span class="p-tag amber">Закреплено</span>
+                {{ end }}
+                {{ with .Params.categories }}{{ range first 2 . }}<span class="p-tag">{{ . }}</span>{{ end }}{{ end }}
+                {{ with .Params.protocol }}
+                  <span class="p-tag amber">Протокол №{{ . }}</span>
+                {{ end }}
+                {{ if or $hasPdf (in (lower .RawContent) ".pdf") }}
+                  <span class="p-tag pdf">Бланк PDF</span>
+                {{ end }}
+              </div>
+              <h3>{{ .Title }}</h3>
+              <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 140 }}{{ end }}</p>
+            </div>
+            <span class="post-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+</div>
+{{ end }}

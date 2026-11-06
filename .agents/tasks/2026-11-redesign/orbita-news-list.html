@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17233b">
+<title>Новости, рубрики и архив публикаций (2023–2026) — СНТ «Орбита»</title>
+<meta name="description" content="Полный список новостей, объявлений правления, протоколов собраний и архив публикаций СНТ «Орбита» за 2023–2026 годы с фильтрацией по рубрикам.">
+<style>
+:root{
+  --bg:#f3f7fb;--card:#ffffff;--card-elevated:#ffffff;
+  --ink:#17233b;--ink2:#3e4c5e;--ink3:#4b5d78;
+  --line:#d6e0ec;--line-strong:#bfcde0;
+  --cyan:#06b6d4;--cyan-deep:#0a5c75;--cyan-soft:#e0f7fa;--cyan-glow:rgba(6,182,212,.18);
+  --amber-soft:#fef3c7;--amber-text:#78350f;--amber-border:#f59e0b;
+  --emerald-soft:#d1fae5;--emerald-text:#065f46;--emerald-border:#10b981;
+  --radius:16px;--r-sm:12px;--header-h:72px;
+  --shadow-sm:0 1px 3px rgba(15,23,42,.06);
+  --shadow:0 3px 10px rgba(15,23,42,.05), 0 1px 2px rgba(15,23,42,.04);
+  --shadow-md:0 8px 24px -4px rgba(15,23,42,.08);
+  --shadow-lg:0 16px 36px -6px rgba(15,23,42,.14);
+  --grad-hero:linear-gradient(135deg,#0f2442 0%,#15375e 55%,#0a6c88 100%);
+}
+[data-theme="dark"]{
+  --bg:#0b1220;--card:#131d31;--card-elevated:#18253d;
+  --ink:#f1f5f9;--ink2:#cbd5e1;--ink3:#94a3b8;
+  --line:#24344f;--line-strong:#33496b;
+  --cyan:#22d3ee;--cyan-deep:#67e8f9;--cyan-soft:#11293d;--cyan-glow:rgba(34,211,238,.22);
+  --amber-soft:#382410;--amber-text:#fcd34d;--amber-border:#d97706;
+  --emerald-soft:#0f2e22;--emerald-text:#6ee7b7;--emerald-border:#059669;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.4);--shadow:0 3px 10px rgba(0,0,0,.35);
+  --shadow-md:0 8px 24px -4px rgba(0,0,0,.5);--shadow-lg:0 16px 36px -6px rgba(0,0,0,.65);
+  --grad-hero:linear-gradient(135deg,#0e1e38 0%,#143054 55%,#0e566e 100%);
+}
+html{scroll-behavior:smooth;font-size:100%}
+html[data-font="large"]{font-size:114%}
+@media (max-width:420px){html[data-font="large"]{font-size:109%}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--cyan-deep);text-decoration:none;transition:color .15s}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--cyan-deep);outline-offset:2px;border-radius:8px}
+.container{max-width:1160px;margin:0 auto;padding:0 20px}
+@media (max-width:480px){.container{padding:0 14px}}
+@media (max-width:359px){.container{padding:0 10px}}
+.skip-link{position:absolute;left:-999px;top:10px;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;font-weight:700;z-index:1000}
+.skip-link:focus{left:14px;top:10px}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(16,185,129,.55)}70%{box-shadow:0 0 0 7px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+
+/* Шапка */
+.header{position:sticky;top:0;z-index:60;background:color-mix(in srgb, var(--card) 94%, transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.header-in{display:flex;align-items:center;gap:12px;height:var(--header-h)}
+.brand{display:flex;align-items:center;gap:11px;color:var(--ink);min-width:0;flex-shrink:0}
+.brand:hover{text-decoration:none}
+.brand svg{width:44px;height:44px;color:var(--ink);flex:none;display:block}
+.brand-t{display:flex;flex-direction:column;line-height:1.22;min-width:0}
+.brand-name{font-weight:800;font-size:1.12rem;letter-spacing:-.01em;white-space:nowrap}
+.brand-sub{font-size:.82rem;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.nav{display:flex;gap:2px;margin-left:auto;align-items:center}
+.nav a,.nav-more-btn{padding:8px 10px;border-radius:10px;color:var(--ink2);font-weight:600;font-size:.91rem;white-space:nowrap}
+.nav a:hover,.nav-more-btn:hover{background:var(--cyan-soft);color:var(--ink);text-decoration:none}
+.nav a[aria-current="page"]{color:var(--cyan-deep);font-weight:700;background:var(--cyan-soft)}
+.nav-more-btn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-family:inherit;font-weight:700;color:var(--cyan-deep);margin-left:4px}
+.nav-more-btn svg{width:15px;height:15px}
+.emergency-pill{display:inline-flex;align-items:center;gap:9px;padding:7px 13px 7px 11px;background:var(--cyan-soft);border:1px solid color-mix(in srgb, var(--cyan) 42%, var(--line));border-radius:999px;color:var(--ink);text-decoration:none;font-size:.88rem;flex-shrink:0}
+.em-dot{width:9px;height:9px;border-radius:50%;background:#10b981;animation:pulse-ring 2.2s infinite;flex:none}
+.em-icon{width:16px;height:16px;color:var(--cyan-deep);flex:none}
+.em-text{display:flex;flex-direction:column;line-height:1.2}
+.em-lbl{font-size:.78rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.em-tel{font-size:.88rem;font-weight:800;color:var(--ink);white-space:nowrap}
+.actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.hbtn{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 10px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;font-weight:800;font-size:.9rem}
+.hbtn:hover{background:var(--cyan-soft);border-color:var(--cyan);color:var(--ink);text-decoration:none}
+.hbtn[aria-pressed="true"],.hbtn[aria-expanded="true"]{background:var(--cyan-soft);border-color:var(--cyan);color:var(--cyan-deep)}
+.hbtn svg{width:21px;height:21px;flex:none}
+.burger{display:none}
+html[data-font="large"] .brand-sub,html[data-font="large"] .em-lbl{display:none}
+@media (max-width:1240px){.brand-sub{display:none}.nav a,.nav-more-btn{padding:7px 8px;font-size:.86rem}}
+@media (max-width:1080px){.emergency-pill{display:none}}
+@media (max-width:940px){.nav{display:none}.burger{display:inline-flex}.brand-sub{display:block}.actions{margin-left:auto}}
+@media (max-width:440px){.brand-sub{display:none}.brand svg{width:38px;height:38px}.brand-name{font-size:1.02rem}.actions{gap:5px}.hbtn{min-width:44px;height:44px;padding:0 8px}}
+
+.menu-backdrop{display:none;position:fixed;inset:var(--header-h) 0 0 0;background:rgba(11,18,32,.48);z-index:55;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.menu-backdrop.open{display:block}
+.mobile-menu{display:none;position:fixed;left:0;right:0;top:var(--header-h);z-index:58;max-height:calc(100dvh - var(--header-h));overflow-y:auto;border-bottom:1px solid var(--line);background:var(--card);padding:16px 0 96px;box-shadow:var(--shadow-lg)}
+.mobile-menu.open{display:block}
+.mm-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line);font-size:.86rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em}
+.mm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:900px){.mm-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.mm-grid{grid-template-columns:1fr}}
+.mobile-menu a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:var(--ink);font-weight:700;font-size:.96rem;min-height:52px;border:1px solid var(--line);background:var(--bg)}
+.mobile-menu a:hover,.mobile-menu a[aria-current="page"]{background:var(--cyan-soft);color:var(--cyan-deep);border-color:var(--cyan);text-decoration:none}
+.mm-ic{width:36px;height:36px;border-radius:10px;background:var(--cyan-soft);color:var(--cyan-deep);display:flex;align-items:center;justify-content:center;flex:none}
+.mm-ic svg{width:19px;height:19px}
+.mm-txt{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.mm-sub{font-size:.78rem;color:var(--ink3);font-weight:600;margin-top:2px}
+
+/* ============ Заголовок раздела и панель фильтров (Рубрики + Годы) ============ */
+.breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:18px 0 10px;font-size:.88rem;color:var(--ink3);font-weight:600}
+.breadcrumbs a{color:var(--ink2)}
+.breadcrumbs .sep{opacity:.55}
+
+.page-hero{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px 26px;margin-bottom:20px;box-shadow:var(--shadow);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;
+}
+@media (max-width:600px){.page-hero{padding:18px 16px}}
+.page-hero h1{margin:0 0 6px;font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;letter-spacing:-.02em}
+.page-hero p{margin:0;color:var(--ink2);font-size:.98rem}
+.year-pills{display:flex;flex-wrap:wrap;gap:8px}
+.year-btn{
+  min-height:44px;padding:8px 15px;border-radius:12px;border:1.5px solid var(--line-strong);
+  background:var(--bg);color:var(--ink);font:700 .92rem inherit;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;transition:all .15s;
+}
+.year-btn:hover{border-color:var(--cyan);background:var(--cyan-soft);color:var(--cyan-deep)}
+.year-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.year-btn span{font-size:.8rem;opacity:.78;font-weight:700}
+
+/* Фильтр по нормализованным рубрикам (вместо дублей в текущей теме Hugo Stack) */
+.filter-bar{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin-bottom:24px;box-shadow:var(--shadow-sm);
+}
+.filter-label{font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink3);font-weight:800;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.cat-chips{display:flex;flex-wrap:wrap;gap:8px}
+.cat-btn{
+  display:inline-flex;align-items:center;gap:7px;min-height:42px;
+  padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);
+  background:var(--bg);color:var(--ink2);font:700 .9rem inherit;cursor:pointer;
+  transition:all .15s;
+}
+.cat-btn:hover{border-color:var(--cyan);color:var(--cyan-deep);background:var(--cyan-soft)}
+.cat-btn.active{background:var(--cyan-soft);color:var(--cyan-deep);border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)}
+.cat-btn b{font-size:.78rem;padding:2px 7px;border-radius:999px;background:var(--card);color:var(--ink3);border:1px solid var(--line)}
+
+/* Таймлайн публикаций по годам */
+.year-section{margin-bottom:30px}
+.year-header{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--line);
+}
+.year-header h2{margin:0;font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px}
+.year-badge{font-size:.84rem;padding:4px 11px;border-radius:999px;background:var(--cyan-soft);color:var(--cyan-deep);font-weight:800}
+
+.post-grid{display:flex;flex-direction:column;gap:12px}
+.post-card{
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:16px 18px;box-shadow:var(--shadow-sm);color:var(--ink);text-decoration:none;
+  transition:transform .15s,box-shadow .15s,border-color .15s;
+}
+.post-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--cyan);text-decoration:none}
+.post-card.pinned{border-left:5px solid var(--cyan);background:color-mix(in srgb, var(--cyan-soft) 28%, var(--card))}
+.post-card.urgent{border-left:5px solid var(--amber-border)}
+
+.post-date-box{
+  width:64px;height:64px;border-radius:12px;background:var(--bg);border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;line-height:1.15;
+}
+.post-date-box b{font-size:1.2rem;font-weight:800;color:var(--ink)}
+.post-date-box span{font-size:.76rem;font-weight:700;color:var(--ink3);text-transform:uppercase}
+
+.post-body{min-width:0}
+.post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.p-tag{font-size:.76rem;font-weight:800;padding:2px 9px;border-radius:999px;background:var(--cyan-soft);color:var(--cyan-deep)}
+.p-tag.amber{background:var(--amber-soft);color:var(--amber-text)}
+.p-tag.pdf{background:#fee2e2;color:#991b1b}
+[data-theme="dark"] .p-tag.pdf{background:#3f1515;color:#fca5a5}
+
+.post-body h3{margin:0 0 5px;font-size:1.08rem;line-height:1.35;font-weight:800;color:var(--ink)}
+.post-body p{margin:0;font-size:.93rem;color:var(--ink2);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.post-arrow{
+  width:40px;height:40px;border-radius:10px;background:var(--bg);color:var(--cyan-deep);
+  display:flex;align-items:center;justify-content:center;flex:none;border:1px solid var(--line);
+}
+.post-card:hover .post-arrow{background:var(--cyan);color:#06202a;border-color:var(--cyan)}
+@media (max-width:600px){
+  .post-card{grid-template-columns:54px 1fr;gap:12px;padding:14px}
+  .post-date-box{width:54px;height:54px}
+  .post-date-box b{font-size:1.05rem}
+  .post-arrow{display:none}
+}
+
+/* Пагинация (layouts/partials/pagination.html в Hugo) */
+.pagination{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:28px 0 12px}
+.page-link{
+  min-width:46px;height:46px;padding:0 14px;border-radius:12px;
+  border:1px solid var(--line-strong);background:var(--card);color:var(--ink);
+  font-weight:800;font-size:.94rem;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+}
+.page-link:hover{border-color:var(--cyan);background:var(--cyan-soft);color:var(--cyan-deep);text-decoration:none}
+.page-link[aria-current="page"]{background:var(--cyan);color:#06202a;border-color:var(--cyan)}
+
+.footer{border-top:1px solid var(--line);background:var(--card);padding:44px 0 36px;margin-top:28px}
+.footer-grid{display:grid;gap:32px;grid-template-columns:1fr}
+@media (min-width:900px){.footer-grid{grid-template-columns:1.35fr 1fr 1fr}}
+.footer h4{margin:0 0 14px;font-size:.9rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);font-weight:800}
+.footer p,.footer li{color:var(--ink2);font-size:.95rem;line-height:1.55}
+.footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.footer a{color:var(--ink2);font-weight:600}
+.footer-brand{display:flex;align-items:center;gap:14px;margin-bottom:14px;color:var(--ink)}
+.footer-brand b{font-size:1.2rem;font-weight:800}
+.footer-bottom{border-top:1px solid var(--line);margin-top:32px;padding-top:20px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:var(--ink3);font-size:.88rem}
+
+.bottomnav{display:none}
+@media (max-width:639px){
+  body{padding-bottom:84px}
+  .bottomnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;z-index:60;left:0;right:0;bottom:0;background:color-mix(in srgb, var(--card) 96%, transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:5px 4px calc(5px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(0,0,0,.08)}
+  .bottomnav a,.bottomnav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 2px;border-radius:10px;border:0;background:transparent;color:var(--ink2);font-family:inherit;font-size:.78rem;font-weight:700;min-height:52px;justify-content:center;cursor:pointer;text-decoration:none}
+  .bottomnav svg{width:21px;height:21px;flex:none}
+  .bottomnav a[aria-current="page"],.bottomnav button[aria-expanded="true"]{color:var(--cyan-deep);background:var(--cyan-soft);font-weight:800}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к списку новостей</a>
+<header class="header">
+  <div class="container header-in">
+    <a class="brand" href="orbita-redesign.html" aria-label="СНТ «Орбита» — на главную страницу">
+      <svg viewBox="0 0 640 640" fill="none" aria-hidden="true">
+        <g fill="currentColor" fill-rule="evenodd">
+          <circle cx="599.0" cy="109.0" r="30.5" />
+          <path d="M 351.5,444.0 L 353.0,443.5 L 354.5,446.0 L 363.0,472.5 L 393.5,473.0 L 392.0,476.5 L 369.5,493.0 L 377.5,516.0 L 378.0,522.5 L 353.0,505.5 L 330.0,521.5 L 326.5,522.0 L 335.5,493.0 L 313.0,476.5 L 311.5,473.0 L 342.0,472.5 Z" />
+          <path d="M 258.5,107.0 C 258.5,107.0 263.5,111.6 265.5,114.0 C 267.5,116.4 267.1,116.0 267.5,118.0 C 267.9,120.0 268.9,120.5 267.5,123.0 C 266.1,125.5 266.4,126.5 261.0,129.5 C 255.6,132.5 247.9,134.0 243.0,136.5 C 238.1,139.0 239.7,138.7 238.5,141.0 C 237.3,143.3 237.3,144.6 237.5,147.0 C 237.7,149.4 237.7,149.4 239.5,152.0 C 241.3,154.6 245.5,159.0 245.5,159.0 L 245.0,160.5 C 245.0,160.5 234.1,149.8 230.5,146.0 C 226.9,142.2 229.2,145.0 228.5,143.0 C 227.8,141.0 226.7,139.5 227.5,137.0 C 228.3,134.5 225.5,135.1 232.0,131.5 C 238.5,127.9 250.7,123.9 257.0,120.5 C 263.3,117.1 259.7,118.1 260.5,116.0 C 261.3,113.9 260.9,113.0 260.5,111.0 C 260.1,109.0 258.5,107.0 258.5,107.0 Z" />
+          <path d="M 133.5,89.0 C 144.8,88.8 157.6,87.9 174.0,88.5 C 190.4,89.1 192.5,89.9 202.0,91.5 C 211.5,93.1 213.5,95.0 213.5,95.0 C 213.5,95.0 183.1,107.8 164.0,118.5 C 144.9,129.2 148.0,127.1 134.0,139.5 C 120.0,151.9 117.4,155.0 105.5,170.0 C 93.6,185.0 93.4,185.7 84.5,202.0 C 75.6,218.3 74.7,220.0 68.5,238.0 C 62.3,256.0 61.6,261.2 58.5,277.0 C 55.4,292.8 56.2,290.8 55.5,304.0 C 54.8,317.2 54.5,316.9 55.5,332.0 C 56.5,347.1 55.4,348.0 59.5,367.0 C 63.6,386.0 67.7,396.8 72.5,411.0 C 77.3,425.2 73.7,415.9 79.5,426.0 C 85.3,436.1 89.3,442.7 96.5,453.0 C 103.7,463.3 97.9,457.1 109.5,469.0 C 121.1,480.9 130.0,489.7 145.0,502.5 C 160.0,515.3 159.8,514.8 172.0,522.5 C 184.2,530.2 196.0,534.5 196.0,534.5 C 196.0,534.5 197.9,549.4 202.5,558.0 C 207.1,566.6 208.9,566.3 215.0,570.5 C 221.1,574.7 221.8,574.3 228.0,575.5 C 234.2,576.7 234.3,576.9 241.0,575.5 C 247.7,574.1 250.6,572.5 256.0,569.5 C 261.4,566.5 260.6,566.4 263.5,563.0 C 266.4,559.6 268.0,555.5 268.0,555.5 C 268.0,555.5 290.0,558.4 313.0,556.5 C 336.0,554.6 344.6,552.3 364.0,547.5 C 383.4,542.7 377.4,544.4 394.0,536.5 C 410.6,528.6 416.0,526.3 433.0,514.5 C 450.0,502.7 451.7,500.6 465.0,487.5 C 478.3,474.4 479.0,472.6 488.5,460.0 C 498.0,447.4 498.0,446.3 504.5,435.0 C 511.0,423.7 509.5,426.2 515.5,413.0 C 521.5,399.8 524.9,393.2 529.5,380.0 C 534.1,366.8 523.2,374.1 534.5,358.0 C 545.8,341.9 576.5,313.0 576.5,313.0 C 576.5,313.0 577.9,325.7 576.5,342.0 C 575.1,358.3 574.1,364.4 570.5,381.0 C 566.9,397.6 566.5,397.1 561.5,411.0 C 556.5,424.9 556.7,424.8 549.5,439.0 C 542.3,453.2 542.1,454.2 531.5,470.0 C 520.9,485.8 517.9,490.5 505.5,505.0 C 493.1,519.5 492.8,519.1 480.0,530.5 C 467.2,541.9 463.8,544.1 452.0,552.5 C 440.2,560.9 445.6,558.1 431.0,565.5 C 416.4,572.9 410.7,576.5 391.0,583.5 C 371.3,590.5 367.2,590.9 349.0,594.5 C 330.8,598.1 332.0,597.5 315.0,598.5 C 298.0,599.5 293.4,599.2 278.0,598.5 C 262.6,597.8 265.2,597.9 251.0,595.5 C 236.8,593.1 233.6,592.3 219.0,588.5 C 204.4,584.7 210.4,577.3 190.0,567.5 C 169.6,557.7 162.8,553.9 144.0,540.5 C 125.2,527.1 119.3,522.1 103.5,505.0 C 87.7,487.9 85.4,484.0 72.5,464.0 C 59.6,444.0 57.6,439.9 48.5,418.0 C 39.4,396.1 38.2,390.9 32.5,367.0 C 26.8,343.1 26.8,337.9 25.5,314.0 C 24.2,290.1 24.8,284.5 27.5,260.0 C 30.2,235.5 31.3,229.6 38.5,205.0 C 45.7,180.4 49.4,173.4 60.5,153.0 C 71.6,132.6 76.2,126.9 91.5,112.0 C 106.8,97.1 122.2,89.2 133.5,89.0 Z" />
+          <path d="M 277.5,36.0 C 295.3,34.8 292.2,34.2 311.0,35.5 C 329.8,36.8 336.8,37.7 356.0,41.5 C 375.2,45.3 373.0,44.5 391.0,51.5 C 409.0,58.5 410.6,68.1 431.0,70.5 C 451.4,72.9 455.6,63.9 476.0,61.5 C 496.4,59.1 497.3,59.1 516.0,60.5 C 534.7,61.9 538.8,62.8 554.0,67.5 C 569.2,72.2 579.5,80.0 579.5,80.0 L 569.0,91.5 C 569.0,91.5 558.2,84.3 546.0,80.5 C 533.8,76.7 533.1,76.5 518.0,75.5 C 502.9,74.5 498.7,74.7 483.0,76.5 C 467.3,78.3 452.5,83.0 452.5,83.0 C 452.5,83.0 467.6,92.3 483.0,106.5 C 498.4,120.7 502.2,124.1 516.5,142.0 C 530.8,159.9 531.2,160.1 542.5,181.0 C 553.8,201.9 556.1,207.2 563.5,229.0 C 570.9,250.8 573.5,272.0 573.5,272.0 L 536.0,313.5 L 534.5,312.0 C 534.5,312.0 534.2,292.7 532.5,279.0 C 530.8,265.3 530.9,267.2 527.5,255.0 C 524.1,242.8 524.0,241.4 518.5,228.0 C 513.0,214.6 511.9,212.2 504.5,199.0 C 497.1,185.8 495.2,183.6 487.5,173.0 C 479.8,162.4 482.9,165.7 472.5,155.0 C 462.1,144.3 456.4,138.7 444.0,128.5 C 431.6,118.3 436.8,121.4 421.0,112.5 C 405.2,103.6 394.6,98.5 378.0,91.5 C 361.4,84.5 365.0,86.6 352.0,83.5 C 339.0,80.4 342.2,79.9 324.0,78.5 C 305.8,77.1 296.6,76.3 276.0,77.5 C 255.4,78.7 257.4,83.7 238.0,83.5 C 218.6,83.3 217.4,78.3 195.0,76.5 C 172.6,74.7 144.5,76.0 144.5,76.0 C 144.5,76.0 157.2,67.9 171.0,61.5 C 184.8,55.1 186.2,54.5 202.0,49.5 C 217.8,44.5 218.9,43.7 237.0,40.5 C 255.1,37.3 259.7,37.2 277.5,36.0 Z" />
+          <path d="M 619.5,137.0 C 622.6,135.5 621.5,137.0 621.5,137.0 C 621.5,137.0 622.4,137.0 623.5,144.0 C 624.6,151.0 626.5,155.8 626.5,169.0 C 626.5,182.2 625.5,191.0 623.5,204.0 C 621.5,217.0 620.4,218.5 617.5,228.0 C 614.6,237.5 616.4,234.5 610.5,247.0 C 604.6,259.5 600.0,269.8 590.5,285.0 C 581.0,300.2 586.5,294.8 567.5,316.0 C 548.5,337.2 528.8,357.4 504.0,381.5 C 479.2,405.6 477.2,406.8 455.0,425.5 C 432.8,444.2 415.1,457.3 403.0,466.5 C 390.9,475.7 400.0,467.5 400.0,467.5 L 391.5,455.0 L 449.0,409.5 C 449.0,409.5 208.2,413.4 131.0,414.5 C 53.8,415.6 98.0,414.5 98.0,414.5 C 98.0,414.5 98.3,417.0 96.5,413.0 C 94.7,409.0 90.0,396.5 90.0,396.5 L 125.5,396.0 L 125.5,306.0 L 109.5,304.0 L 231.5,197.0 L 231.5,182.0 L 227.5,181.0 L 227.5,173.0 L 232.0,169.5 L 266.0,170.5 L 266.5,179.0 L 264.5,181.0 L 264.5,189.0 L 266.0,190.5 L 345.0,173.5 L 474.5,308.0 L 459.0,308.5 C 459.0,308.5 371.2,215.6 345.5,189.0 C 319.8,162.4 342.0,187.5 342.0,187.5 L 222.5,297.0 L 222.5,396.0 L 321.0,399.5 L 321.5,309.0 L 365.0,308.5 L 365.5,400.0 L 458.0,402.5 C 458.0,402.5 469.5,393.4 485.0,378.5 C 500.5,363.6 511.9,352.5 528.5,335.0 C 545.1,317.5 548.6,313.7 560.5,299.0 C 572.4,284.3 574.8,280.3 582.5,268.0 C 590.2,255.7 590.2,255.5 595.5,243.0 C 600.8,230.5 603.2,223.1 606.5,211.0 C 609.8,198.9 609.6,199.0 610.5,188.0 C 611.4,177.0 611.2,170.7 610.5,161.0 C 609.8,151.3 607.5,144.0 607.5,144.0 C 607.5,144.0 616.4,138.5 619.5,137.0 Z" />
+          <path d="M 305.5,508.0 C 317.8,501.6 307.0,507.5 307.0,507.5 C 307.0,507.5 307.4,507.0 309.5,510.0 C 311.6,513.0 316.5,521.0 316.5,521.0 C 316.5,521.0 289.5,536.4 276.0,543.5 C 262.5,550.6 268.3,551.6 255.0,553.5 C 241.7,555.4 215.5,552.0 215.5,552.0 C 215.5,552.0 231.2,546.2 251.0,536.5 C 270.8,526.8 293.2,514.4 305.5,508.0 Z" />
+        </g>
+      </svg>
+      <span class="brand-t">
+        <span class="brand-name">СНТ «Орбита»</span>
+        <span class="brand-sub">д. Малое Карлино, Ломоносовский р-н</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="orbita-redesign.html">Главная</a>
+      <a href="orbita-news-list.html" aria-current="page">Новости</a>
+      <a href="orbita-documents.html">Документы</a>
+      <a href="orbita-search.html">Поиск</a>
+      <button class="nav-more-btn" id="allSectionsBtn" type="button" aria-expanded="false" aria-controls="mobileMenu">
+        <span>Все разделы (10)</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </nav>
+
+    <a class="emergency-pill" href="tel:+79219670642">
+      <span class="em-dot" aria-hidden="true"></span>
+      <svg class="em-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="em-text">
+        <span class="em-lbl">Правление СНТ</span>
+        <span class="em-tel">+7 (921) 967-06-42</span>
+      </span>
+    </a>
+
+    <div class="actions">
+      <button class="hbtn" id="fontBtn" type="button" aria-label="Увеличить шрифт" aria-pressed="false">А+</button>
+      <a class="hbtn" href="orbita-search.html" aria-label="Поиск по сайту" title="Умный поиск">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </a>
+      <button class="hbtn" id="themeBtn" type="button" aria-label="Переключить тему"><span id="themeIconSlot"></span></button>
+      <button class="hbtn burger" id="burgerBtn" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Все разделы сайта" aria-hidden="true">
+  <div class="container">
+    <div class="mm-head">
+      <span>Навигация по макетам темы Hugo и разделам СНТ</span>
+      <span>Малое Карлино · 334 участка</span>
+    </div>
+    <div class="mm-grid">
+      <a href="orbita-redesign.html"><span class="mm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="mm-txt"><span>Главная (index.html)</span><span class="mm-sub">Баннер собрания, сервисы, реквизиты</span></span></a>
+      <a href="orbita-article.html"><span class="mm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span><span class="mm-txt"><span>Страница новости (single.html)</span><span class="mm-sub">Кандидаты 2026, PDF-карточки, таблицы</span></span></a>
+      <a href="orbita-news-list.html" aria-current="page"><span class="mm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/></svg></span><span class="mm-txt"><span>Список / Архив / Тег (list.html)</span><span class="mm-sub">Фильтр по рубрикам и годам 2023–2026</span></span></a>
+      <a href="orbita-search.html"><span class="mm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><span class="mm-txt"><span>Поиск по сайту (search.html)</span><span class="mm-sub">Живой поиск по новостям и PDF</span></span></a>
+      <a href="orbita-documents.html"><span class="mm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span class="mm-txt"><span>Документы и Правление</span><span class="mm-sub">Устав, сметы, тарифы ПСК, органы СНТ</span></span></a>
+      <a href="https://cnt-orbita.ru/vznosy/"><span class="mm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span><span class="mm-txt"><span>Взносы и реквизиты</span><span class="mm-sub">Оплата по QR СБП и сверка участков</span></span></a>
+    </div>
+  </div>
+</nav>
+
+<main id="main" class="container">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="orbita-redesign.html">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Новости, рубрики и архив по годам</span>
+  </nav>
+
+  <!-- Шапка списка / архива / таксономии -->
+  <section class="page-hero">
+    <div>
+      <h1 id="pageHeading">Новости, объявления и архив СНТ «Орбита»</h1>
+      <p id="pageSubheading">Единый шаблон для <code>list.html</code>, страниц рубрик <code>/categories/...</code> и архива <code>/archives/</code> (76 публикаций за 2023–2026 годы)</p>
+    </div>
+    <div class="year-pills" role="group" aria-label="Фильтр по году публикации">
+      <button class="year-btn active" type="button" data-year="all">Все годы <span>76</span></button>
+      <button class="year-btn" type="button" data-year="2026">2026 <span>10</span></button>
+      <button class="year-btn" type="button" data-year="2025">2025 <span>43</span></button>
+      <button class="year-btn" type="button" data-year="2024">2024 <span>23</span></button>
+    </div>
+  </section>
+
+  <!-- Нормализованные категории (убраны дубли Объявление/Объявления, Собрание/Собрания, Важное/Важно) -->
+  <section class="filter-bar" aria-label="Фильтр по рубрикам и тегам">
+    <div class="filter-label">
+      <span>Рубрики и темы публикаций</span>
+      <span id="filterCounter">Показано: все рубрики</span>
+    </div>
+    <div class="cat-chips">
+      <button class="cat-btn active" type="button" data-cat="all">Все публикации <b>76</b></button>
+      <button class="cat-btn" type="button" data-cat="vazhnoe">Важное и срочное <b>14</b></button>
+      <button class="cat-btn" type="button" data-cat="vybory">Собрания и выборы <b>19</b></button>
+      <button class="cat-btn" type="button" data-cat="pravlenie">Правление и отчёты <b>15</b></button>
+      <button class="cat-btn" type="button" data-cat="dorogi">Дороги и благоустройство <b>11</b></button>
+      <button class="cat-btn" type="button" data-cat="electro">Электроэнергия и тарифы <b>6</b></button>
+      <button class="cat-btn" type="button" data-cat="mchs">Пожарная безопасность и МЧС <b>6</b></button>
+      <button class="cat-btn" type="button" data-cat="dosug">Праздники и жизнь СНТ <b>5</b></button>
+    </div>
+  </section>
+
+  <!-- ================= 2026 ГОД ================= -->
+  <section class="year-section" data-year-block="2026">
+    <div class="year-header">
+      <h2>2026 год</h2>
+      <span class="year-badge">10 публикаций</span>
+    </div>
+    <div class="post-grid">
+      <a class="post-card pinned" href="orbita-article.html" data-cats="vazhnoe vybory">
+        <div class="post-date-box"><b>20</b><span>июн</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag amber">Закреплено · Голосование 2026</span>
+            <span class="p-tag">Собрание</span>
+          </div>
+          <h3>Уважаемые жители СНТ «Орбита»! Приходите на голосование (20 июня – 4 июля 2026)</h3>
+          <p>Заочная часть голосования проходит до 3 июля 2026 (20:00), очная часть — 4 июля с 12:00. Выдача бюллетеней в Правлении по субботам с 12:00 до 14:00 и у волонтёров.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="orbita-article.html" data-cats="vybory pravlenie vazhnoe">
+        <div class="post-date-box"><b>05</b><span>июн</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag">Выборы и собрания</span>
+            <span class="p-tag">Правление</span>
+            <span class="p-tag pdf">2 файла PDF внутри</span>
+          </div>
+          <h3>Утверждён список кандидатов в органы управления СНТ (Протокол №31)</h3>
+          <p>Утверждён список кандидатов в Правление (6 человек) и Ревизионную комиссию (3 человека). Прикреплены PDF-анкеты кандидатов для ознакомления перед голосованием.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="https://cnt-orbita.ru/p/uvedomlenie-o-provedenii-ocherednogo-obshhego-sobraniya-2026/" data-cats="vybory vazhnoe">
+        <div class="post-date-box"><b>15</b><span>мая</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag">Собрания и выборы</span>
+            <span class="p-tag pdf">Повестка дня</span>
+          </div>
+          <h3>Уведомление о проведении очередного общего собрания членов СНТ «Орбита» в 2026 году</h3>
+          <p>Официальное уведомление о сроках проведения собрания, порядке ознакомления с проектом сметы и ФЭО на 2026–2027 гг. и регламенте приёма заявок.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="https://cnt-orbita.ru/p/subbotnik-10-may-2026/" data-cats="dorogi dosug">
+        <div class="post-date-box"><b>06</b><span>мая</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag">Дороги и благоустройство</span>
+            <span class="p-tag">Жизнь СНТ</span>
+          </div>
+          <h3>Весенний субботник 10 мая и онлайн-галерея «Бессмертный полк СНТ „Орбита“»</h3>
+          <p>Приглашаем садоводов на традиционную весеннюю уборку общественных территорий товарищества и публикуем памятную фотогалерею ветеранов.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="https://cnt-orbita.ru/p/fire-safety-may-2026/" data-cats="mchs vazhnoe">
+        <div class="post-date-box"><b>30</b><span>апр</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag amber">Пожарная безопасность и МЧС</span>
+          </div>
+          <h3>Пожарная безопасность на майские праздники: правила разведения огня и уборки сухостоя</h3>
+          <p>Памятка МЧС по Ленинградской области для владельцев дачных участков: безопасные расстояния для мангалов, запрет пала травы и телефоны экстренных служб 101 / 112.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="https://cnt-orbita.ru/p/rabochaya-gruppa-dorogi-14-03-26/" data-cats="dorogi pravlenie">
+        <div class="post-date-box"><b>14</b><span>мар</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag">Дороги и благоустройство</span>
+            <span class="p-tag">Рабочая группа</span>
+          </div>
+          <h3>Итоги совещания рабочей группы по ремонту дорог от 14 марта 2026 года</h3>
+          <p>Рассмотрение коммерческих предложений подрядчиков, сметы отсыпки асфальтовой крошкой и подготовки дорожного полотна к весенне-летнему сезону.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= 2025 ГОД ================= -->
+  <section class="year-section" data-year-block="2025">
+    <div class="year-header">
+      <h2>2025 год</h2>
+      <span class="year-badge">43 публикации</span>
+    </div>
+    <div class="post-grid">
+      <a class="post-card urgent" href="https://cnt-orbita.ru/p/pozhar-yuzhnaya-346-pomosh/" data-cats="vazhnoe mchs">
+        <div class="post-date-box"><b>17</b><span>дек</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag amber">Взаимопомощь · Пожар</span>
+          </div>
+          <h3>Сбор помощи пострадавшим от пожара на улице Южной, участок 346</h3>
+          <p>Обращение к жителям СНТ «Орбита» об оказании посильной помощи нашим соседям, пострадавшим при пожаре жилого дома в декабре 2025 года.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="https://cnt-orbita.ru/p/itogi-vyborov-predsedatelya-11-2025/" data-cats="vybory pravlenie">
+        <div class="post-date-box"><b>10</b><span>ноя</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag">Собрания и выборы</span>
+            <span class="p-tag">Правление</span>
+          </div>
+          <h3>Итоги внеочередного общего собрания по выборам Председателя СНТ «Орбита»</h3>
+          <p>Протокол счётной комиссии: Председателем СНТ «Орбита» избран Витер Андрей Дмитриевич. Публикация итогов голосования.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="https://cnt-orbita.ru/p/rasshirennyj-diapazon-otopleniya/" data-cats="electro">
+        <div class="post-date-box"><b>24</b><span>сен</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag">Электроэнергия и тарифы</span>
+          </div>
+          <h3>Расширенный диапазон потребления электроэнергии в отопительный период и новые тарифы ПСК</h3>
+          <p>Порядок применения диапазонов энергопотребления для жилых домов с электроотоплением и тарифы АО «ПСК» (День 7,25 ₽ / Ночь 3,95 ₽ / Одноставочный 6,59 ₽).</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+
+      <a class="post-card" href="https://cnt-orbita.ru/p/sbor-sredstv-na-remont-dorogi-2025/" data-cats="dorogi vazhnoe">
+        <div class="post-date-box"><b>01</b><span>авг</span></div>
+        <div class="post-body">
+          <div class="post-tags">
+            <span class="p-tag">Дороги и благоустройство</span>
+            <span class="p-tag pdf">Смета и КП</span>
+          </div>
+          <h3>Объявляем целевой сбор средств на ремонт 520 метров подъездной дороги!</h3>
+          <p>Сравнение вариантов ремонта (1,8 млн ₽ асфальтовая крошка / 4,1 млн ₽ асфальтирование), коммерческие предложения и онлайн-таблица учёта поступлений по участкам.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= 2024 ГОД ================= -->
+  <section class="year-section" data-year-block="2024">
+    <div class="year-header">
+      <h2>2024–2023 годы</h2>
+      <span class="year-badge">23 публикации</span>
+    </div>
+    <div class="post-grid">
+      <a class="post-card" href="https://cnt-orbita.ru/p/vznosi-09-24/" data-cats="pravlenie">
+        <div class="post-date-box"><b>10</b><span>сен</span></div>
+        <div class="post-body">
+          <div class="post-tags"><span class="p-tag">Правление и отчёты</span></div>
+          <h3>Оплата членских и целевых взносов за 2024 год и реквизиты Сбербанка</h3>
+          <p>Реквизиты расчётного счёта СНТ «Орбита» и напоминание о сроках внесения членских и целевых взносов.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+      <a class="post-card" href="https://cnt-orbita.ru/p/predlozhenie-pravleniya-snt-orbita-obshhemu-sobraniyu-po-voprosu-gazifikaczii/" data-cats="dorogi pravlenie">
+        <div class="post-date-box"><b>12</b><span>июн</span></div>
+        <div class="post-body">
+          <div class="post-tags"><span class="p-tag">Дороги и благоустройство</span></div>
+          <h3>Предложение правления СНТ «Орбита» общему собранию по вопросу догазификации СНТ</h3>
+          <p>Условия участия в федеральной программе социальной газификации садоводств Ленинградской области.</p>
+        </div>
+        <span class="post-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Пагинация Hugo -->
+  <nav class="pagination" aria-label="Постраничная навигация">
+    <a class="page-link" href="#main" aria-current="page">1</a>
+    <a class="page-link" href="https://cnt-orbita.ru/archives/">2</a>
+    <a class="page-link" href="https://cnt-orbita.ru/archives/">3</a>
+    <a class="page-link" href="https://cnt-orbita.ru/archives/">Вперёд →</a>
+  </nav>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><b>СНТ «Орбита»</b></div>
+        <p>188508, Ленинградская обл., Ломоносовский р-н, Виллозское ГП, д. Малое Карлино, тер. СНТ «Орбита».</p>
+      </div>
+      <div>
+        <h4>Макеты страниц для темы Hugo</h4>
+        <ul>
+          <li><a href="orbita-redesign.html">Главная страница (index.html)</a></li>
+          <li><a href="orbita-article.html">Страница новости / статьи (single.html)</a></li>
+          <li><a href="orbita-news-list.html">Список новостей / Архив / Тег (list.html)</a></li>
+          <li><a href="orbita-search.html">Страница умного поиска (search.html)</a></li>
+          <li><a href="orbita-documents.html">Документы и органы СНТ (documents.html)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Контакты Правления</h4>
+        <ul>
+          <li><a href="tel:+79219670642">+7 (921) 967-06-42 (Правление)</a></li>
+          <li><a href="mailto:sntorbita56@yandex.ru">sntorbita56@yandex.ru</a></li>
+          <li><a href="https://max.ru/id4720008674_biz" target="_blank" rel="noopener">Официальный канал СНТ в MAX</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2023–2026 СНТ «Орбита» (ИНН 4720008674). Все права защищены.</span>
+      <span>Шаблон list.html / archives.html · cnt-orbita.ru</span>
+    </div>
+  </div>
+</footer>
+
+<nav class="bottomnav" aria-label="Быстрая навигация для смартфонов">
+  <a href="orbita-redesign.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Главная</a>
+  <a href="orbita-news-list.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Новости</a>
+  <a href="orbita-documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>Документы</a>
+  <a href="orbita-search.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Поиск</a>
+  <button type="button" id="bottomMenuBtn" aria-expanded="false" aria-controls="mobileMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>Меню</button>
+</nav>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var themeBtn=document.getElementById('themeBtn');
+  var themeSlot=document.getElementById('themeIconSlot');
+  var fontBtn=document.getElementById('fontBtn');
+  var sunSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-15.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+  var moonSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+  var saved=null;try{saved=localStorage.getItem('orbita-theme')}catch(e){}
+  if(saved){root.dataset.theme=saved}else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){root.dataset.theme='dark'}
+  function syncTheme(){themeSlot.innerHTML=root.dataset.theme==='dark'?sunSVG:moonSVG}
+  syncTheme();
+  themeBtn.addEventListener('click',function(){root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('orbita-theme',root.dataset.theme)}catch(e){}syncTheme()});
+
+  var savedFont=null;try{savedFont=localStorage.getItem('orbita-font')}catch(e){}
+  if(savedFont==='large'){root.dataset.font='large';fontBtn.setAttribute('aria-pressed','true')}
+  fontBtn.addEventListener('click',function(){
+    var l=root.dataset.font==='large'?'normal':'large';
+    root.dataset.font=l;fontBtn.setAttribute('aria-pressed',l==='large'?'true':'false');
+    try{localStorage.setItem('orbita-font',l)}catch(e){}
+  });
+
+  var mm=document.getElementById('mobileMenu'),bb=document.getElementById('burgerBtn'),allBtn=document.getElementById('allSectionsBtn'),bd=document.getElementById('menuBackdrop'),bmb=document.getElementById('bottomMenuBtn');
+  function setMenu(o){
+    mm.classList.toggle('open',o);mm.setAttribute('aria-hidden',o?'false':'true');
+    if(bb)bb.setAttribute('aria-expanded',o?'true':'false');
+    if(allBtn)allBtn.setAttribute('aria-expanded',o?'true':'false');
+    if(bd)bd.classList.toggle('open',o);
+    if(bmb)bmb.setAttribute('aria-expanded',o?'true':'false');
+  }
+  if(bb)bb.addEventListener('click',function(){setMenu(!mm.classList.contains('open'))});
+  if(allBtn)allBtn.addEventListener('click',function(){setMenu(!mm.classList.contains('open'))});
+  if(bmb)bmb.addEventListener('click',function(){setMenu(!mm.classList.contains('open'))});
+  if(bd)bd.addEventListener('click',function(){setMenu(false)});
+
+  /* Интерактивная фильтрация по рубрике и году публикации */
+  var activeCat='all', activeYear='all';
+  var catBtns=document.querySelectorAll('.cat-btn[data-cat]');
+  var yearBtns=document.querySelectorAll('.year-btn[data-year]');
+  var cards=document.querySelectorAll('.post-card[data-cats]');
+  var yearBlocks=document.querySelectorAll('.year-section[data-year-block]');
+  var counter=document.getElementById('filterCounter');
+
+  function applyFilter(){
+    var shown=0;
+    for(var i=0;i<cards.length;i++){
+      var c=cards[i];
+      var cats=(c.getAttribute('data-cats')||'').split(' ');
+      var okCat=(activeCat==='all'||cats.indexOf(activeCat)!==-1);
+      c.style.display=okCat?'':'none';
+      if(okCat)shown++;
+    }
+    for(var j=0;j<yearBlocks.length;j++){
+      var yb=yearBlocks[j];
+      var y=yb.getAttribute('data-year-block');
+      var visibleInYear=yb.querySelectorAll('.post-card:not([style*="display: none"])').length;
+      var okYear=(activeYear==='all'||activeYear===y)&&visibleInYear>0;
+      yb.style.display=okYear?'':'none';
+    }
+    if(counter){
+      counter.textContent=activeCat==='all'?'Показано: все рубрики':'Найдено в рубрике: '+shown;
+    }
+  }
+
+  for(var k=0;k<catBtns.length;k++){
+    catBtns[k].addEventListener('click',function(){
+      activeCat=this.getAttribute('data-cat');
+      for(var m=0;m<catBtns.length;m++)catBtns[m].classList.remove('active');
+      this.classList.add('active');
+      applyFilter();
+    });
+  }
+  for(var n=0;n<yearBtns.length;n++){
+    yearBtns[n].addEventListener('click',function(){
+      activeYear=this.getAttribute('data-year');
+      for(var p=0;p<yearBtns.length;p++)yearBtns[p].classList.remove('active');
+      this.classList.add('active');
+      applyFilter();
+    });
+  }
+})();
+</script>
+</body>
+</html>

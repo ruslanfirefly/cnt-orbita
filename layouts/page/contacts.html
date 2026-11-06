@@ -1,0 +1,161 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Контакты и реквизиты</span>
+  </nav>
+
+  <!-- Шапка страницы -->
+  <section class="page-hero page-hero-grad">
+    <h1>Контакты и реквизиты СНТ «Орбита»</h1>
+    <p>Официальный адрес товарищества, телефоны Правления и экстренных служб, график личного приёма садоводов, канал в мессенджере MAX и банковские реквизиты.</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход по контактам">
+      <a class="jump-pill" href="#board-contacts">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Связь с Правлением
+      </a>
+      <a class="jump-pill" href="#emergency-phones">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Экстренные службы
+      </a>
+      <a class="jump-pill" href="#address">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Адрес СНТ
+      </a>
+      <a class="jump-pill" href="#requisites">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        Реквизиты
+      </a>
+    </div>
+  </section>
+
+  <!-- Связь с Правлением и каналы -->
+  <section class="sec-block" id="board-contacts" aria-labelledby="boardContactTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="boardContactTitle">Правление СНТ «Орбита» и каналы связи</h2>
+      <span class="sec-sub">Председатель Правления: {{ site.Params.snt.chairman | default "Витер Андрей Дмитриевич" }}</span>
+    </div>
+
+    <div class="tariff-grid">
+      <div class="tariff-card highlight">
+        <span class="t-badge">Телефон Правления</span>
+        <div class="t-name">Дежурная связь и консультации</div>
+        <div class="t-price" style="font-size: 1.45rem;">
+          <a href="tel:{{ site.Params.snt.phoneTel | default "+79219670642" }}" style="color: inherit;">{{ site.Params.snt.phoneDisplay | default "+7 (921) 967-06-42" }}</a>
+        </div>
+        <p class="t-note">Председатель Правления: <b>{{ site.Params.snt.chairman | default "Витер Андрей Дмитриевич" }}</b>. Личный приём садоводов в доме Правления: <b>каждую субботу с 12:00 до 14:00</b>.</p>
+      </div>
+
+      <div class="tariff-card highlight">
+        <span class="t-badge">Электронная почта</span>
+        <div class="t-name">Официальный E-mail СНТ</div>
+        <div class="t-price" style="font-size: 1.3rem; word-break: break-all;">
+          <a href="mailto:{{ site.Params.snt.email | default "sntorbita56@yandex.ru" }}" style="color: inherit;">{{ site.Params.snt.email | default "sntorbita56@yandex.ru" }}</a>
+        </div>
+        <p class="t-note">Для официальных писем, заявлений и документов. Для публикации новостей от жителей: <a href="mailto:news@cnt-orbita.ru" style="color: var(--cyan-deep); font-weight: 700;">news@cnt-orbita.ru</a>.</p>
+      </div>
+
+      <div class="tariff-card">
+        <span class="t-badge">Мессенджер MAX</span>
+        <div class="t-name">Официальный инфоканал СНТ</div>
+        <div class="t-price" style="font-size: 1.35rem;">Канал в MAX</div>
+        <p class="t-note">Оперативные объявления Правления, уведомления о работах на сетях и собраниях: <a href="{{ site.Params.snt.maxChannelUrl | default "https://max.ru/id4720008674_biz" }}" target="_blank" rel="noopener" style="color: var(--cyan-deep); font-weight: 700;">подписаться в MAX ↗</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Аварийные и диспетчерские службы -->
+  <section class="sec-block" id="emergency-phones" aria-labelledby="emPhonesTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="emPhonesTitle">Экстренные и сервисные телефоны</h2>
+      <span class="sec-sub">Электросети, сбытовая компания и экстренная помощь</span>
+    </div>
+
+    <div class="electro-ActionBar" style="margin-top: 0;">
+      <div class="eab-info">
+        <div class="eab-title">Отключение света или авария на линии электропередачи</div>
+        <div class="eab-sub">При аварийном отключении электроэнергии звоните на круглосуточную горячую линию ПАО «Россети Ленэнерго». Показания счётчиков передаются с 1 по 25 число в АО «ПСК».</div>
+      </div>
+      <div class="eab-btns">
+        <a class="btn-danger-soft" href="tel:88002200220">
+          Аварийная Ленэнерго: 8 (800) 220-02-20
+        </a>
+        <a class="btn-solid" href="tel:88126789600">
+          Показания ПСК: 8 (812) 678-96-00
+        </a>
+        <a class="btn-solid" href="tel:112">
+          Экстренные службы (МЧС / Скорая): 112
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Адрес товарищества -->
+  <section class="sec-block" id="address" aria-labelledby="addrTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="addrTitle">Юридический и фактический адрес</h2>
+      <span class="sec-sub">Территория СНТ насчитывает {{ site.Params.snt.plotsCount | default 383 }} садовых участка</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext docx">АДРЕС</div>
+          <div>
+            <div class="doc-name">{{ site.Params.snt.fullAddress | default "188508, Ленинградская обл., Ломоносовский р-н, Виллозское ГП, д. Малое Карлино, тер. СНТ «Орбита»" }}</div>
+            <div class="doc-desc">Почтовый индекс: 188508 · Ломоносовский муниципальный район Ленинградской области · Виллозское городское поселение.</div>
+            <div class="doc-meta">GPS-координаты въезда: 59.706980, 30.163649</div>
+          </div>
+        </div>
+        <button class="doc-btn copy-btn" type="button" data-copy="{{ site.Params.snt.fullAddress | default "188508, Ленинградская обл., Ломоносовский р-н, Виллозское ГП, д. Малое Карлино, тер. СНТ «Орбита»" }}" data-label="Адрес СНТ «Орбита»">
+          Скопировать адрес
+        </button>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">ПРИЁМ</div>
+          <div>
+            <div class="doc-name">Дом Правления СНТ «Орбита»</div>
+            <div class="doc-desc">Личный приём садоводов Председателем и членами Правления, выдача справок, приём заявлений и заверение доверенностей.</div>
+            <div class="doc-meta">График работы: каждую субботу с 12:00 до 14:00</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/pravlenie/" | relURL }}">
+          Состав Правления →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Банковские реквизиты -->
+  <section class="sec-block" id="requisites" aria-labelledby="reqSecTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="reqSecTitle">Банковские реквизиты СНТ «Орбита»</h2>
+      <span class="sec-sub">Подробная инструкция по оплате взносов доступна в разделе <a href="{{ "/vznosy/" | relURL }}">«Взносы»</a></span>
+    </div>
+
+    {{ partial "payment-card.html" . }}
+  </section>
+
+  <!-- Электронная приёмная -->
+  <section class="sec-block" aria-labelledby="onlineAppealTitle">
+    <div class="appeal-box">
+      <div class="ab-text">
+        <h2 class="ab-title" id="onlineAppealTitle">Отправить письменное обращение в Правление онлайн</h2>
+        <p class="ab-desc">Задайте вопрос или оставьте заявку на благоустройство через единую электронную форму СНТ «Орбита».</p>
+      </div>
+      <div class="ab-actions">
+        <a class="btn-solid" href="https://forms.gle/VBFi8jxwGUGyLHwR9" target="_blank" rel="noopener">
+          Заполнить обращение ↗
+        </a>
+        <a class="btn-solid" href="{{ "/komfort/" | relURL }}">
+          Раздел «Комфортная жизнь» →
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

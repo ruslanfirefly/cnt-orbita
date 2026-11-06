@@ -1,0 +1,14 @@
+{{- $sb := .Site.Params.statusBar -}}
+{{- if and $sb $sb.enabled -}}
+<div class="status-bar" role="region" aria-label="Оперативная сводка инфраструктуры и тарифов">
+  {{- range $sb.items -}}
+  <div class="status-item">
+    <span class="status-dot {{ .dot }}" aria-hidden="true"></span>
+    <div class="status-txt">
+      <span class="status-lbl">{{ .label }}</span>
+      <span class="status-val">{{ .value }}</span>
+    </div>
+  </div>
+  {{- end -}}
+</div>
+{{- end -}}

@@ -1,0 +1,137 @@
+{{- $index := slice -}}
+
+{{/* 1. Прямые ключевые официальные документы и бланки СНТ */}}
+{{- $docUstav := dict
+    "type" "doc"
+    "badge" "Документ · PDF (1.4 МБ)"
+    "date" "Действующая редакция"
+    "title" "Устав Садоводческого некоммерческого товарищества «Орбита»"
+    "snippet" "Полный текст действующего Устава СНТ «Орбита» (ustav.pdf): права и обязанности садоводов, регламент проведения общих собраний, компетенция Председателя, Правления и Ревизионной комиссии."
+    "tags" (slice "устав" "документы" "правила" "правление" "собрание" "регламент" "закон")
+    "url" ("/documents/ustav/ustav.pdf" | relURL)
+    "actionText" "Скачать PDF"
+-}}
+{{- $index = $index | append $docUstav -}}
+
+{{- $docDoverka := dict
+    "type" "doc"
+    "badge" "Документ · DOCX (24 КБ)"
+    "date" "Официальный бланк"
+    "title" "Бланк доверенности на голосование на общем собрании членов СНТ «Орбита»"
+    "snippet" "Официальный шаблон доверенности (doverka.docx) для представления интересов собственника садового участка на очередном и внеочередном общем собрании садоводов СНТ «Орбита»."
+    "tags" (slice "доверенность" "бланк" "собрание" "голосование" "документы" "представитель" "голос")
+    "url" ("/documents/docs/doverka.docx" | relURL)
+    "actionText" "Скачать DOCX"
+-}}
+{{- $index = $index | append $docDoverka -}}
+
+{{/* 2. Страницы и публикации сайта */}}
+{{- range site.RegularPages -}}
+  {{/* Пропускаем саму страницу поиска */}}
+  {{- if ne .RelPermalink ("/search/" | relURL) -}}
+    {{- $titleLower := lower .Title -}}
+    {{- $snippet := .Summary | plainify | truncate 240 -}}
+    {{- with .Description -}}
+      {{- $snippet = . -}}
+    {{- end -}}
+
+    {{- $tags := slice -}}
+    {{- with .Params.categories -}}
+      {{- $tags = $tags | append . -}}
+    {{- end -}}
+    {{- with .Params.tags -}}
+      {{- $tags = $tags | append . -}}
+    {{- end -}}
+
+    {{- $type := "page" -}}
+    {{- $badge := "Раздел сайта" -}}
+    {{- $actionText := "Открыть" -}}
+    {{- $dateStr := "" -}}
+    {{- if not .Date.IsZero -}}
+      {{- $dateStr = .Date.Format "02.01.2006" -}}
+    {{- end -}}
+
+    {{- if in (slice "post" "posts") .Type -}}
+      {{/* Проверяем, является ли публикация официальным протоколом или документом */}}
+      {{- $isDocPost := false -}}
+      {{- with .Params.protocol -}}
+        {{- $isDocPost = true -}}
+      {{- end -}}
+      {{- if or (findRE "(?i)(протокол|устав|бланк|доверенность|смета|сметы|фэо|отчёт|отчет|положение)" .Title) (findRE "(?i)(протокол|устав|бланк|доверенность|смета|сметы|фэо|отчёт|отчет|положение)" (delimit $tags " ")) -}}
+        {{- $isDocPost = true -}}
+      {{- end -}}
+
+      {{- if $isDocPost -}}
+        {{- $type = "doc" -}}
+        {{- with .Params.protocol -}}
+          {{- $badge = printf "Документ · Протокол №%v" . -}}
+        {{- else -}}
+          {{- with .Params.categories -}}
+            {{- $badge = printf "Документ · %s" (index . 0) -}}
+          {{- else -}}
+            {{- $badge = "Документ · Официальный" -}}
+          {{- end -}}
+        {{- end -}}
+        {{- $actionText = "Открыть документ" -}}
+      {{- else -}}
+        {{- $type = "news" -}}
+        {{- with .Params.categories -}}
+          {{- $badge = printf "Новость · %s" (index . 0) -}}
+        {{- else -}}
+          {{- $badge = "Новость · Объявление" -}}
+        {{- end -}}
+        {{- $actionText = "Читать объявление" -}}
+      {{- end -}}
+    {{- else -}}
+      {{/* Страницы (разделы сайта) */}}
+      {{- $type = "page" -}}
+      {{- if or (eq .RelPermalink ("/vznosy/" | relURL)) (eq .Slug "vznosy") -}}
+        {{- $badge = "Раздел · Финансы" -}}
+        {{- $actionText = "Реквизиты и оплата" -}}
+        {{- $tags = $tags | append (slice "взносы" "реквизиты" "инн" "сбп" "qr" "оплата" "банк" "пени") -}}
+      {{- else if or (eq .RelPermalink ("/electro/" | relURL)) (eq .Slug "electro") -}}
+        {{- $badge = "Раздел · Справочник" -}}
+        {{- $actionText = "Тарифы и телефоны" -}}
+        {{- $tags = $tags | append (slice "свет" "электроэнергия" "тариф" "пск" "ленэнерго" "показания" "аварийная") -}}
+      {{- else if or (eq .RelPermalink ("/documents/" | relURL)) (eq .Slug "documents") -}}
+        {{- $type = "doc" -}}
+        {{- $badge = "Документы · Справочник" -}}
+        {{- $actionText = "Открыть документы" -}}
+        {{- $tags = $tags | append (slice "документы" "устав" "бланки" "доверенность" "сметы" "фэо" "протоколы") -}}
+      {{- else if or (eq .RelPermalink ("/pravlenie/" | relURL)) (eq .Slug "pravlenie") -}}
+        {{- $badge = "Раздел · Руководство" -}}
+        {{- $actionText = "Состав Правления" -}}
+        {{- $tags = $tags | append (slice "правление" "председатель" "витер" "прием" "часы" "ревизионная") -}}
+      {{- else if or (eq .RelPermalink ("/contacts/" | relURL)) (eq .Slug "contacts") -}}
+        {{- $badge = "Раздел · Контакты" -}}
+        {{- $actionText = "Контакты и карта" -}}
+        {{- $tags = $tags | append (slice "контакты" "телефон" "почта" "адрес" "охрана" "проезд") -}}
+      {{- else if or (eq .RelPermalink ("/komfort/" | relURL)) (eq .Slug "komfort") -}}
+        {{- $badge = "Раздел · Благоустройство" -}}
+        {{- $actionText = "Правила и вывоз ТКО" -}}
+        {{- $tags = $tags | append (slice "мусор" "тко" "контейнеры" "собаки" "тишина" "чистота") -}}
+      {{- else if or (eq .RelPermalink ("/archives/" | relURL)) (eq .Slug "archives") -}}
+        {{- $badge = "Раздел · Архив" -}}
+        {{- $actionText = "Архив публикаций" -}}
+        {{- $tags = $tags | append (slice "архив" "новости" "хроника" "собрания") -}}
+      {{- else -}}
+        {{- $badge = "Раздел сайта" -}}
+        {{- $actionText = "Перейти в раздел" -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $item := dict
+        "type" $type
+        "badge" $badge
+        "date" $dateStr
+        "title" .Title
+        "snippet" $snippet
+        "tags" $tags
+        "url" .RelPermalink
+        "actionText" $actionText
+    -}}
+    {{- $index = $index | append $item -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $index | jsonify -}}

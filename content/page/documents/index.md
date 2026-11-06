@@ -1,11 +1,7 @@
 ---
 title: Документы
 slug: documents
-menu:
-  main:
-    weight: -80
-    params:
-      icon: file-check
+layout: documents
 ---
 
 # 📚 Документы СНТ «Орбита»
