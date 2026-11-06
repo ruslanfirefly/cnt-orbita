@@ -38,7 +38,7 @@ if [ ! -f "public/index.html" ]; then
 fi
 
 # Подсчет статей
-ARTICLE_COUNT=$(grep -o '<article' public/index.html | wc -l | tr -d ' ')
+ARTICLE_COUNT=$(grep -o -E '(<article|class="?(featured|row\b))' public/index.html | wc -l | tr -d ' ')
 echo "   Найдено статей в ленте главной страницы: $ARTICLE_COUNT"
 
 if [ "$ARTICLE_COUNT" -lt 1 ]; then
