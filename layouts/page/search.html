@@ -6,52 +6,78 @@
       Главная
     </a>
     <span class="sep" aria-hidden="true">/</span>
-    <span aria-current="page">Поиск по сайту</span>
+    <span aria-current="page">Поиск по сайту, новостям и документам</span>
   </nav>
 
-  <section class="search-hero">
-    <h1>Поиск по материалам, документам и тарифам СНТ «Орбита»</h1>
-    <p>Мгновенный поиск по всем новостям, протоколам собраний, тарифам ПСК, реквизитам и бланкам заявлений.</p>
+  <!-- SEARCH HERO -->
+  <section class="search-hero" aria-label="Поиск по сайту">
+    <h1 class="sh-title">Умный поиск по СНТ «Орбита»</h1>
+    <p class="sh-sub">Ищите сразу по новостям, протоколам собраний, PDF-бланкам, тарифам и телефонам служб.</p>
 
-    <form id="searchForm" role="search" onsubmit="event.preventDefault();">
+    <form class="search-form-main" id="searchForm" onsubmit="return false;">
       <div class="search-input-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input class="search-main-input" id="mainSearchInput" type="search" placeholder="Введите запрос: например, взносы, тариф на свет, доверенность..." autocomplete="off" autofocus aria-label="Поисковый запрос">
-        <button class="clear-btn" id="clearSearchBtn" type="button" aria-label="Очистить поле поиска" style="display:none;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input
+          type="search"
+          id="searchInput"
+          class="search-main-input"
+          placeholder="Например: реквизиты, доверенность, тариф свет, кандидаты, дорога..."
+          autocomplete="off"
+          aria-label="Поисковый запрос"
+        />
+        <button type="button" class="search-clear-btn" id="clearSearchBtn" aria-label="Очистить поиск" title="Очистить">✕</button>
       </div>
-
-      <div class="quick-queries" aria-label="Быстрые подсказки">
-        <span class="qq-title">Часто ищут:</span>
-        <button class="qq-btn" type="button" data-q="взносы">Взносы и СБП</button>
-        <button class="qq-btn" type="button" data-q="электроэнергия">Тарифы на свет</button>
-        <button class="qq-btn" type="button" data-q="доверенность">Доверенность на собрание</button>
-        <button class="qq-btn" type="button" data-q="дорога">Ремонт дорог</button>
-        <button class="qq-btn" type="button" data-q="охрана">Пост охраны</button>
-      </div>
+      <button type="submit" class="search-submit-btn">
+        Найти
+      </button>
     </form>
+
+    <div class="quick-queries" aria-label="Частые запросы садоводов">
+      <span class="qq-label">Часто ищут:</span>
+      <button type="button" class="qq-chip" data-query="реквизиты">Реквизиты и ИНН</button>
+      <button type="button" class="qq-chip" data-query="тариф">Тариф на свет</button>
+      <button type="button" class="qq-chip" data-query="доверенность">Бланк доверенности</button>
+      <button type="button" class="qq-chip" data-query="устав">Устав СНТ</button>
+      <button type="button" class="qq-chip" data-query="кандидат">Кандидаты 2026</button>
+      <button type="button" class="qq-chip" data-query="дорога">Ремонт дороги</button>
+      <button type="button" class="qq-chip" data-query="пожар">Пожарная безопасность</button>
+    </div>
   </section>
 
+  <!-- TYPE FILTER TABS + COUNTER -->
   <div class="results-toolbar">
-    <div class="type-tabs" id="typeTabs" role="tablist">
-      <button class="type-tab active" type="button" data-type="all">Все материалы</button>
-      <button class="type-tab" type="button" data-type="post">Новости</button>
-      <button class="type-tab" type="button" data-type="page">Разделы сайта</button>
+    <div class="type-tabs" id="typeTabs" role="tablist" aria-label="Тип материалов">
+      <button type="button" class="type-tab active" data-type="all">
+        Все результаты <span class="type-tab-count" id="countAll">0</span>
+      </button>
+      <button type="button" class="type-tab" data-type="news">
+        Новости и объявления <span class="type-tab-count" id="countNews">0</span>
+      </button>
+      <button type="button" class="type-tab" data-type="doc">
+        Документы и бланки PDF <span class="type-tab-count" id="countDoc">0</span>
+      </button>
+      <button type="button" class="type-tab" data-type="page">
+        Разделы и контакты <span class="type-tab-count" id="countPage">0</span>
+      </button>
     </div>
-    <div class="results-count" id="resultsStatus" aria-live="polite">Загрузка индекса поиска...</div>
+
+    <div class="results-status" id="resultsStatus" aria-live="polite">
+      Загрузка поискового индекса...
+    </div>
   </div>
 
-  <div id="resultsList" class="results-container" aria-live="polite"></div>
+  <!-- RESULTS CONTAINER -->
+  <div class="results-list" id="resultsList" aria-live="polite"></div>
 
-  <div id="emptyBox" class="empty-state" style="display:none;">
-    <div class="empty-title">Ничего не найдено</div>
-    <p>Попробуйте изменить формулировку или перейти в основные разделы:</p>
+  <!-- EMPTY FALLBACK -->
+  <div class="empty-box" id="emptyBox">
+    <div class="empty-title">По вашему запросу точных совпадений не найдено</div>
+    <p class="empty-sub">Попробуйте ввести более короткое слово или выберите один из ключевых разделов СНТ «Орбита» ниже:</p>
     <div class="empty-links">
-      <a href="{{ "/vznosy/" | relURL }}">Оплата взносов</a>
-      <a href="{{ "/documents/" | relURL }}">Устав и документы</a>
-      <a href="{{ "/contacts/" | relURL }}">Контакты и правление</a>
+      <a href="{{ "/documents/" | relURL }}">Документы, Правление и тарифы</a>
       <a href="{{ "/archives/" | relURL }}">Архив всех новостей</a>
+      <a href="{{ "/vznosy/" | relURL }}">Реквизиты и оплата взносов</a>
+      <a href="tel:+79219670642">Позвонить в Правление: +7 (921) 967-06-42</a>
     </div>
   </div>
 </div>
@@ -61,110 +87,169 @@
 <script>
 (function() {
   var searchIndex = [];
-  var input = document.getElementById('mainSearchInput');
-  var clearBtn = document.getElementById('clearSearchBtn');
-  var list = document.getElementById('resultsList');
-  var status = document.getElementById('resultsStatus');
+  var searchInput = document.getElementById('searchInput');
+  var clearSearchBtn = document.getElementById('clearSearchBtn');
+  var searchForm = document.getElementById('searchForm');
+  var resultsList = document.getElementById('resultsList');
+  var resultsStatus = document.getElementById('resultsStatus');
   var emptyBox = document.getElementById('emptyBox');
+  var typeTabs = document.querySelectorAll('.type-tab');
+  var countAll = document.getElementById('countAll');
+  var countNews = document.getElementById('countNews');
+  var countDoc = document.getElementById('countDoc');
+  var countPage = document.getElementById('countPage');
   var activeType = 'all';
 
-  var urlParams = new URLSearchParams(window.location.search);
-  var initQuery = urlParams.get('q') || '';
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, function(ch) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+    });
+  }
 
+  function highlightText(text, query) {
+    var safe = escapeHtml(text);
+    if (!query) return safe;
+    var words = query.trim().split(/\s+/).filter(function(w) { return w.length >= 2; });
+    if (!words.length) return safe;
+    var pattern = words.map(function(w) {
+      return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }).join('|');
+    try {
+      var re = new RegExp('(' + pattern + ')', 'gi');
+      return safe.replace(re, '<mark>$1</mark>');
+    } catch(e) {
+      return safe;
+    }
+  }
+
+  function renderResults() {
+    if (!searchIndex) return;
+    var q = (searchInput.value || '').trim().toLowerCase();
+    clearSearchBtn.classList.toggle('visible', q.length > 0);
+
+    var matchedByQuery = searchIndex.filter(function(item) {
+      if (!q) return true;
+      var tagsStr = Array.isArray(item.tags) ? item.tags.join(' ') : '';
+      var hay = ((item.title || '') + ' ' + (item.snippet || '') + ' ' + tagsStr + ' ' + (item.badge || '')).toLowerCase();
+      var words = q.split(/\s+/).filter(function(w) { return w.length > 0; });
+      return words.every(function(w) { return hay.indexOf(w) !== -1; });
+    });
+
+    var counts = { all: matchedByQuery.length, news: 0, doc: 0, page: 0 };
+    matchedByQuery.forEach(function(it) {
+      if (counts[it.type] !== undefined) counts[it.type]++;
+    });
+
+    if (countAll) countAll.textContent = counts.all;
+    if (countNews) countNews.textContent = counts.news;
+    if (countDoc) countDoc.textContent = counts.doc;
+    if (countPage) countPage.textContent = counts.page;
+
+    var filtered = matchedByQuery.filter(function(it) {
+      return activeType === 'all' || it.type === activeType;
+    });
+
+    if (resultsStatus) {
+      resultsStatus.innerHTML = 'Найдено материалов: <strong>' + filtered.length + '</strong>';
+    }
+
+    if (!filtered.length) {
+      resultsList.innerHTML = '';
+      emptyBox.classList.add('show');
+      return;
+    }
+
+    emptyBox.classList.remove('show');
+    resultsList.innerHTML = filtered.map(function(item) {
+      var tagsHtml = '';
+      if (Array.isArray(item.tags) && item.tags.length) {
+        tagsHtml = '<div class="res-tags">' + item.tags.slice(0, 5).map(function(t) {
+          return '<span class="res-tag">#' + escapeHtml(t) + '</span>';
+        }).join('') + '</div>';
+      }
+
+      var dateHtml = item.date ? '<span>' + escapeHtml(item.date) + '</span>' : '';
+      var itemType = item.type || 'page';
+      var badgeClass = (itemType === 'doc' ? 'doc' : (itemType === 'news' ? 'news' : 'page'));
+
+      return (
+        '<article class="res-card">' +
+          '<div class="res-body">' +
+            '<div class="res-meta">' +
+              '<span class="res-badge ' + badgeClass + '">' + escapeHtml(item.badge || 'Материал') + '</span>' +
+              dateHtml +
+            '</div>' +
+            '<h2 class="res-title"><a href="' + escapeHtml(item.url) + '">' + highlightText(item.title, q) + '</a></h2>' +
+            '<p class="res-snippet">' + highlightText(item.snippet, q) + '</p>' +
+            tagsHtml +
+          '</div>' +
+          '<a class="res-action" href="' + escapeHtml(item.url) + '">' +
+            escapeHtml(item.actionText || 'Открыть') +
+            '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>' +
+          '</a>' +
+        '</article>'
+      );
+    }).join('');
+  }
+
+  // Загрузка поискового индекса
   fetch('{{ "searchindex.json" | relURL }}')
     .then(function(res) {
       if (!res.ok) throw new Error('Search index load failed');
       return res.json();
     })
     .then(function(data) {
-      searchIndex = data;
-      status.textContent = 'Индекс загружен (' + searchIndex.length + ' материалов)';
-      if (initQuery) {
-        input.value = initQuery;
-        clearBtn.style.display = 'inline-flex';
-        renderResults();
-      } else {
-        renderResults();
+      searchIndex = data || [];
+      var params = new URLSearchParams(window.location.search);
+      var initialQ = params.get('q');
+      if (initialQ) {
+        searchInput.value = initialQ;
       }
+      renderResults();
     })
     .catch(function(err) {
-      status.textContent = 'Ошибка загрузки индекса поиска.';
+      if (resultsStatus) {
+        resultsStatus.textContent = 'Ошибка загрузки индекса поиска.';
+      }
       console.error(err);
     });
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  if (searchInput) {
+    searchInput.addEventListener('input', renderResults);
   }
 
-  function renderResults() {
-    if (!searchIndex || !searchIndex.length) return;
-    var q = input.value.trim().toLowerCase();
-    var filtered = searchIndex.filter(function(item) {
-      if (activeType !== 'all' && item.type !== activeType) return false;
-      if (!q) return true;
-      var title = (item.title || '').toLowerCase();
-      var snippet = (item.snippet || '').toLowerCase();
-      var tags = (item.tags || []).join(' ').toLowerCase();
-      return title.indexOf(q) !== -1 || snippet.indexOf(q) !== -1 || tags.indexOf(q) !== -1;
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      searchInput.focus();
+      renderResults();
     });
-
-    if (q) {
-      status.textContent = 'Найдено материалов: ' + filtered.length;
-    } else {
-      status.textContent = 'Показаны все материалы (' + filtered.length + ')';
-    }
-
-    if (filtered.length === 0) {
-      list.innerHTML = '';
-      emptyBox.style.display = 'block';
-      return;
-    }
-
-    emptyBox.style.display = 'none';
-    var html = '';
-    filtered.forEach(function(item) {
-      html += '<article class="result-card">';
-      html += '<div class="rc-head">';
-      html += '<span class="rc-badge">' + escapeHtml(item.badge) + '</span>';
-      html += '<span class="rc-date">' + escapeHtml(item.date) + '</span>';
-      html += '</div>';
-      html += '<h2 class="rc-title"><a href="' + escapeHtml(item.url) + '">' + escapeHtml(item.title) + '</a></h2>';
-      html += '<p class="rc-desc">' + escapeHtml(item.snippet) + '</p>';
-      html += '<div class="rc-foot">';
-      html += '<a class="rc-link" href="' + escapeHtml(item.url) + '">' + escapeHtml(item.actionText || 'Открыть') + ' →</a>';
-      html += '</div>';
-      html += '</article>';
-    });
-    list.innerHTML = html;
   }
 
-  input.addEventListener('input', function() {
-    clearBtn.style.display = input.value ? 'inline-flex' : 'none';
-    renderResults();
-  });
+  if (searchForm) {
+    searchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      renderResults();
+    });
+  }
 
-  clearBtn.addEventListener('click', function() {
-    input.value = '';
-    clearBtn.style.display = 'none';
-    input.focus();
-    renderResults();
-  });
-
-  var qqBtns = document.querySelectorAll('.qq-btn');
-  qqBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      input.value = btn.getAttribute('data-q') || '';
-      clearBtn.style.display = 'inline-flex';
-      input.focus();
+  document.querySelectorAll('.qq-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var query = chip.getAttribute('data-query') || '';
+      searchInput.value = query;
+      activeType = 'all';
+      typeTabs.forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-type') === 'all');
+      });
+      searchInput.focus();
       renderResults();
     });
   });
 
-  var tabs = document.querySelectorAll('.type-tab');
-  tabs.forEach(function(tab) {
+  typeTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      tabs.forEach(function(t) { t.classList.remove('active'); });
+      typeTabs.forEach(function(t) { t.classList.remove('active'); });
       tab.classList.add('active');
       activeType = tab.getAttribute('data-type') || 'all';
       renderResults();
