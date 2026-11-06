@@ -30,7 +30,7 @@
 
   // Применяем тему
   var savedTheme = null;
-  try { savedTheme = localStorage.getItem('orbita-theme'); } catch(e) {}
+  try { savedTheme = localStorage.getItem('orbita-theme') || localStorage.getItem('cnt_theme'); } catch(e) {}
   if (savedTheme) {
     root.dataset.theme = savedTheme;
   } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -42,7 +42,10 @@
     themeBtn.addEventListener('click', function() {
       var nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = nextTheme;
-      try { localStorage.setItem('orbita-theme', nextTheme); } catch(e) {}
+      try {
+        localStorage.setItem('orbita-theme', nextTheme);
+        localStorage.setItem('cnt_theme', nextTheme);
+      } catch(e) {}
       syncThemeUI();
     });
   }
@@ -58,7 +61,7 @@
   }
 
   var savedFont = null;
-  try { savedFont = localStorage.getItem('orbita-font'); } catch(e) {}
+  try { savedFont = localStorage.getItem('orbita-font') || localStorage.getItem('cnt_font'); } catch(e) {}
   if (savedFont === 'large') {
     root.dataset.font = 'large';
   }
@@ -67,7 +70,10 @@
   function toggleFont() {
     var nextFont = root.dataset.font === 'large' ? 'normal' : 'large';
     root.dataset.font = nextFont;
-    try { localStorage.setItem('orbita-font', nextFont); } catch(e) {}
+    try {
+      localStorage.setItem('orbita-font', nextFont);
+      localStorage.setItem('cnt_font', nextFont);
+    } catch(e) {}
     syncFontUI();
   }
   if (fontBtn) fontBtn.addEventListener('click', toggleFont);
@@ -91,9 +97,11 @@
       searchBar.classList.remove('open');
       if (searchBtn) searchBtn.setAttribute('aria-expanded', 'false');
     }
-    if (menu) menu.classList.add('open');
+    if (menu) {
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden', 'false');
+    }
     if (backdrop) backdrop.classList.add('open');
-    document.body.classList.add('menu-open');
     if (burgerBtn) {
       burgerBtn.setAttribute('aria-expanded', 'true');
       burgerBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
@@ -103,9 +111,11 @@
   }
 
   function closeMenu() {
-    if (menu) menu.classList.remove('open');
+    if (menu) {
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+    }
     if (backdrop) backdrop.classList.remove('open');
-    document.body.classList.remove('menu-open');
     if (burgerBtn) {
       burgerBtn.setAttribute('aria-expanded', 'false');
       burgerBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
@@ -252,6 +262,50 @@
     var exp = Date.parse(heroBanner.getAttribute('data-expires'));
     if (!isNaN(exp) && Date.now() > exp) {
       heroBanner.style.display = 'none';
+    }
+  }
+
+  // 9. Кнопка «Скопировать ссылку соседям» (#copyLinkBtn)
+  var copyLinkBtn = document.getElementById('copyLinkBtn');
+  if (copyLinkBtn) {
+    copyLinkBtn.addEventListener('click', function() {
+      var url = window.location.href;
+      var span = copyLinkBtn.querySelector('span');
+      var origText = span ? span.textContent : '';
+      function onCopied() {
+        showToast('✓ Ссылка на страницу скопирована');
+        if (span) {
+          span.textContent = 'Ссылка скопирована!';
+          setTimeout(function() { span.textContent = origText; }, 2200);
+        }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(onCopied).catch(function() {
+          fallbackCopy(url, 'Ссылка на страницу');
+        });
+      } else {
+        fallbackCopy(url, 'Ссылка на страницу');
+      }
+    });
+  }
+
+  // 10. Фильтрация по годам на странице архива (.year-btn[data-year])
+  var yearBtns = document.querySelectorAll('.year-btn[data-year]');
+  var yearBlocks = document.querySelectorAll('.year-section[data-year-block]');
+  if (yearBtns.length > 0 && yearBlocks.length > 0) {
+    for (var y = 0; y < yearBtns.length; y++) {
+      yearBtns[y].addEventListener('click', function(e) {
+        var targetYear = this.getAttribute('data-year');
+        if (!targetYear) return;
+        e.preventDefault();
+        for (var b = 0; b < yearBtns.length; b++) {
+          yearBtns[b].classList.toggle('active', yearBtns[b] === this);
+        }
+        for (var s = 0; s < yearBlocks.length; s++) {
+          var blockYear = yearBlocks[s].getAttribute('data-year-block');
+          yearBlocks[s].style.display = (targetYear === 'all' || blockYear === targetYear) ? '' : 'none';
+        }
+      });
     }
   }
 })();

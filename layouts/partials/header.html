@@ -15,15 +15,15 @@
         </g>
       </svg>
       <span class="brand-t">
-        <span class="brand-name">СНТ «Орбита»</span>
-        <span class="brand-sub">Ломоносовский р-н, Лен. обл.</span>
+        <span class="brand-name">{{ .Site.Params.snt.name | default "СНТ «Орбита»" }}</span>
+        <span class="brand-sub">{{ .Site.Params.snt.location | default "д. Малое Карлино, Ломоносовский р-н" }}</span>
       </span>
     </a>
 
     <nav class="nav" aria-label="Основная навигация">
       <a href="{{ "/vznosy/" | relURL }}"{{ if eq .RelPermalink "/vznosy/" }} aria-current="page"{{ end }}>Взносы</a>
       <a href="{{ "/electro/" | relURL }}"{{ if or (eq .RelPermalink "/electro/") (eq .Page.Layout "electro") }} aria-current="page"{{ end }}>Электроэнергия</a>
-      <a href="{{ "/p/sbor-sredstv-na-remont-dorogi-2025/" | relURL }}"{{ if eq .RelPermalink "/p/sbor-sredstv-na-remont-dorogi-2025/" }} aria-current="page"{{ end }}>Дороги</a>
+      <a href="{{ "/dorogi/" | relURL }}"{{ if strings.HasPrefix .RelPermalink "/dorogi" }} aria-current="page"{{ end }}>Дороги</a>
       <a href="{{ "/documents/" | relURL }}"{{ if or (eq .RelPermalink "/documents/") (eq .Page.Layout "documents") }} aria-current="page"{{ end }}>Документы</a>
       <a href="{{ "/pravlenie/" | relURL }}"{{ if or (eq .RelPermalink "/pravlenie/") (eq .Page.Layout "pravlenie") }} aria-current="page"{{ end }}>Правление</a>
       <a href="{{ "/post/" | relURL }}"{{ if or (eq .Section "post") (eq .RelPermalink "/post/") }} aria-current="page"{{ end }}>Новости</a>
@@ -45,7 +45,7 @@
     {{- end -}}
 
     <div class="actions">
-      <button class="hbtn font-toggle-btn" id="fontBtn" type="button" aria-label="Переключить крупный шрифт для удобного чтения" aria-pressed="false" title="Режим крупного шрифта А+ для садоводов">
+      <button class="hbtn hbtn-font font-toggle-btn" id="fontBtn" type="button" aria-label="Переключить крупный шрифт для удобного чтения" aria-pressed="false" title="Режим крупного шрифта А+ для садоводов">
         А+
       </button>
       <button class="hbtn" id="searchBtn" type="button" aria-label="Открыть поиск по сайту" aria-expanded="false" aria-controls="searchBar" title="Поиск по новостям и документам">

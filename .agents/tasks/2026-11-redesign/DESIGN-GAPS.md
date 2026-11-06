@@ -48,6 +48,29 @@
    * Устранены конфликтующие переопределения `.alert-icon { display: none; }` и дублирующие селекторы карточек документов.
    * Git-подмодуль `themes/hugo-theme-stack/` приведен в абсолютно чистое состояние (0 незакоммиченных изменений).
 
+7. **Приёмочный авторский аудит (сверка с `new_design/*.html`)**:
+   * **Количество участков СНТ (383 участка)**: по данным официальной таблицы взносов СНТ «Орбита» максимальный номер участка — `383`. Обновлены параметры `snt.plotsCount: 383` и `heroBanner.progressLeftLabel` в `hugo.yaml`, шторке `#mobileMenu` и разделе `/documents/`.
+   * **Устранение рассинхронизации темы и шрифта А+ (FOUC)**: синхронизированы ключи `localStorage` (`orbita-theme` / `cnt_theme` и `orbita-font` / `cnt_font`) между инлайн-скриптом в `layouts/_default/baseof.html` и `assets/js/main.js`. Исправлен якорь `.skip-link` (`#main`).
+   * **Главная страница (`orbita-redesign.html`)**:
+     * В `hero-banner.html` добавлены векторные иконки в кнопки `.hero-btn-primary` и `.hero-btn-secondary`, выделены полужирным акценты в `.quorum-head`.
+     * В `emergency-strip.html` выровнена структура `.em-strip-info`, `.em-strip-sub` и единой кнопки `.em-strip-phone`.
+     * В `status-bar.html` приведён к эталону класс `.status-txt`.
+     * В `quick-grid.html` и `layouts/index.html` устранён дублирующий вложенный `<section>`, добавлены `<span>` внутри `.q-title` и hover-анимация стрелок `.q-title svg`.
+     * Блок `payment-card.html` и шорткод `requisites.html` приведены к макету `.pay-card` с пилюлями `.req-pills` для копирования ИНН, Р/с, БИК и назначения платежа в 1 клик, а также кнопками `.qr-open-btn` и ведомостью взносов (присутствует также на `/vznosy/`).
+   * **Страница статьи (`orbita-article.html`)**:
+     * Блок перелинковки `<nav class="post-nav">` вынесен за пределы `<article class="article-card">` в левую колонку `.article-layout`.
+     * Добавлена одновременная поддержка `.Params.documents` и `.Params.attachments` в `layouts/post/single.html`, `layouts/_default/single.html` и `layouts/_default/page.html`.
+     * Добавлен рабочий обработчик кнопки `#copyLinkBtn` («Скопировать ссылку соседям») в `assets/js/main.js`.
+     * Правый сайдбар статьи дополнен поддержкой `.Params.show_voting_widget` и расширенным виджетом Председателя (ФИО, часы приёма Сб 12:00–14:00, телефоны Правления, аварийной «Ленэнерго» и ПСК).
+     * Межстрочный интервал `.prose` приведён строго к `1.65`, добавлены стили для `.columns-container`, `figure.text-center` и горизонтального скролла широких таблиц на мобильных экранах.
+   * **Списки публикаций и архивы (`orbita-news-list.html`)**:
+     * Добавлена интерактивная фильтрация по годам (`.year-btn[data-year]`, включая кнопку «Все годы») на странице `/archives/` в `assets/js/main.js` и `layouts/page/archives.html`.
+     * Иконка `.post-arrow` приведена к стрелке с древком (`M5 12h14`, `m12 5 7 7-7 7`), добавлен бейдж `Закреплено` для `pinned`-постов и ограничение сниппета `.post-body p` в 2 строки (`-webkit-line-clamp: 2`).
+   * **Справочные разделы и поиск (`orbita-documents.html`, `orbita-search.html`)**:
+     * Исправлен критический баг контрастности `.page-hero` на страницах `/documents/`, `/electro/` и `/pravlenie/`: добавлен фирменный градиент `var(--grad-hero)` для `.page-hero-grad` / `.page-hero:has(.jump-pills)`, благодаря чему белые кнопки `.jump-pill` и заголовок идеально читаются в светлой и тёмной темах.
+     * В `:root` и `[data-theme="dark"]` (`assets/scss/main.scss`) добавлены недостававшие CSS-переменные (`--bg-elev`, `--bg-soft`, `--amber`, `--green`, `--green-soft`, `--danger`, `--danger-soft`), исправившие цвета бейджей `.res-badge.doc`, `.res-badge.page`, `.res-tag` и `.res-action` на странице поиска `/search/`.
+     * Карточки `.doc-grid .doc-card` на странице `/documents/` оформлены на белой подложке `var(--card)` с выравниванием `align-items: flex-start`.
+
 ---
 
 ## 📌 Рекомендации для редакции и архитектурные заметки (Content & Design Gaps)

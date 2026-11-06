@@ -8,13 +8,13 @@
   </nav>
 
   <!-- Шапка страницы с быстрым переходом -->
-  <section class="page-hero">
+  <section class="page-hero page-hero-grad">
     <h1>Официальные документы, тарифы и руководство СНТ «Орбита»</h1>
     <p>Справочный раздел для садоводов и постоянных жителей: Устав товарищества, бланки доверенностей, актуальные тарифы АО «ПСК», график личного приёма и состав выборных органов.</p>
     <div class="jump-pills" role="navigation" aria-label="Быстрый переход по справочнику">
       <a class="jump-pill" href="#docs">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-        Официальные документы (6)
+        Официальные документы (8)
       </a>
       <a class="jump-pill" href="#electro">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -120,12 +120,42 @@
           <div>
             <div class="doc-name">Распределение долей (% голосов) по участкам СНТ «Орбита»</div>
             <div class="doc-desc">Справочная ведомость расчёта голосов пропорционально площади садовых участков для подсчёта кворума собрания.</div>
-            <div class="doc-meta">Файл: golosa.pdf · Реестр 334 участков</div>
+            <div class="doc-meta">Файл: golosa.pdf · Реестр {{ .Site.Params.snt.plotsCount | default 383 }} участков</div>
           </div>
         </div>
         <a class="doc-btn" href="{{ "documents/pravila/golosa.pdf" | relURL }}" target="_blank" rel="noopener">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
           Открыть реестр
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Положение о порядке подготовки и проведения общего собрания</div>
+            <div class="doc-desc">Регламент уведомления садоводов, выдвижения кандидатов, проведения очно-заочного голосования и подсчёта голосов.</div>
+            <div class="doc-meta">Файл: polozhenie.pdf · Регламент собраний</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/pravila/polozhenie.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Открыть PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Положение о сборе и обработке персональных данных</div>
+            <div class="doc-desc">Порядок хранения, защиты и использования персональных данных собственников участков для ведения реестра членов СНТ.</div>
+            <div class="doc-meta">Файл: pers_data.pdf · Персональные данные (152-ФЗ)</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "documents/pravila/pers_data.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Открыть PDF
         </a>
       </div>
     </div>

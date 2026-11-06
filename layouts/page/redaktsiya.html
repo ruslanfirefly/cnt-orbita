@@ -1,0 +1,112 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Редакция сайта</span>
+  </nav>
+
+  <!-- Шапка страницы -->
+  <section class="page-hero page-hero-grad">
+    <h1>Редакция официального сайта СНТ «Орбита»</h1>
+    <p>Наш портал — это не только официальный источник информации от Правления, но и открытая добрососедская площадка для обмена новостями, фотографиями и полезными объявлениями между жителями СНТ «Орбита».</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход по разделу">
+      <a class="jump-pill" href="#send-news">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Прислать новость
+      </a>
+      <a class="jump-pill" href="#policy">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        Редакционная политика
+      </a>
+      <a class="jump-pill" href="#process">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Процесс публикации
+      </a>
+    </div>
+  </section>
+
+  <!-- Прислать новость -->
+  <section class="sec-block" id="send-news" aria-labelledby="sendNewsTitle">
+    <div class="electro-ActionBar" style="margin-top: 0;">
+      <div class="eab-info">
+        <div class="eab-title" id="sendNewsTitle">Станьте соавтором сайта СНТ «Орбита»</div>
+        <div class="eab-sub">Присылайте свои новости, истории о жизни посёлка, частные объявления садоводов или фотографии на почту редакции. Обязательно укажите ваше имя и номер участка для обратной связи.</div>
+      </div>
+      <div class="eab-btns">
+        <a class="btn-solid" href="mailto:news@cnt-orbita.ru">
+          Написать: news@cnt-orbita.ru
+        </a>
+        <button class="btn-solid copy-btn" type="button" data-copy="news@cnt-orbita.ru" data-label="Email редакции news@cnt-orbita.ru">
+          Скопировать E-mail
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Редакционная политика -->
+  <section class="sec-block" id="policy" aria-labelledby="policyTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="policyTitle">Редакционная политика портала</h2>
+      <span class="sec-sub">Правила поддержания конструктивной и дружелюбной атмосферы</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="article-card" style="padding: 24px 26px;">
+        <div class="prose">
+          <h3 style="margin-top: 0; color: var(--emerald-text);">✓ Что мы публикуем</h3>
+          <ul>
+            <li><b>Новости и события</b>, касающиеся жизни и развития СНТ «Орбита».</li>
+            <li><b>Частные объявления</b> от садоводов (помощь по хозяйству, находки, обмен растениями).</li>
+            <li><b>Фотографии и видеоролики</b> о нашем посёлке, праздниках и природе.</li>
+            <li><b>Конструктивные предложения</b> по благоустройству и личные мнения (с соответствующей рубрикой).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="article-card" style="padding: 24px 26px;">
+        <div class="prose">
+          <h3 style="margin-top: 0; color: var(--danger-text);">✕ Что не допускается к публикации</h3>
+          <ol>
+            <li>Материалы, нарушающие законодательство Российской Федерации.</li>
+            <li>Голословные обвинения, клевета и оскорбления в адрес любых лиц.</li>
+            <li>Ненормативная лексика и агрессивные высказывания.</li>
+            <li>Персональные данные третьих лиц без их согласия.</li>
+            <li>Коммерческая реклама сторонних организаций без согласования.</li>
+            <li>Заведомо ложная и непроверенная информация (слухи и фейки).</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Процесс публикации -->
+  <section class="sec-block" id="process" aria-labelledby="processTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="processTitle">Порядок подготовки и выпуска материалов</h2>
+      <span class="sec-sub">Как работает редакция сайта</span>
+    </div>
+
+    <div class="tariff-grid">
+      <div class="tariff-card highlight">
+        <span class="t-badge">Правило 1</span>
+        <div class="t-name">Авторство и контакты</div>
+        <p class="t-note" style="margin-top: 8px;">Анонимные материалы не публикуются. Редакция должна знать ваши контакты и номер участка, но по вашей просьбе мы можем не указывать имя автора в самой статье.</p>
+      </div>
+
+      <div class="tariff-card highlight">
+        <span class="t-badge">Правило 2</span>
+        <div class="t-name">Бережная редактура</div>
+        <p class="t-note" style="margin-top: 8px;">Редакция оставляет за собой право вносить в текст стилистические, корректорские и грамматические правки, а также оформлять списки и выноски, не искажая сути материала.</p>
+      </div>
+
+      <div class="tariff-card">
+        <span class="t-badge">Правило 3</span>
+        <div class="t-name">Официальный статус</div>
+        <p class="t-note" style="margin-top: 8px;">Сайт СНТ «Орбита» является официальным информационным окном Правления. Публикация материалов от жителей — добрососедская инициатива, дополняющая официальную хронику.</p>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

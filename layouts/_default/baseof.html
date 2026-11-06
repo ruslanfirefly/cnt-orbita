@@ -9,13 +9,13 @@
   <script>
     (function() {
       try {
-        var t = localStorage.getItem('cnt_theme');
+        var t = localStorage.getItem('orbita-theme') || localStorage.getItem('cnt_theme');
         if (t === 'dark' || (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.setAttribute('data-theme', 'dark');
         } else {
           document.documentElement.setAttribute('data-theme', 'light');
         }
-        var f = localStorage.getItem('cnt_font');
+        var f = localStorage.getItem('orbita-font') || localStorage.getItem('cnt_font');
         if (f === 'large') {
           document.documentElement.setAttribute('data-font', 'large');
         }
@@ -31,7 +31,7 @@
   <!-- Стили дизайн-системы СНТ «Орбита» -->
   {{ $scss := resources.Get "scss/main.scss" }}
   {{ if $scss }}
-    {{ $style := $scss | toCSS (dict "targetPath" "css/main.css" "enableSourceMap" false) | minify | fingerprint }}
+    {{ $style := $scss | css.Sass (dict "transpiler" "dartsass" "targetPath" "css/main.css" "enableSourceMap" false) | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
   {{ end }}
 
@@ -53,7 +53,7 @@
   {{ partial "mobile-menu.html" . }}
 
   <!-- Основной контент страницы -->
-  <main id="main-content">
+  <main id="main" tabindex="-1">
     {{ block "main" . }}{{ end }}
   </main>
 

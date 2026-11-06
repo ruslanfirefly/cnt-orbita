@@ -1,0 +1,48 @@
+{{ define "main" }}
+<div class="container">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Главная
+    </a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Ошибка 404</span>
+  </nav>
+
+  <section class="search-hero" aria-label="Страница не найдена">
+    <h1 class="sh-title">Страница не найдена (404)</h1>
+    <p class="sh-sub">Возможно, ссылка устарела или материал был перенесён в архив. Воспользуйтесь поиском по сайту СНТ «Орбита» или перейдите в один из основных разделов.</p>
+
+    <form class="search-form-main" action="{{ "/search/" | relURL }}" method="get" role="search">
+      <div class="search-input-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+        </svg>
+        <input
+          id="notFoundSearchInput"
+          class="search-main-input"
+          type="search"
+          name="q"
+          placeholder="Найти устав, реквизиты, тарифы на свет, протокол..."
+          autocomplete="off"
+          aria-label="Поисковый запрос"
+        />
+      </div>
+      <button class="search-submit-btn" type="submit">Найти на сайте</button>
+    </form>
+  </section>
+
+  <div class="empty-box show" style="margin-top: 24px;">
+    <div class="empty-title">Быстрый переход по разделам СНТ «Орбита»</div>
+    <p class="empty-sub">Все актуальные документы, реквизиты для оплаты взносов и протоколы правления доступны в основных разделах портала:</p>
+    <div class="empty-links">
+      <a href="{{ "/" | relURL }}">На главную страницу</a>
+      <a href="{{ "/vznosy/" | relURL }}">Взносы и реквизиты</a>
+      <a href="{{ "/electro/" | relURL }}">Электроэнергия и тарифы</a>
+      <a href="{{ "/documents/" | relURL }}">Официальные документы</a>
+      <a href="{{ "/pravlenie/" | relURL }}">Правление и контакты</a>
+      <a href="{{ "/archives/" | relURL }}">Архив новостей</a>
+    </div>
+  </div>
+</div>
+{{ end }}

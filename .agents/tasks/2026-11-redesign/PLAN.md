@@ -100,7 +100,7 @@ requisites:
   bank: 'Северо-Западный банк ПАО Сбербанк'
   bik: '044030653'
   corrAccount: '30101810500000000653'
-  purposeTemplate: 'Целевой и членский взнос за 2026 год, участок № ___'
+  purposeTemplate: 'Целевой и членский взнос за 20__ год, участок № ___'
   paymentTableUrl: 'https://docs.google.com/spreadsheets/d/1zhGuLnfFQLzfv22SANlKMt_76mLHWN2umiCzYl9Nk64/edit?usp=sharing'
   qrImageUrl: '/vznosy/qr-oplata.png'
 

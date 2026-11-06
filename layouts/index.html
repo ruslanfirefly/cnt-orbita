@@ -7,9 +7,7 @@
   {{ partial "hero-banner.html" . }}
 
   <!-- Справочная сводка инфраструктуры (свет, мусор, приём правления) -->
-  <section aria-label="Справочная сводка СНТ Орбита">
-    {{ partial "status-bar.html" . }}
-  </section>
+  {{ partial "status-bar.html" . }}
 
   <!-- Сетка сервисов и карточка быстрой оплаты СБП -->
   <section aria-label="Основные разделы и сервисы СНТ">
@@ -31,7 +29,7 @@
     <h2>Новости и объявления СНТ «Орбита»</h2>
     <a href="{{ "/archives/" | relURL }}">
       Все публикации в архиве
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
 
@@ -51,7 +49,7 @@
               <span class="featured-event-place">{{ with .Params.subtitle }}{{ . }}{{ else }}Официальное сообщение{{ end }}</span>
             </div>
             <div class="featured-art-center" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
             </div>
           {{ end }}
         </div>
@@ -75,7 +73,13 @@
     <!-- Список свежих публикаций -->
     <div class="news-list">
       {{ range $topList }}
-        {{ $cat := lower (index .Params.categories 0 | default "") }}
+        {{ $primaryCat := index .Params.categories 0 | default "" }}
+        {{ range .Params.categories }}
+          {{ if and (eq $primaryCat "Праздники и жизнь СНТ") (ne . "Праздники и жизнь СНТ") }}
+            {{ $primaryCat = . }}
+          {{ end }}
+        {{ end }}
+        {{ $cat := lower $primaryCat }}
         {{ $isUrgent := or .Params.urgent (in $cat "важное") (in $cat "пожар") (in $cat "срочн") }}
         <a class="row{{ if $isUrgent }} row-urgent{{ end }}" href="{{ .RelPermalink }}">
           {{ if or (in $cat "пожар") (in $cat "безопасн") (in $cat "мчс") }}
@@ -103,7 +107,7 @@
             <b>{{ .Title }}</b>
             <div class="meta">
               <span>{{ .Date.Format "02.01.2006" }}</span>
-              {{ with index .Params.categories 0 }}
+              {{ with $primaryCat }}
                 <span class="dot" aria-hidden="true"></span>
                 <span>{{ . }}</span>
               {{ end }}

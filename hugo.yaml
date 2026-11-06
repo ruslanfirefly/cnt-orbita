@@ -1,8 +1,8 @@
 baseURL: 'https://cnt-orbita.ru/'
 locale: 'ru-RU'
 title: 'Садоводческое некоммерческое товарищество "Орбита"'
-theme: "hugo-theme-stack"
 DefaultContentLanguage: "ru"
+capitalizeListTitles: false
 enableRobotsTXT: true
 enableEmoji: true
 hasCJKLanguage: false
@@ -36,7 +36,7 @@ params:
     location: 'д. Малое Карлино, Ломоносовский р-н'
     fullAddress: '188508, Ленинградская обл., Ломоносовский р-н, Виллозское ГП, д. Малое Карлино, тер. СНТ «Орбита»'
     chairman: 'Витер Андрей Дмитриевич'
-    plotsCount: 334
+    plotsCount: 383
     phoneDisplay: '+7 (921) 967-06-42'
     phoneTel: '+79219670642'
     receptionHours: 'Сб 12:00–14:00'
@@ -56,7 +56,7 @@ params:
     bank: 'Северо-Западный банк ПАО Сбербанк'
     bik: '044030653'
     corrAccount: '30101810500000000653'
-    purposeTemplate: 'Целевой и членский взнос за 2026 год, участок № ___'
+    purposeTemplate: 'Целевой и членский взнос за 20__ год, участок № ___'
     paymentTableUrl: 'https://docs.google.com/spreadsheets/d/1zhGuLnfFQLzfv22SANlKMt_76mLHWN2umiCzYl9Nk64/edit?usp=sharing'
     qrImageUrl: '/vznosy/qr-oplata.png'
 
@@ -67,24 +67,24 @@ params:
     title: 'Правление СНТ «Орбита» · Приём: Сб 12:00–14:00'
     subtitle: 'Аварийная «Ленэнерго»: 8 (800) 220-02-20 · Показания ПСК: 8 (812) 678-96-00'
 
-  # Главный Hero-баннер собрания на главной (.hero-banner)
+  # Главный сезонный Hero-баннер на главной (.hero-banner)
   heroBanner:
     enabled: true
-    expiresAt: '2027-07-05T23:59:59+03:00'
-    tag: 'Общее собрание 2026'
-    datesLabel: 'Заочно: 20 июня – 3 июля · Очно: 4 июля в 12:00'
-    title: 'Очередное общее собрание членов СНТ «Орбита» (очно-заочное голосование)'
-    description: 'Выборы Председателя, членов Правления (5 кандидатов) и Ревизионной комиссии, утверждение отчётов и сметы на 2026 год.'
-    showProgress: true
-    progressLeftLabel: 'Территория СНТ: 334 участка (д. Малое Карлино)'
-    progressRightLabel: 'Бюллетени: в Правлении Сб 12:00–14:00'
-    progressPercent: 68
+    expiresAt: ''
+    tag: 'Взносы и реквизиты'
+    datesLabel: 'Расчётный счёт СНТ в ПАО Сбербанк · Оплата по QR-коду СБП'
+    title: 'Кампания по оплате членских и целевых взносов СНТ «Орбита»'
+    description: 'Оплата производится официально на расчётный счёт товарищества по QR-коду или банковским реквизитам. В назначении платежа обязательно указывайте номер участка и ФИО собственника.'
+    showProgress: false
+    progressLeftLabel: 'Территория СНТ: <b>383 участка (д. Малое Карлино)</b>'
+    progressRightLabel: 'Сверка поступлений: <b>онлайн-таблица по участкам</b>'
+    progressPercent: 75
     primaryBtn:
-      text: 'Порядок голосования 2026'
-      url: '/p/nachalo-golosovaniya-2026/'
+      text: 'Реквизиты и QR-код оплаты'
+      url: '/vznosy/'
     secondaryBtn:
-      text: 'Список кандидатов (Протокол №31)'
-      url: '/p/utverzhden-spisok-kandidatov-2026/'
+      text: 'Таблица сверки оплат'
+      url: 'https://docs.google.com/spreadsheets/d/1zhGuLnfFQLzfv22SANlKMt_76mLHWN2umiCzYl9Nk64/edit?usp=sharing'
 
   # Оперативная сводка инфраструктуры и тарифов (.status-bar)
   statusBar:
@@ -180,7 +180,7 @@ menu:
         icon: bolt
     - identifier: dorogi
       name: "Дороги"
-      url: "/p/sbor-sredstv-na-remont-dorogi-2025/"
+      url: "/dorogi/"
       weight: 30
       params:
         icon: road
@@ -261,6 +261,7 @@ security:
   exec:
     allow:
       - "^dart-sass-embedded$"
+      - "^sass$"
       - "^go run.*"
       - "^npx.*"
       - "^postcss.*"

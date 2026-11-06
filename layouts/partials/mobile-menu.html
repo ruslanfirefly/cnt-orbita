@@ -5,7 +5,7 @@
   <div class="container">
     <div class="mm-head">
       <span>Все разделы сайта СНТ «Орбита» (10 разделов)</span>
-      <span>Малое Карлино · 334 участка</span>
+      <span>Малое Карлино · {{ .Site.Params.snt.plotsCount | default 383 }} участка</span>
     </div>
     <div class="mm-grid">
       <a href="{{ "/" | relURL }}">
@@ -29,7 +29,7 @@
         <span class="mm-txt"><span>Электроэнергия</span><span class="mm-sub">Тарифы ПСК (7,25 / 3,95 ₽), показания</span></span>
       </a>
 
-      <a href="{{ "/p/sbor-sredstv-na-remont-dorogi-2025/" | relURL }}">
+      <a href="{{ "/dorogi/" | relURL }}">
         <span class="mm-ic" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19 8 5"/><path d="m16 5 4 14"/><path d="M12 5v2"/><path d="M12 11v2"/><path d="M12 17v2"/></svg>
         </span>

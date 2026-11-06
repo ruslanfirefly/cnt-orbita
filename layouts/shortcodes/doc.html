@@ -1,9 +1,22 @@
-{{- $title := .Get "title" | default (.Get 0) -}}
-{{- $url := .Get "url" | default (.Get 1) | default (.Get "file") -}}
-{{- $ext := .Get "ext" | default (.Get "type") | default "PDF" | upper -}}
-{{- $size := .Get "size" -}}
-{{- $desc := .Get "desc" -}}
-<div class="doc-list" style="margin: 16px 0;">
+{{- $title := "" -}}
+{{- $url := "" -}}
+{{- $ext := "PDF" -}}
+{{- $size := "" -}}
+{{- $desc := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $title = .Get "title" -}}
+  {{- $url = .Get "url" | default (.Get "file") -}}
+  {{- $ext = .Get "ext" | default (.Get "type") | default "PDF" | upper -}}
+  {{- $size = .Get "size" -}}
+  {{- $desc = .Get "desc" -}}
+{{- else -}}
+  {{- $title = .Get 0 -}}
+  {{- $url = .Get 1 -}}
+{{- end -}}
+{{- with $.Page.Resources.GetMatch $url -}}
+  {{- $url = .RelPermalink -}}
+{{- end -}}
+<div class="doc-list" style="margin: 12px 0;">
   <a class="doc-card" href="{{ $url }}" target="_blank" rel="noopener">
     <div class="doc-left">
       <span class="doc-badge{{ if eq $ext "DOCX" }} docx{{ else if or (eq $ext "XLS") (eq $ext "XLSX") }} xlsx{{ end }}">{{ $ext }}</span>

@@ -1,0 +1,20 @@
+{{ $paginator := .Paginator }}
+{{ if gt $paginator.TotalPages 1 }}
+<nav class="pagination" aria-label="Постраничная навигация">
+  {{ if $paginator.HasPrev }}
+    <a class="page-link" href="{{ $paginator.Prev.URL }}" aria-label="Предыдущая страница">← Назад</a>
+  {{ end }}
+
+  {{ range $paginator.Pagers }}
+    {{ if eq . $paginator }}
+      <a class="page-link" href="{{ .URL }}" aria-current="page">{{ .PageNumber }}</a>
+    {{ else }}
+      <a class="page-link" href="{{ .URL }}">{{ .PageNumber }}</a>
+    {{ end }}
+  {{ end }}
+
+  {{ if $paginator.HasNext }}
+    <a class="page-link" href="{{ $paginator.Next.URL }}" aria-label="Следующая страница">Вперёд →</a>
+  {{ end }}
+</nav>
+{{ end }}

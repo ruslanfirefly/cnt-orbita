@@ -1,0 +1,239 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Хлебные крошки -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{{ "/" | relURL }}">Главная</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Взносы и реквизиты</span>
+  </nav>
+
+  <!-- Шапка страницы -->
+  <section class="page-hero page-hero-grad">
+    <h1>Оплата членских и целевых взносов СНТ «Орбита»</h1>
+    <p>Актуальные банковские реквизиты товарищества в ПАО Сбербанк, оплата по QR-коду без ввода реквизитов, образец назначения платежа и онлайн-таблица сверки по участкам.</p>
+    <div class="jump-pills" role="navigation" aria-label="Быстрый переход по разделу">
+      <a class="jump-pill" href="#requisites">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        Банковские реквизиты
+      </a>
+      <a class="jump-pill" href="#naznachenie">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Назначение платежа
+      </a>
+      <a class="jump-pill" href="#table-check">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        Таблица сверки оплат
+      </a>
+      <a class="jump-pill" href="#smety">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+        Сметы и ФЭО
+      </a>
+    </div>
+  </section>
+
+  <!-- Быстрая карточка копирования и QR -->
+  <section class="sec-block" id="requisites" aria-labelledby="reqTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="reqTitle">Банковские реквизиты и QR-код для оплаты</h2>
+      <span class="sec-sub">Нажмите на любое поле, чтобы скопировать реквизит в буфер обмена</span>
+    </div>
+
+    {{ partial "payment-card.html" . }}
+
+    <div class="doc-grid" style="margin-top: 18px;">
+      <!-- Полная таблица реквизитов -->
+      <div class="article-card" style="padding: 22px 24px;">
+        <h3 style="margin: 0 0 14px; font-size: 1.12rem; font-weight: 800; color: var(--ink);">Полные реквизиты получателя</h3>
+        <table class="req-table" aria-label="Банковские реквизиты СНТ Орбита">
+          <tbody>
+            <tr>
+              <th>Получатель</th>
+              <td>
+                <span>{{ site.Params.snt.name | default "СНТ «Орбита»" }}</span>
+                <button class="copy-btn" type="button" data-copy="{{ site.Params.snt.name | default "СНТ «Орбита»" }}" data-label="Получатель">Копировать</button>
+              </td>
+            </tr>
+            <tr>
+              <th>ИНН</th>
+              <td>
+                <span>{{ site.Params.requisites.inn | default "4720008674" }}</span>
+                <button class="copy-btn" type="button" data-copy="{{ site.Params.requisites.inn | default "4720008674" }}" data-label="ИНН">Копировать</button>
+              </td>
+            </tr>
+            <tr>
+              <th>КПП</th>
+              <td>
+                <span>{{ site.Params.requisites.kpp | default "472501001" }}</span>
+                <button class="copy-btn" type="button" data-copy="{{ site.Params.requisites.kpp | default "472501001" }}" data-label="КПП">Копировать</button>
+              </td>
+            </tr>
+            <tr>
+              <th>Расчётный счёт</th>
+              <td>
+                <span>{{ site.Params.requisites.account | default "40703810155240000156" }}</span>
+                <button class="copy-btn" type="button" data-copy="{{ site.Params.requisites.account | default "40703810155240000156" }}" data-label="Расчётный счёт">Копировать</button>
+              </td>
+            </tr>
+            <tr>
+              <th>Банк</th>
+              <td>
+                <span>{{ site.Params.requisites.bank | default "СЕВЕРО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК" }}</span>
+                <button class="copy-btn" type="button" data-copy="{{ site.Params.requisites.bank | default "СЕВЕРО-ЗАПАДНЫЙ БАНК ПАО СБЕРБАНК" }}" data-label="Банк">Копировать</button>
+              </td>
+            </tr>
+            <tr>
+              <th>БИК</th>
+              <td>
+                <span>{{ site.Params.requisites.bik | default "044030653" }}</span>
+                <button class="copy-btn" type="button" data-copy="{{ site.Params.requisites.bik | default "044030653" }}" data-label="БИК">Копировать</button>
+              </td>
+            </tr>
+            <tr>
+              <th>Корр. счёт</th>
+              <td>
+                <span>{{ site.Params.requisites.correspondentAccount | default "30101810500000000653" }}</span>
+                <button class="copy-btn" type="button" data-copy="{{ site.Params.requisites.correspondentAccount | default "30101810500000000653" }}" data-label="Корр. счёт">Копировать</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Карточка с QR-кодом -->
+      <div class="article-card" style="padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">
+        <div>
+          <h3 style="margin: 0 0 8px; font-size: 1.12rem; font-weight: 800; color: var(--ink);">Быстрая оплата по QR-коду</h3>
+          <p style="margin: 0 0 16px; font-size: .92rem; color: var(--ink2); line-height: 1.55;">
+            Отсканируйте код камерой смартфона или из мобильного приложения вашего банка (СберБанк Онлайн, Т-Банк, ВТБ) — все реквизиты СНТ «Орбита» заполнятся автоматически.
+          </p>
+        </div>
+        <div class="qr-box" style="margin: 0;">
+          <img src="{{ site.Params.requisites.qrImageUrl | default "/vznosy/qr-oplata.png" | relURL }}" alt="QR-код для оплаты взносов СНТ «Орбита»" width="180" height="180" loading="lazy">
+          <div style="font-size: .88rem; color: var(--ink2); line-height: 1.45;">
+            <b>Останется ввести только сумму и назначение платежа:</b><br>
+            <span style="color: var(--cyan-deep); font-weight: 700;">«Целевой и членский взнос за ____ год, участок № ____»</span>
+          </div>
+        </div>
+        <button class="btn btn-cyan btn-show-qr" type="button" style="width: 100%; justify-content: center;">
+          Открыть QR-код на весь экран
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Назначение платежа -->
+  <section class="sec-block" id="naznachenie" aria-labelledby="purposeTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="purposeTitle">Как правильно указать назначение платежа</h2>
+      <span class="sec-sub">Обязательно для корректного разноса платежей бухгалтерией</span>
+    </div>
+
+    <div class="callout warn" role="note" style="margin-top: 0;">
+      <div class="callout-ic" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      </div>
+      <div class="callout-body">
+        <b>Образец назначения платежа: «Целевой и членский взнос за ____ год, участок № ____»</b>
+        <div>Многие садоводы пытаются самостоятельно разделить и высчитать в платёжке сумму целевого и членского взноса по отдельности. <b>Этого делать не нужно</b> — бухгалтерия сама распределит платёж согласно утверждённой смете. Достаточно указать год и номер вашего участка.</div>
+      </div>
+    </div>
+
+    <div class="callout" role="note">
+      <div class="callout-ic" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      </div>
+      <div class="callout-body">
+        <b>Оплата только на расчётный счёт товарищества (ч. 3 ст. 14 ФЗ № 217-ФЗ)</b>
+        <div>В соответствии с Федеральным законом № 217-ФЗ приём наличных денежных средств в кассу СНТ не производится. Все взносы вносятся безналичным переводом на официальный расчётный счёт СНТ «Орбита».</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Таблица сверки оплат -->
+  <section class="sec-block" id="table-check" aria-labelledby="checkTitle">
+    <div class="electro-ActionBar" style="margin-top: 0;">
+      <div class="eab-info">
+        <div class="eab-title" id="checkTitle">Онлайн-таблица состояния оплаты взносов по участкам</div>
+        <div class="eab-sub">Проверьте поступление вашего платежа и баланс по номеру участка (всего в реестре {{ site.Params.snt.plotsCount | default 383 }} участка). Таблица регулярно обновляется бухгалтерией по банковским выпискам.</div>
+      </div>
+      <div class="eab-btns">
+        <a class="btn-solid" href="{{ site.Params.requisites.paymentTableUrl | default "https://docs.google.com/spreadsheets/d/1zhGuLnfFQLzfv22SANlKMt_76mLHWN2umiCzYl9Nk64/edit?usp=sharing" }}" target="_blank" rel="noopener">
+          Открыть таблицу по взносам (Google Sheets) ↗
+        </a>
+        <a class="btn-solid" href="tel:{{ site.Params.snt.phoneTel | default "+79219670642" }}">
+          Правление: {{ site.Params.snt.phoneDisplay | default "+7 (921) 967-06-42" }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Сметы и ФЭО -->
+  <section class="sec-block" id="smety" aria-labelledby="smetyTitle">
+    <div class="sec-head">
+      <h2 class="sec-title" id="smetyTitle">Финансово-экономическое обоснование (ФЭО) и сметы</h2>
+      <span class="sec-sub">Утверждённые общим собранием расчёты взносов</span>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ФЭО и приходно-расходная смета СНТ «Орбита» за 2025 год</div>
+            <div class="doc-desc">Обоснование размера членских и целевых взносов и постатейный план расходов товарищества.</div>
+            <div class="doc-meta">Файл: smeta_2025.pdf · Официальный документ</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/documents/smeta/smeta_2025.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ФЭО и смета СНТ «Орбита» за 2024 год (основная + дополнения)</div>
+            <div class="doc-desc">Финансово-экономическое обоснование и смета доходов и расходов за 2024 расчётный период.</div>
+            <div class="doc-meta">Файлы: smeta_2024.pdf, smeta_2024_dop.pdf</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/documents/smeta/smeta_2024.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">ФЭО и приходно-расходная смета СНТ «Орбита» за 2023 год</div>
+            <div class="doc-desc">Архивная смета доходов и расходов товарищества за 2023 год.</div>
+            <div class="doc-meta">Файл: smeta_2023.pdf · Архив</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/documents/smeta/smeta_2023.pdf" | relURL }}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Скачать PDF
+        </a>
+      </div>
+
+      <div class="doc-card">
+        <div class="doc-left">
+          <div class="doc-ext pdf">PDF</div>
+          <div>
+            <div class="doc-name">Целевой сбор на ремонт подъездной дороги (2025–2026)</div>
+            <div class="doc-desc">Подробная информация о целевом сборе средств на ремонт 520 метров подъездной дороги СНТ.</div>
+            <div class="doc-meta">Раздел: Дороги и благоустройство</div>
+          </div>
+        </div>
+        <a class="doc-btn" href="{{ "/dorogi/" | relURL }}">
+          Раздел «Дороги» →
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}
