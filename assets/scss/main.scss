@@ -586,6 +586,206 @@ html[data-font="large"] .em-lbl {
   margin-top: 2px;
 }
 
+/* ==========================================================================
+   Баннер мониторинга плановых отключений электроэнергии (.outage-banner)
+   ========================================================================== */
+.outage-banner {
+  margin: 16px 0 16px;
+  border-radius: var(--r-sm);
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+
+  /* Состояние: Запланировано отключение (Предупреждение) */
+  &.outage-banner--warning,
+  &[data-state="warning"] {
+    border-left: 5px solid var(--amber-border);
+    background: color-mix(in srgb, var(--amber-soft) 35%, var(--card));
+
+    .outage-banner-icon {
+      background: var(--amber-soft);
+      color: var(--amber);
+      border-color: var(--amber-border);
+    }
+  }
+
+  /* Состояние: Все в норме, отключений нет */
+  &.outage-banner--ok,
+  &[data-state="ok"] {
+    border-left: 5px solid var(--emerald-border);
+    background: color-mix(in srgb, var(--emerald-soft) 25%, var(--card));
+
+    .outage-banner-icon {
+      background: var(--emerald-soft);
+      color: var(--green);
+      border-color: var(--emerald-border);
+    }
+  }
+}
+
+.outage-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 18px;
+}
+
+.outage-banner-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  transition: all 0.2s ease;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.outage-banner-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.outage-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.outage-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  &.outage-badge--warning {
+    background: var(--amber-soft);
+    color: var(--amber-text);
+  }
+
+  &.outage-badge--ok {
+    background: var(--emerald-soft);
+    color: var(--emerald-text);
+  }
+}
+
+.outage-date-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink3);
+  background: var(--bg-soft);
+  padding: 2px 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.outage-banner-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 2px;
+
+  b {
+    color: var(--ink);
+    font-weight: 800;
+  }
+}
+
+.outage-banner-desc {
+  font-size: 0.85rem;
+  color: var(--ink2);
+  line-height: 1.45;
+
+  b {
+    color: var(--ink);
+  }
+
+  .outage-check-time {
+    color: var(--ink3);
+    font-size: 0.78rem;
+    margin-left: 6px;
+    white-space: nowrap;
+  }
+}
+
+.outage-banner-actions {
+  flex-shrink: 0;
+}
+
+.outage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    color: var(--ink3);
+    transition: transform 0.15s ease;
+  }
+
+  &:hover {
+    background: var(--cyan-soft);
+    border-color: var(--cyan);
+    color: var(--cyan-deep);
+
+    svg {
+      color: var(--cyan-deep);
+      transform: translateX(2px);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .outage-banner-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .outage-banner-icon {
+    display: none;
+  }
+
+  .outage-banner-actions {
+    width: 100%;
+  }
+
+  .outage-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+}
+
 /* Экстренная мобильная плашка */
 .emergency-strip {
   display: flex;
