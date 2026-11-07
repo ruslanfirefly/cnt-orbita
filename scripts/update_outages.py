@@ -3,6 +3,8 @@
 Скрипт мониторинга плановых отключений электроэнергии для СНТ «Орбита».
 Получает данные с официального сайта «Россети Ленэнерго» и сохраняет их в JSON
 для Hugo и клиентского JavaScript-баннера на главной странице.
+
+Может запускаться как локально при сборке, так и по CRON на хостинге (Reg.ru / ISPmanager).
 """
 
 import sys
@@ -29,9 +31,6 @@ def fetch_html(url, local_file=None):
         return resp.read().decode("utf-8", errors="replace")
 
 def parse_outages_table(html_content):
-    """
-    Парсит HTML-таблицу графика плановых отключений Россети Ленэнерго.
-    """
     table_match = re.search(r'<table[^>]*>(.*?)</table>', html_content, re.DOTALL | re.IGNORECASE)
     if not table_match:
         return []
@@ -42,7 +41,6 @@ def parse_outages_table(html_content):
         return []
 
     results = []
-    # Столбцы: 0-Регион/район, 1-Адрес, 2-Дата отключения, 3-Дата восстановления, 4-Филиал, 5-РЭС, 6-Комментарий, 7-ФИАС
     for r in rows[1:]:
         cols = re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', r, re.DOTALL | re.IGNORECASE)
         clean_cols = [' '.join(re.sub(r'<[^>]+>', ' ', c).split()) for c in cols]
@@ -57,7 +55,6 @@ def parse_outages_table(html_content):
         comment = clean_cols[6] if len(clean_cols) > 6 else ""
         fias = clean_cols[7] if len(clean_cols) > 7 else ""
 
-        # Проверяем, относится ли запись именно к СНТ «Орбита» (и исключаем посторонние вроде «Орбита-3» в Волковицах)
         is_our_orbita = False
         if "тер. СНТ Орбита" in address or "тер СНТ Орбита" in address or "СНТ «Орбита»" in address:
             is_our_orbita = True
@@ -67,11 +64,9 @@ def parse_outages_table(html_content):
         if not is_our_orbita:
             continue
 
-        # Парсим дату окончания работ
         dt_end = None
         dt_start = None
         try:
-            # Формат даты: 10-11-2026, 18:00
             dt_end = datetime.strptime(date_end_str.strip(), "%d-%m-%Y, %H:%M")
         except Exception:
             pass
@@ -81,7 +76,6 @@ def parse_outages_table(html_content):
         except Exception:
             pass
 
-        # Форматируем дату для отображения
         display_date = date_start_str.split(",")[0].replace("-", ".") if date_start_str else ""
         time_interval = ""
         if dt_start and dt_end:
@@ -123,7 +117,6 @@ def process_outages(parsed_items, now=None):
         else:
             upcoming.append(clean_item)
 
-    # Сортируем предстоящие по дате
     upcoming.sort(key=lambda x: x.get("dateStartIso", ""))
 
     has_outage = len(upcoming) > 0
@@ -138,50 +131,54 @@ def process_outages(parsed_items, now=None):
         "hasOutage": has_outage,
         "activeOutage": active_outage,
         "upcoming": upcoming,
-        "past": past[:5]  # сохраняем последние 5 для истории
+        "past": past[:5]
     }
     return payload
 
 def main():
-    local_file = None
-    if len(sys.argv) > 1 and not sys.argv[1].startswith("--"):
-        local_file = sys.argv[1]
+    import argparse
+    parser = argparse.ArgumentParser(description="Обновление данных графика отключений Россети Ленэнерго")
+    parser.add_argument("--file", help="Путь к локальному HTML-файлу для парсинга (тестирование)")
+    parser.add_argument("--output", "-o", help="Прямой путь для сохранения outages.json")
+    args = parser.parse_args()
 
     try:
-        html = fetch_html(URL, local_file=local_file)
+        html = fetch_html(URL, local_file=args.file)
     except Exception as e:
-        print(f"Ошибка получения страницы: {e}", file=sys.stderr)
+        print(f"Ошибка получения данных: {e}", file=sys.stderr)
         return 1
 
     parsed = parse_outages_table(html)
     data = process_outages(parsed)
+    json_str = json.dumps(data, ensure_ascii=False, indent=2)
 
-    # Определяем пути для записи
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.abspath(os.path.join(script_dir, ".."))
 
-    data_dir = os.path.join(project_root, "data")
-    static_data_dir = os.path.join(project_root, "static", "data")
-    os.makedirs(data_dir, exist_ok=True)
-    os.makedirs(static_data_dir, exist_ok=True)
+    targets = []
+    if args.output:
+        targets.append(args.output)
+    else:
+        # 1. Основной путь: data/outages.json (работает и в корне репозитория, и в корне веб-сервера /www/cnt-orbita.ru/)
+        targets.append(os.path.join(project_root, "data", "outages.json"))
 
-    data_json_path = os.path.join(data_dir, "outages.json")
-    static_json_path = os.path.join(static_data_dir, "outages.json")
+        # 2. Если есть static/data (локальный репозиторий Hugo), также обновляем его
+        static_data_dir = os.path.join(project_root, "static", "data")
+        if os.path.isdir(static_data_dir) or os.path.isdir(os.path.join(project_root, "content")):
+            targets.append(os.path.join(static_data_dir, "outages.json"))
 
-    json_str = json.dumps(data, ensure_ascii=False, indent=2)
+    for target_path in targets:
+        os.makedirs(os.path.dirname(target_path), exist_ok=True)
+        with open(target_path, "w", encoding="utf-8") as f:
+            f.write(json_str + "\n")
+        print(f"Записано: {target_path}")
 
-    with open(data_json_path, "w", encoding="utf-8") as f:
-        f.write(json_str + "\n")
-
-    with open(static_json_path, "w", encoding="utf-8") as f:
-        f.write(json_str + "\n")
-
-    print(f"Успешно обновлено: hasOutage={data['hasOutage']}")
+    print(f"Статус: hasOutage={data['hasOutage']}")
     if data["hasOutage"]:
         o = data["activeOutage"]
         print(f"Ближайшее отключение: {o.get('displayDate')} ({o.get('timeInterval')}) — {o.get('duration')}")
     else:
-        print("Плановых отключений в ближайшее время не обнаружено.")
+        print("В ближайшее время плановых отключений не запланировано.")
     return 0
 
 if __name__ == "__main__":
