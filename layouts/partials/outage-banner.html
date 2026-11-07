@@ -1,0 +1,74 @@
+{{- $data := hugo.Data.outages -}}
+{{- $hasOutage := false -}}
+{{- $active := false -}}
+{{- $checkedAt := "" -}}
+{{- $sourceUrl := "https://rosseti-lenenergo.ru/clients/planned_work/?reg=5&res=59&street=%D1%82%D0%B5%D1%80.+%D0%A1%D0%9D%D0%A2+%D0%9E%D1%80%D0%B1%D0%B8%D1%82%D0%B0&date_start=&date_finish=" -}}
+
+{{- if $data -}}
+  {{- $hasOutage = $data.hasOutage -}}
+  {{- $active = $data.activeOutage -}}
+  {{- $checkedAt = $data.checkedAt -}}
+  {{- with $data.sourceUrl }}{{ $sourceUrl = . }}{{ end -}}
+{{- end -}}
+
+{{- $jsonStr := "" -}}
+{{- if $data -}}
+  {{- $jsonStr = jsonify $data | urlquery -}}
+{{- end -}}
+
+<section id="powerOutageBanner" class="outage-banner {{ if $hasOutage }}outage-banner--warning{{ else }}outage-banner--ok{{ end }}" data-endpoint="{{ "data/outages.json" | relURL }}" data-state="{{ if $hasOutage }}warning{{ else }}ok{{ end }}" {{ with $jsonStr }}data-embedded="{{ . }}"{{ end }} role="region" aria-label="Мониторинг плановых отключений электроэнергии">
+  <div class="outage-banner-inner">
+    <div class="outage-banner-icon" aria-hidden="true">
+      {{- if $hasOutage -}}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      {{- else -}}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      {{- end -}}
+    </div>
+
+    <div class="outage-banner-content">
+      <div class="outage-banner-header">
+        <span class="outage-badge {{ if $hasOutage }}outage-badge--warning{{ else }}outage-badge--ok{{ end }}">
+          {{- if $hasOutage -}}⚡ Плановые работы Ленэнерго{{- else -}}✓ Электроснабжение в норме{{- end -}}
+        </span>
+        <span class="outage-date-badge">
+          {{- if $hasOutage -}}
+            {{- with $active -}}{{ .displayDate | default "Скоро" }}{{- end -}}
+          {{- else -}}
+            Плановых работ нет
+          {{- end -}}
+        </span>
+      </div>
+
+      <div class="outage-banner-title" id="outageTitle">
+        {{- if $hasOutage -}}
+          {{- with $active -}}
+            Запланировано отключение электроэнергии: <b>{{ .displayDate }} с {{ .timeInterval }}</b>
+          {{- end -}}
+        {{- else -}}
+          В ближайшее время планируемых отключений не предвидится
+        {{- end -}}
+      </div>
+
+      <div class="outage-banner-desc" id="outageDesc">
+        {{- if $hasOutage -}}
+          {{- with $active -}}
+            {{- if .duration }}Режим работ: <b>{{ .duration }}</b>. {{ end -}}
+            Зона: СНТ «Орбита». {{ .res | default "Красносельский РЭС" }} («Россети Ленэнерго»).
+            {{- with $checkedAt }} <span class="outage-check-time">Сверка: {{ . }}</span>{{ end -}}
+          {{- end -}}
+        {{- else -}}
+          По официальным данным «Россети Ленэнерго» (Красносельский РЭС), энергосеть СНТ «Орбита» работает в штатном режиме.
+          {{- with $checkedAt }} <span class="outage-check-time">Проверено: {{ . }}</span>{{ end -}}
+        {{- end -}}
+      </div>
+    </div>
+
+    <div class="outage-banner-actions">
+      <a href="{{ $sourceUrl }}" target="_blank" rel="noopener" class="outage-btn">
+        {{- if $hasOutage -}}График Ленэнерго{{- else -}}Проверить график{{- end -}}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
